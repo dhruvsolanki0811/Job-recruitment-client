@@ -1,0 +1,22 @@
+.input-search-container {
+  border: 0.2px solid rgb(164, 168, 173);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.search-box {
+  height: 1.6rem;
+  width: 95%;
+  outline: none;
+  border: none;
+  font-size: 12px;
+}
+
+.filters-tab {
+  border-bottom: 0.2px solid rgb(225 228 232);
+}
+.search-section {
+  border-bottom: 0.2px solid rgb(225 228 232);
+}
+.filter-btn {
+  font-size: large;
+}

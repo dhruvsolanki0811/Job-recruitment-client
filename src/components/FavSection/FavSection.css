@@ -1,0 +1,26 @@
+.fav-section {
+  width: 20%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgb(225 228 232);
+  border-left: 1px solid rgb(225 228 232);
+}
+
+.top-section {
+  border-bottom: 0.2px solid rgb(225 228 232);
+}
+
+.people-rec-section {
+  margin-top: 1rem;
+}
+
+.org-rec-section {
+  margin-top: 1.5rem;
+}
+
+.people-desc {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,25 @@
+.side-section {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 16%;
+  border-right: 1px solid rgb(225 228 232);
+  border-left: 1px solid rgb(225 228 232);
+
+  margin-left: 6rem;
+}
+
+.logo {
+  margin-top: -14px;
+}
+
+.nav-item {
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.nav-items-logo {
+  font-size: 20px;
+  font-weight: 600;
+}
