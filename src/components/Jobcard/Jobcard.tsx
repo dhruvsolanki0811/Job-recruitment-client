@@ -1,11 +1,15 @@
 import "./Jobcard.css";
 import orgPlaceHolder from "../../assets/placeholder-organization.png";
 import { IoBookmarkOutline } from "react-icons/io5";
-
-function Jobcard() {
+import { useNavigate } from "react-router-dom";
+  interface jobDesc{
+    id:number;
+  }
+function Jobcard({job}:{job:jobDesc}) {
+const navigate=useNavigate()
   return (
     <>
-      <div className="card-container w-full h-20 flex pt-2 pb-2 justify-between">
+      <div onClick={()=>navigate(`/job/${job.id}`)} className="card-container w-full h-20 flex pt-2 pb-2 justify-between cursor-pointer">
         <div className="org-logo w-20 h-full flex justify-center items-center p-2 overflow-hidden  ">
           <img
             src={orgPlaceHolder}
@@ -14,12 +18,12 @@ function Jobcard() {
           />
         </div>
         <div className="job-desc flex flex-col h-full gap-[1px]">
-          <div className="title-sec flex text-xs gap-1 items-center">
+          <div className="title-sec flex text-xs gap-1 items-center ">
             <div className="title ">Senior Frontend dev </div>
-            <div className="org-name text-xs color-lgt-grey ">at Linkedin</div>
+            <div className="org-name w- text-xs color-lgt-grey word-wrap-overflow w-24">at Linkedin</div>
           </div>
-          <div className="about-job flex text-[11px] font-thin  gap-2 color-lgt-grey">
-            Full-time • ₹20L • 5Y experience • posted about 20hr ago
+          <div className="about-job flex text-[11px] font-thin  gap-2 color-lgt-grey word-wrap-overflow">
+            Full-time • ₹20L • 5Y experience • posted about 20hr ago 
           </div>
           <div className="job-skills mt-2 flex items-center w-full gap-[9px] text-black">
             {["Java", "Python", "JavaScript"].map((skill) => {
@@ -34,8 +38,9 @@ function Jobcard() {
             </div>
           </div>
         </div>
+        
         <div className="job-bookmark flex h-full justify-center items-center">
-          <div className="follow-btn text-xs ps-2 pe-2 border-[1px] rounded border-solid border-black cursor-pointer">
+          <div className="follow-btn text-xs ps-2 pe-2 border-[1px] rounded border-solid border-white bg-[#22C55E] hover:bg-[#13883e] text-white cursor-pointer">
             Apply
           </div>
         </div>

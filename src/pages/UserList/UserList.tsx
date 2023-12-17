@@ -7,7 +7,9 @@ import {
 } from "../../components/components";
 import placeHolder from "../../assets/unknown.png";
 import "./UserList.css";
+import { useNavigate } from "react-router-dom";
 function UserList() {
+  const navigate=useNavigate()
   return (
     <>
       <div className="main-wrapper">
@@ -17,9 +19,9 @@ function UserList() {
 
           <JobNav jobtype="Users"></JobNav>
           <div className="people-grid flex p-3  w-full ">
-            {[2, 3, 4, 5, 7, 8, 9, 2.2, 23, 2, 32].map(() => (
+            {[2, 3, 4, 5, 7, 8, 9, 2.2, 23, 2, 32].map((id) => (
               <>
-                <div className="people-box flex flex-col  ps-3 pe-3">
+                <div onClick={()=>{navigate(`${id.toString()}`)}} className="people-box cursor-pointer flex flex-col  ps-3 pe-3">
                   <div className="follow-container flex justify-between items-center">
                     <div className="profile-pic  h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">
                       <img

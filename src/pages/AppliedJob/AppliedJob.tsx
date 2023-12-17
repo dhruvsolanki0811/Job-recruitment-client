@@ -34,8 +34,8 @@ function AppliedJob() {
               </div>
             </div>
             <div className="job-list flex flex-col ">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(() => (
-                <Jobcard></Jobcard>
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((id) => (
+                <Jobcard job={{id:id}}></Jobcard>
               ))}
             </div>
           </div>

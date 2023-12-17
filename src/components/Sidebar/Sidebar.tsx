@@ -32,7 +32,7 @@ function Sidebar() {
           </div>
           <div
             onClick={() => navigate("/users")}
-            className="nav-item btn-joblist flex items-center gap-1 text-[14px] font-medium m-3"
+            className="nav-item btn-joblist flex items-center gap-1 text-[14px] font-medium m-3 "
           >
             <IoPeopleOutline className="nav-items-logo"></IoPeopleOutline>
             People
@@ -53,14 +53,14 @@ function Sidebar() {
           </div>
         </div>
 
-        <div className="profile-name  flex  gap-1 items-center  justify-space-between me-5 mt-5 flex-wrap   ">
-          <img className="profile-icon cursor-pointer ms-1" src={unknown}></img>
+        <div className="profile-name  flex  gap-1 items-center  justify-space-between me-5 ms-1 mt-2  flex-wrap   ">
+          <img className="profile-icon cursor-pointer ms-1 " src={unknown}></img>
           <div className="username-sec text-sm cursor-pointer font-medium">
             Username
           </div>
-          <div className="about-circle cursor-pointer text-[8px] bg-green-500 rounded-full ps-1 pe-1">
+          {/* <div className="about-circle cursor-pointer text-[8px] bg-green-500 rounded-full ps-1 pe-1">
             About
-          </div>
+          </div> */}
         </div>
       </div>
     </>

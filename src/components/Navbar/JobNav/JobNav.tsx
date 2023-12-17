@@ -3,9 +3,20 @@ import { CiSearch } from "react-icons/ci";
 import { GoSortDesc } from "react-icons/go";
 import "../Nav.css";
 import { useState, useRef, useEffect } from "react";
+import unknown from "../../../assets/unknown.png";
 
+type Job={
+  id:number;
+  type:string
+}
+
+type User={
+  id:number;
+  type:string
+
+}
 type JobNavProps = {
-  jobtype: "All Jobs" | "Applied" | "Users" | "Company" | "Connections";
+  jobtype: "All Jobs" | "Applied" | "Users" | "Company" | "Connections"|"Login"| "User Signin"|User|Job;
 };
 
 function JobNav({ jobtype }: JobNavProps) {
@@ -35,17 +46,18 @@ function JobNav({ jobtype }: JobNavProps) {
 
   return (
     <>
-      {(jobtype === "Users" || jobtype === "Company") && (
+      {(jobtype === "Users" || jobtype === "Company" || jobtype==="Login" || jobtype==="User Signin") && (
         <>
           <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 h-[4.7rem]">
             <div className="head-filter">{jobtype}</div>
           </div>
+          {(jobtype!=="Login" && jobtype!=="User Signin" ) &&
           <div className="search-section w-full h-19 ps-5 pt-3 pb-2 pe-5  ">
             <div className="input-search-container w-full flex justify-center items-center roundedfull ps-1 pe-1 ">
               <input type="text" placeholder="Search" className="search-box" />
               <CiSearch className="cursor-pointer"></CiSearch>
             </div>
-          </div>
+          </div>}
         </>
       )}
       {(jobtype === "All Jobs" ||
@@ -59,12 +71,13 @@ function JobNav({ jobtype }: JobNavProps) {
               onClick={toggleDropdown}
               ref={dropdownRef}
             >
+              {(jobtype==="All Jobs" )&&<>
               <GoSortDesc className="cursor-pointer text-[20px]" />
-
+              
               <div className="filter-btn-text text-xs flex-nowrap cursor-pointer">
                 Sort
-              </div>
-              {isOpen && (
+              </div></>}
+              {(isOpen && jobtype==="All Jobs" )&& (
                 <div className="absolute flex flex-col justify-center align-items-center top-[1.5rem] mt-2 space-y-2 bg-white border border-gray-300 rounded-md shadow-md">
                   <a
                     href="#"
@@ -96,6 +109,27 @@ function JobNav({ jobtype }: JobNavProps) {
           </div>
         </>
       )}
+        {(typeof jobtype === 'object' && 'id' in jobtype && jobtype.type=="jobs") && <>
+          <div className="filters-tab w-full flex gap-4 items-center ps-5 pe-5 h-[4.7rem]">
+            <div className="head-filter">Jobs at Linkedin</div>
+          </div>
+          
+        </>}
+
+        {(typeof jobtype === 'object' && 'id' in jobtype && jobtype.type=="user") && <>
+          <div className="filters-tab w-full flex gap-4 items-center ps-5 pe-5 h-[3.2rem]">
+          <div className="username-container flex gap-3    items-center">
+            <div className=" h-8 w-6">
+              <img
+                className=" object-cover overflow-hidden h-full"
+                src={unknown}
+              ></img>
+            </div>
+            UserName
+          </div>
+          </div>
+          
+        </>}
     </>
   );
 }

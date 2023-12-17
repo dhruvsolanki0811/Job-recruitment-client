@@ -1,0 +1,30 @@
+.intro-sec {
+  border-bottom: 1px solid rgb(225 228 232);
+  padding-bottom: 15px;
+}
+.user-desc-content-wrapper{
+    width: 50vw;
+        
+    
+    border-right: 0.5px solid rgb(225 228 232);
+}
+.user-about-desc {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #333 transparent;
+}
+
+.user-about-desc::-webkit-scrollbar {
+  width: 5px; /* Set the width of the vertical scrollbar */
+}
+
+.user-about-desc::-webkit-scrollbar-thumb {
+  background-color: rgb(
+    225 228 232
+  ); /* Set the color of the vertical scrollbar thumb */
+}
+
+.user-about-desc::-webkit-scrollbar-track {
+  background-color: transparent; 
+}

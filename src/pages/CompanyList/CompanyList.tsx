@@ -2,7 +2,10 @@ import React from "react";
 import "./CompanyList.css";
 import { FavSection, JobNav, Sidebar } from "../../components/components";
 import placeHolder from "../../assets/placeholder-organization.png";
+import { useNavigate } from "react-router-dom";
+
 function CompanyList() {
+const navigate= useNavigate()
   return (
     <>
       <div className="main-wrapper">
@@ -12,9 +15,9 @@ function CompanyList() {
 
           <JobNav jobtype="Company"></JobNav>
           <div className="people-grid flex p-3  w-full ">
-            {[2, 3, 4, 5, 7, 8, 9, 2.2, 23, 2, 32].map(() => (
+            {[2, 3, 4, 5, 7, 8, 9, 2.2, 23, 2, 32].map((Id) => (
               <>
-                <div className="people-box flex flex-col  ps-3">
+                <div onClick={(id)=>{navigate(`${Id.toString()}`)}} className="people-box cursor-pointer flex flex-col  ps-3">
                   <div className="profile-pic  flex flex-between items-center h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">
                     <img
                       className=" object-cover  h-8 "
