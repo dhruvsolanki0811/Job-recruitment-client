@@ -6,6 +6,7 @@ import {
   Sidebar,
 } from "../../components/components";
 import { useNavigate } from "react-router-dom";
+import { BottomBar } from "../../components/BottomBar/BottomBar";
 
 function AppliedJob() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ function AppliedJob() {
           <Sidebar></Sidebar>
           <div className="content-wrapper flex flex-col ">
             <div className="nav-section">
-              <JobNav jobtype="Applied"></JobNav>
+              <JobNav jobtype={{type:"Applied",name:"Jobs you've applied"}}></JobNav>
               <div className="section-jobtype w-full h-7 ps-5 pe-5 flex">
                 <div
                   onClick={() => navigate("/")}
@@ -34,13 +35,14 @@ function AppliedJob() {
               </div>
             </div>
             <div className="job-list flex flex-col ">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((id) => (
+              {/* {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((id) => (
                 <Jobcard job={{id:id}}></Jobcard>
-              ))}
+              ))} */}
             </div>
           </div>
           <FavSection page="Company"></FavSection>
         </div>
+        <BottomBar></BottomBar>
       </>
     </>
   );

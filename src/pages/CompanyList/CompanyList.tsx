@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./CompanyList.css";
 import { FavSection, JobNav, Sidebar } from "../../components/components";
 import placeHolder from "../../assets/placeholder-organization.png";
 import { useNavigate } from "react-router-dom";
+import { BottomBar } from "../../components/BottomBar/BottomBar";
+import { useOrganizationStore } from "../../store/OrganizationStore";
 
 function CompanyList() {
+const {organizationList,fetchOrganizations}= useOrganizationStore()
+useEffect(()=>{
+  fetchOrganizations()
+},[])
 const navigate= useNavigate()
   return (
     <>
@@ -13,21 +19,20 @@ const navigate= useNavigate()
         <div className="people-content-wrapper flex flex-col ">
           <div className="nav-section"></div>
 
-          <JobNav jobtype="Company"></JobNav>
+          <JobNav jobtype={{type:"Company",name:"Company"}}></JobNav>
           <div className="people-grid flex p-3  w-full ">
-            {[2, 3, 4, 5, 7, 8, 9, 2.2, 23, 2, 32].map((Id) => (
+            {organizationList.map((organization) => (
               <>
-                <div onClick={(id)=>{navigate(`${Id.toString()}`)}} className="people-box cursor-pointer flex flex-col  ps-3">
+                <div onClick={()=>{navigate(`${organization.username.toString()}`)}} className="people-box cursor-pointer flex flex-col  ps-3">
                   <div className="profile-pic  flex flex-between items-center h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">
                     <img
                       className=" object-cover  h-8 "
-                      src={placeHolder}
+                      src={organization.profile_pic==null?placeHolder:organization.profile_pic}
                     ></img>
                   </div>
-                  <div className="people-username text-xs mt-1">Linkedin</div>
+                  <div className="people-username text-xs mt-1">{organization.name}</div>
                   <div className="people-desc color-lgt-grey w-full text-[10px] pe-4 mb-1">
-                    First-year undergrad at Indian Institute of Informationz
-                    Technology Technology.
+                    {organization.overview}
                   </div>
                 </div>
               </>
@@ -36,6 +41,7 @@ const navigate= useNavigate()
         </div>
         <FavSection page="Company"></FavSection>
       </div>
+      <BottomBar></BottomBar>
     </>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { JobNav, Sidebar } from "../../../components/components";
 import "./AuthLogin.css";
 import { useNavigate } from "react-router-dom";
+import { BottomBar } from "../../../components/BottomBar/BottomBar";
 function AuthLogin() {
   const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ function AuthLogin() {
 
         <div className="content-wrapper flex flex-col ">
           <div className="nav-section">
-            <JobNav jobtype="Login"></JobNav>
+            <JobNav jobtype={{type:"Login",name:"Login"}}></JobNav>
             <div className="login-container flex flex-col items-center  h-full">
               <div className="login-box flex flex-col items-center  w-[20rem] mt-4 ">
                 <div className="slider-login flex justify-between w-full">
@@ -53,6 +54,7 @@ function AuthLogin() {
           </div>
         </div>
       </div>
+      <BottomBar></BottomBar>
     </>
   );
 }

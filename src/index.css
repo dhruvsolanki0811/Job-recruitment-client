@@ -16,6 +16,7 @@
   height: 100%;
   width: 100%;
   display: flex;
+
 }
 
 .profile-icon {
@@ -34,4 +35,46 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.footer-bar{
+  display: none;
+}
+
+
+@media only screen and (max-width: 871px) {
+  .fav-section{
+    display: none;
+  }
+  .content-wrapper{ 
+    width: 80%;
+  }
+  .people-content-wrapper{ 
+    width: 80%;
+  }
+  .side-section{
+    width: 25%;
+    margin-left: 1rem; ;
+  }
+}
+
+
+@media only screen and (max-width: 560px) {
+  .fav-section{
+    display: none;
+  }
+  .content-wrapper{ 
+    width: 100%;
+    height: 89vh;
+  }
+  .people-content-wrapper{ 
+    width: 100%;
+    height: 88.6vh; 
+  }
+  .side-section{
+    display: none;
+  }
+  .footer-bar{
+    display: block;
+  }
 }

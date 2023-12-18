@@ -21,7 +21,7 @@
 }
 .people-box {
   box-sizing: border-box;
-  min-width: 14rem;
+  min-width: 17rem;
   max-width: 17rem;
   height: 100px;
   border: 1px solid rgb(225 228 232);

@@ -1,22 +1,30 @@
+import { useEffect } from "react";
+import { BottomBar } from "../../components/BottomBar/BottomBar";
 import {
   FavSection,
   JobNav,
   Jobcard,
   Sidebar,
+  Loader
 } from "../../components/components";
 import "./AllJobPage.css";
 import { useNavigate } from "react-router-dom";
+import {useJobStore} from "../../store/store"
 
 function AllJobPage() {
   const navigate = useNavigate();
-
+  const {jobList,fetchJobs,loader} =useJobStore()
+  useEffect(()=>{
+    fetchJobs()
+  },[])
+  console.log(jobList)
   return (
     <>
       <div className="main-wrapper">
         <Sidebar></Sidebar>
         <div className="content-wrapper flex flex-col ">
           <div className="nav-section">
-            <JobNav jobtype="All Jobs"></JobNav>
+            <JobNav jobtype={{type:"All Jobs",name:"Jobs"}}></JobNav>
             <div className="section-jobtype w-full h-7 ps-5 pe-5 flex">
               <div
                 onClick={() => navigate("/")}
@@ -32,14 +40,18 @@ function AllJobPage() {
               </div>
             </div>
           </div>
-          <div className="job-list flex flex-col ">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((id) => (
-              <Jobcard job={{ id: id }}></Jobcard>
+         {loader?
+        <Loader></Loader>
+         : <div className="job-list flex flex-col ">
+            {jobList.map((elem) => (
+              <Jobcard job={elem}></Jobcard>
             ))}
-          </div>
+          </div>}
         </div>
         <FavSection page="All Job"></FavSection>
       </div>
+      <BottomBar />
+      
     </>
   );
 }

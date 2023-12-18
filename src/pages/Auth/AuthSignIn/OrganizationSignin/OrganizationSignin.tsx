@@ -1,173 +1,267 @@
-import React, { useState } from 'react'
-import { Sidebar } from '../../../../components/components'
-import unknow from "../../../../assets/placeholder-organization.png"
-function OrganizationSignin() {
-    const [selectedImage, setSelectedImage] = useState<String|null>(null)
-    const [selectedImagePreview, setSelectedImagePreview] = useState<String|null>(null);
-  
-    const handleImageChange = (event:any) => {
-      const file = event.target.files[0];
-  
-      // Check if the file is an image
-      if (file && file.type.startsWith('image/')) {
-        setSelectedImage(file);
-  
-        // Create a preview URL for the selected image
-        const previewUrl = URL.createObjectURL(file);
-        setSelectedImagePreview(previewUrl);
-      } else {
-        alert('Please select an image file.');
-        // Clear the input field
-        event.target.value = null;
-      }
-    };
-  
-    const handleRemoveImage = () => {
-      // Clear the selected image and preview
-      setSelectedImage(null);
-      setSelectedImagePreview(null);
-      // Clear the input field
-      let imageInput=document.getElementById('imageInput')
-      if (imageInput) {
-          // Clear the input field
-          imageInput.nodeValue = '';
-        }
+import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { JobNav, Sidebar, BottomBar, Loader } from '../../../../components/components';
+import unknown from '../../../../assets/placeholder-organization.png';
+import { useOrganizationStore } from '../../../../store/OrganizationStore';
+
+interface OrganizationSigninProps {}
+
+interface OrganizationFormData {
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+  overview: string;
+  location: string;
+  founded_at: number|string;
+  website: string;
+  profile_pic: File | null;
+}
+
+function OrganizationSignin({}: OrganizationSigninProps) {
+  const {createOrganization,loader} =useOrganizationStore()
+  const [formState, setFormState] = useState<OrganizationFormData>({
+    name: '',
+    username: '',
+    email: '',
+    password: '',
+    overview: '',
+    location: '',
+    founded_at: '',
+    website: '',
+    profile_pic: null,
+  })
+  ;
+  const [selectedImagePreview, setSelectedImagePreview] = useState<string | null>(null);
+
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file && file.type.startsWith('image/')) {
+      setFormState((prevState) => ({
+        ...prevState,
+        profile_pic: file,
+      }));
+
+      const previewUrl = URL.createObjectURL(file);
+      setSelectedImagePreview(previewUrl);
+    } else {
+      toast.error('Please select an image file.');
+      event.target.value = '';
+    }
   };
-  
+
+  const handleRemoveImage = () => {
+    setFormState((prevState) => ({
+      ...prevState,
+      profile_pic: null,
+    }));
+    setSelectedImagePreview(null);
+    let imageInput = document.getElementById('imageInput') as HTMLInputElement;
+    if (imageInput) {
+      imageInput.value = '';
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement | HTMLButtonElement>) => {
+    e.preventDefault();
+    // Add your form submission logic here
+    // Validation
+    if (!formState.name.trim()) {
+      toast.error('Name is required');
+      return;
+    }
+    if (formState.profile_pic===null) {
+      toast.error('Profile pic is required');
+      return;
+    }
+    if (!formState.username.trim()) {
+      toast.error('Username is required');
+      return;
+    }
+    if (!formState.email.trim()) {
+      toast.error('Email is required');
+      return;
+    } else if (!isValidEmail(formState.email)) {
+      toast.error('Invalid email format');
+      return;
+    }
+    // Add more validations as needed
+
+    
+       createOrganization(formState);
+      // toast.success('Organization signed up successfully!');
+      setFormState({
+        name: '',
+        username: '',
+        email: '',
+        password: '',
+        overview: '',
+        location: '',
+        founded_at: '',
+        website: '',
+        profile_pic: null,
+      })
+      setSelectedImagePreview(null)
+
+  };  
+
+  const isValidEmail = (email: string) => {
+    // Add your email validation logic here
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   return (
     <>
-    <div className="main-wrapper">
+      <ToastContainer />
+      <div className="main-wrapper">
         <Sidebar></Sidebar>
-
         <div className="box-signin content-wrapper flex flex-col ">
           <div className="nav-section mt-6">
-            {/* <JobNav jobtype="User Signin"></JobNav> */}
-            <div className=" login-container flex flex-col items-center  h-full">
-              <div className=" login-box flex flex-col items-center  w-[25rem]  ">
+            <JobNav jobtype={{ type: 'User Signin', name: 'Organization Signin' }}></JobNav>
+            <div className="login-container flex flex-col items-center h-full">
+              <div className="login-box flex flex-col items-center w-[25rem]">
                 <div className="slider-login flex justify-between w-full">
-                  {/* <div className={`header-user w-[50%] flex justify-center cursor-pointer ${UserLogin?``:`hover:text-[#13883e]`}`} onClick={()=>SetUserLogin(true)} style={UserLogin?toggleStyle:{}}>User</div> */}
-                  <div className={`header-org flex justify-center items-center cursor-pointer `}>Fill the below form to create a JobCom Profile</div>
+                  <div className={`header-org flex justify-center items-center cursor-pointer `}>
+                    Fill the below form to create a JobCom Profile
+                  </div>
                 </div>
+                {loader?
+                <Loader></Loader>
+                :<form method='POST' onSubmit={handleSubmit} className="login-box flex flex-col items-center w-[25rem]">
                 <input
-                  type="text"
-                  name="role"
-                  placeholder="Name of the Organization"
-                  // value={filters.role}
-                  // onChange={handleInputChange}
-                  className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
-                />
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="Grab a unique username for your Company !"
-                  // value={filters.role}
-                  // onChange={handleInputChange}
-                  className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
-                />  
-                
-
-
-                <input
-                  type="email"
-                  name="role"
-                  placeholder="Email"
-                  // value={filters.role}
-                  // onChange={handleInputChange}
-                  className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
-                />
-                <input
-                  type="password"
-                  name="role"
-                  placeholder="Password"
-                  // value={filters.role}
-                  // onChange={handleInputChange}
-                  className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
-                />
-                <textarea
-                  name="role"
-                  placeholder="Overview about your Company"
-                  // value={filters.role}
-                  // onChange={handleInputChange}
-                  className="w-full text-[12px] h-20 border-[2px] p-2 rounded min-h-10 max-h-[7rem]"
-                />
-                <input
-                  type="text"
-                  name="role"
-                  placeholder="Location"
-                  // value={filters.role}
-                  // onChange={handleInputChange}
-                  className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
-                />
-                <input
-                type='number'
-                name="yearInput"
-                placeholder="Enter the year of  foundation"
-                min="1900"
-                max="2100"              
-                  className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
-                />
-                <input
-                  name="website"
-                  placeholder="Website"
-                  type="url"
-
-            
-                  className="w-full text-[12px] h-8 border-[2px] p-2 rounded "
-                />
-               
-               <div className='flex flex gap-2 justify-center items-center'>
-    <div className="flex ">
-          
-          {selectedImagePreview===null ?  <img
-            src={unknow}
-            className="rounded-full border-grey border-[0.2px] border-solid h-20 w-20 object-contain"
-          />:<> <img
-          src={selectedImagePreview?.toString()}
-          className="rounded-full h-20 w-20 object-contain"
-        />
-          <span
-            onClick={handleRemoveImage}
-            className="  px-1 py-1
-            text-lg
-            text-red-500
-            text-white
-            border-none
-            rounded
-            cursor-pointer
-            "
-          >
-            x
-          </span>
-          </>}
-        </div>
-      <input
-        type="file"
-        id="imageInput"
-        accept="image/*"
-        onChange={handleImageChange}
-        style={{ display: 'none' }}
-      />
-      <label htmlFor="imageInput" className=" h-8 text-xs text-[#22C55E] hover:bg-[#13883e] hover:text-white px-2 py-2 text-xs  text-white border-none rounded cursor-pointer select-none inline-block mt-4">
-        Choose a profile picture
-      </label>
-      
-        
-      
-    </div>
-
-                <div className="login-btn-wrapper ">
-                  <button className="submit-btn text-xs hover:bg-[#13883e]  ">SignUp</button>
-                </div>
-
-                {/* <div onClick={()=>{if(UserLogin){navigate("/signup/user")}else{navigate("/signup/organization")}}} className="signin-head text-xs cursor-pointer hover:text-[#13883e]">{UserLogin?"Don't have an user account? Join Now":"Hey! Join as a Organization!  "}</div> */}
+                    type="text"
+                    name="name"
+                    placeholder="Name of the Organization"
+                    value={formState.name}
+                    onChange={handleInputChange}
+                    className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+                  />
+                  <input
+                    type="text"
+                    name="username"
+                    placeholder="Grab a unique username for your Company !"
+                    value={formState.username}
+                    onChange={handleInputChange}
+                    className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formState.email}
+                    onChange={handleInputChange}
+                    className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+                  />
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={formState.password}
+                    onChange={handleInputChange}
+                    className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+                  />
+                  <textarea
+                    name="overview"
+                    placeholder="Overview about your Company"
+                    value={formState.overview}
+                    onChange={handleInputChange}
+                    className="w-full text-[12px] h-20 border-[2px] p-2 rounded min-h-10 max-h-[7rem]"
+                  />
+                  <input
+                    type="text"
+                    name="location"
+                    placeholder="Location"
+                    value={formState.location}
+                    onChange={handleInputChange}
+                    className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+                  />
+                  <input
+                    type="number"
+                    name="founded_at"
+                    placeholder="Enter the year of foundation"
+                    min="1900"
+                    max="2100"
+                    value={formState.founded_at}
+                    onChange={handleInputChange}
+                    className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+                  />
+                  <input
+                    name="website"
+                    placeholder="Website"
+                    // type="url"
+                    value={formState.website}
+                    onChange={handleInputChange}
+                    className="w-full text-[12px] h-8 border-[2px] p-2 rounded "
+                  />
+                  {/* Image upload section */}
+                  <div className="flex flex gap-2 justify-center items-center">
+                    <div className="flex ">
+                      {selectedImagePreview === null ? (
+                        <img
+                          src={unknown}
+                          className="rounded-full border-grey border-[0.2px] border-solid h-20 w-20 object-contain"
+                        />
+                      ) : (
+                        <>
+                          {' '}
+                          <img
+                            src={selectedImagePreview?.toString()}
+                            className="rounded-full h-20 w-20 object-contain"
+                          />
+                          <span
+                            onClick={handleRemoveImage}
+                            className="  px-1 py-1
+                          text-lg
+                          text-red-500
+                          border-none
+                          rounded
+                          cursor-pointer
+                          "
+                          >
+                            x
+                          </span>
+                        </>
+                      )}
+                    </div>
+                    <input
+                      type="file"
+                      id="imageInput"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      style={{ display: 'none' }}
+                    />
+                    <label
+                      htmlFor="imageInput"
+                      className=" h-8 text-xs text-[#22C55E] hover:bg-[#13883e] hover:text-white px-2 py-2 text-xs   border-none rounded cursor-pointer select-none inline-block mt-4"
+                    >
+                      Choose a profile picture
+                    </label>
+                  </div>
+                  {/* Submit button */}
+                  <div className="login-btn-wrapper ">
+                    <button type="submit" className="submit-btn text-xs hover:bg-[#13883e]">
+                      SignUp
+                    </button>
+                  </div>
+                </form>}
               </div>
             </div>
-            
           </div>
         </div>
       </div>
-    </>
-  )
+      <BottomBar></BottomBar>
+    </>);
 }
 
-export {OrganizationSignin}
+export { OrganizationSignin };

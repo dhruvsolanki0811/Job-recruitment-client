@@ -14,7 +14,7 @@ function Sidebar() {
   return (
     <>
       <div className="side-section ">
-        <div className="logo flex  w-full">
+        <div className="logo flex flex-nowrap  w-full">
           <div className="logo-container h-24 ob">
             <img
               className="logo object-cover overflow-hidden h-full"

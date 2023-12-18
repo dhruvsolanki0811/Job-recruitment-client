@@ -2,6 +2,7 @@ import React from "react";
 import { FavSection, JobNav, Sidebar } from "../../components/components";
 import placeHolder from "../../assets/unknown.png";
 import { useNavigate } from "react-router-dom";
+import { BottomBar } from "../../components/BottomBar/BottomBar";
 
 function FollowingList() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function FollowingList() {
         <Sidebar></Sidebar>
         <div className="content-wrapper flex flex-col ">
           <div className="nav-section">
-            <JobNav jobtype="Connections"></JobNav>
+            <JobNav jobtype={{type:"Connections",name:"Connections"}}></JobNav>
             <div className="section-jobtype w-full h-7 ps-5 pe-5 flex">
               <div
                 onClick={() => navigate("/followers")}
@@ -57,6 +58,7 @@ function FollowingList() {
         </div>
         <FavSection page="Connections"></FavSection>
       </div>
+      <BottomBar></BottomBar>
     </>
   );
 }

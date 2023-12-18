@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 import { FavSection, Sidebar } from "../../components/components";
+import { BottomBar } from "../../components/BottomBar/BottomBar";
 
 function JobPostingForm() {
   const [inputListValue, setListValue] = useState<string>("");
@@ -121,6 +122,7 @@ function JobPostingForm() {
         </div>
         <FavSection page="Company"></FavSection>
       </div>
+      <BottomBar></BottomBar>
     </>
   );
 }
