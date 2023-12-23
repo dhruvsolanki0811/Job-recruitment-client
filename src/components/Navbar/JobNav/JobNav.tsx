@@ -66,7 +66,7 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
 
   return (
     <>
-      {jobtype.type === "Users" && (
+      {(jobtype.type === "Users"|| jobtype.type === "Applied") && (
         <>
           <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 h-[5.8rem]">
             <div className="head-filter">{jobtype.name}</div>
@@ -81,7 +81,7 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
           
         </>
       )}
-      {(jobtype.type === "All Jobs" || jobtype.type === "Applied") && (
+      {(jobtype.type === "All Jobs" ) && (
         <>
           <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 h-[3rem]">
             <div className="head-filter">{jobtype.name}</div>
@@ -139,14 +139,14 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
             </div>
           </div>
 
-          <div className="search-section w-full h-19 ps-5 pt-1 pb-2 pe-5  ">
+         { jobtype.type === "All Jobs"&&<div className="search-section w-full h-19 ps-5 pt-1 pb-2 pe-5  ">
             <div className="input-search-container w-full flex justify-center items-center roundedfull ps-1 pe-1 ">
               <input type="text" placeholder="Search" className="search-box" value={Search}
         onChange={handleSearchInput}
         onKeyDown={handleEnter}/>
               <CiSearch className="cursor-pointer"></CiSearch>
             </div>
-          </div>
+          </div>}
         </>
       )}
       {(jobtype.type == "Jobs" ||

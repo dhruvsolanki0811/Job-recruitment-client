@@ -37,7 +37,7 @@ interface JobSeekerState {
   fetchSingleJobSeeker: (username: string) => Promise<void>;
   fetchJobseekers: () => Promise<void>;
   createUser: (data: CreateJobSeeker) => Promise<void>;
-  
+  fetchApplicants:(jobId:number|null)=>Promise<void>;
   loader: boolean;
 }
 
@@ -117,5 +117,21 @@ export const useJobSeekerState = create<JobSeekerState>((set) => ({
 
     }
   },
+  fetchApplicants:async(jobId)=>{
+    try {
+      set({ loader: true });
+      let response;
+ 
+      response = await axios.get<JobSeeker[]>(`${APIBASEURL}/applicants/job_applications/${jobId}`,{
+        headers:{
+          Authorization:`Bearer ${localStorage.getItem('accessToken')}`
+        }
+      });
+      
+      return response.data      
+    } catch (err) {
+      console.error(err);
+    }
+  }
   
 }));

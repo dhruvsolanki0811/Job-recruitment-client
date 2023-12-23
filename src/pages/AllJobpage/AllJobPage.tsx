@@ -33,7 +33,7 @@ function AllJobPage() {
                 Jobs
               </div>
               <div
-                onClick={() => navigate("/applied")}
+                onClick={() => navigate(`${user.userType==='organization'?'/jobposted':'/applied'}`)}
                 className="jobtype-container cursor-pointer primary-text flex justify-center"
               >
                                   {user.userType==='organization'?'Job Posted':'Applied'}

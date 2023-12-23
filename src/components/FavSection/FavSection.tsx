@@ -76,8 +76,8 @@ function FavSection({ page }: pageType) {
               return (
                 <>
                   <div className="profile-pic-follow flex flex-between items-center">
-                    <div className="profile-pic  flex flex-between items-center h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">
-                      <img className=" object-cover  h-8 " src={seeker.profile_pic==null?logo:`http://127.0.0.1:8000/${seeker.profile_pic}`}></img>
+                    <div className="profile-pic  flex flex-between justify-center items-center h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">
+                      <img className="   h-8 " src={seeker.profile_pic==null?logo:`${seeker.profile_pic}`}></img>
                     </div>
                     <div className="people-username text-xs mt-3 ms-2">
                     {seeker.username}
@@ -102,7 +102,7 @@ function FavSection({ page }: pageType) {
                 return (
                   <>
                     <div className="profile-pic-follow mt-1 flex flex-between items-center">
-                      <div className="profile-pic  flex flex-between items-center h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">
+                      <div className="profile-pic  flex flex-between justify-center items-center h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">
                         <img
                           className=" object-contain  h-8 "
                           src={org.profile_pic==null?placeHolder:`${org.profile_pic}`}

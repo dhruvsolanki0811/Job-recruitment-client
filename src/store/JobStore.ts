@@ -80,9 +80,12 @@ export interface Job {
       if(localStorage.getItem("accessToken")!=null){
        response = await axios.get(apiUrl,{headers:{
         Authorization:`Bearer ${localStorage.getItem("accessToken")}`
-      }});}
+      }});
+      console.log(response)
+    }
       else{
          response = await axios.get(apiUrl)
+         console.log(response.data)
       }
       set({ loader: false, jobList: response.data });
     } catch (error) {

@@ -6,14 +6,15 @@ import {
   CompanyDescription,
   CompanyList,
   FollowersList,
-  FollowingList,
   JobDescriptionPage,
   JobPostingForm,
   OrganizationSignin,
   UserDescriptionPage,
   UserList,
   UserSignin,
-  OrganizationProfilePage
+  OrganizationProfilePage,
+  OrganizationJobPosted,
+  ApplicantsList
 } from "./pages/pages";
 import { RestrictAuth } from "./pages/Auth/AuthRoutes/restrict-auth";
 import { RequireAuth } from "./pages/Auth/AuthRoutes/require-auth";
@@ -41,10 +42,12 @@ function RoutesPath() {
       <Route path="/organization/jobposting" element={<JobPostingForm></JobPostingForm>} />
       <Route path="/organization/us" element={<OrganizationProfilePage/>} />
       <Route path="/jobseeker/us" element={<UserProfilePage/>} />
+      <Route path="/applicantslist/:jobId" element={<ApplicantsList></ApplicantsList>} />
 
     <Route path="/applied" element={<AppliedJob></AppliedJob>} />
+    <Route path="/jobposted" element={<OrganizationJobPosted></OrganizationJobPosted>} />
+
     <Route path="/connections/:page" element={<FollowersList></FollowersList>} />
-      <Route path="/following" element={<FollowingList></FollowingList>} />
     </Route>
 
     </Routes>

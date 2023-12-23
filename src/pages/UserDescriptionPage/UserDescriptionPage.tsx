@@ -53,7 +53,7 @@ function UserDescriptionPage() {
               />
               <div className="follow-username-sec flex items-center gap-5 ">
               <div className="header-username font-medium ">{jobSeeker?.username}</div>
-              {user.userId && <div  onClick={handleRequest} className="follow-btn text-xs  ps-2 pe-2 border-[1px] rounded border-solid cursor-pointer hover:bg-[#22C55E] hover:text-[white]">
+              {(user.userId && user.userType=='jobseeker') && <div  onClick={handleRequest} className="follow-btn text-xs  ps-2 pe-2 border-[1px] rounded border-solid cursor-pointer hover:bg-[#22C55E] hover:text-[white]">
                       {status?status[0].toUpperCase()+status.slice(1,status.length):"Follow"}
                     </div>}
               </div>
