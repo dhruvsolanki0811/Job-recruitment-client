@@ -1,43 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { FavSection, JobNav, Loader, Sidebar } from "../../components/components";
-import unknown from "../../assets/unknown.png";
-import { CiMail } from "react-icons/ci";
+import React, { useEffect } from 'react';
+import { BottomBar, FavSection, JobNav, Loader, Sidebar } from '../../../components/components';
+import { useJobSeekerState, useUserAuthStore } from '../../../store/store';
+import unknown from "../../../assets/placeholder-organization.png";
+import { CiMail } from 'react-icons/ci';
 
-import "./UserDescriptionPage.css";
+function UserProfilePage() {
+  const { jobSeeker, fetchSingleJobSeeker,loader } = useJobSeekerState();
+  const { user, accessToken } = useUserAuthStore();
 
-import { BottomBar } from "../../components/BottomBar/BottomBar";
-import { useParams } from "react-router-dom";
-import { useJobSeekerState } from "../../store/JobSeekerStore";
-import { useConnectionStore, useUserAuthStore } from "../../store/store";
-
-function UserDescriptionPage() {
-    const {username }=useParams()
-    const {status,statusCheck,handleReject,sendRequets,handleConnections}=useConnectionStore()
-    const {user}=useUserAuthStore()
-    const {fetchSingleJobSeeker,jobSeeker,loader}=useJobSeekerState()
-    const [trigger,setTrigger]=useState(false)
-    useEffect(()=>{
-      if(username!=null){
-        fetchSingleJobSeeker(username)
-        statusCheck(username)
-        }
-    },[trigger])
-    const handleRequest=async(e:HTMLInputElement)=>{
-        console.log(e.target.innerText)
-        let type=e.target.innerText
-        if(type=='Follow'){
-          sendRequets(user.userId,jobSeeker?.id).then(()=>setTrigger(!trigger))
-        }
-        else if(type=='Requested'){
-          handleReject(jobSeeker?.id).then(()=>setTrigger(!trigger))
-        }
-
-
+  useEffect(() => {
+    if (user.userName != null && accessToken != null) {
+      fetchSingleJobSeeker(user.userName); // Assuming accessToken is the correct parameter
     }
-    return (
-    <>
+  }, [user.userName]);
   
-      <div className="main-wrapper">
+
+  return (
+    <>
+     <div className="main-wrapper">
         <Sidebar></Sidebar>
         <div className="people-content-wrapper flex flex-col ">
           <div className="nav-section"></div>
@@ -53,9 +33,7 @@ function UserDescriptionPage() {
               />
               <div className="follow-username-sec flex items-center gap-5 ">
               <div className="header-username font-medium ">{jobSeeker?.username}</div>
-              {user.userId && <div  onClick={handleRequest} className="follow-btn text-xs  ps-2 pe-2 border-[1px] rounded border-solid cursor-pointer hover:bg-[#22C55E] hover:text-[white]">
-                      {status?status[0].toUpperCase()+status.slice(1,status.length):"Follow"}
-                    </div>}
+              
               </div>
               <div className="header-username font-medium text-xs mt-2">
                 {jobSeeker?.firstname} {jobSeeker?.lastname}
@@ -79,7 +57,7 @@ function UserDescriptionPage() {
               </div>
             </div>
             <div className="about-sec flex flex-col justify-center mt-6 items-center">
-              <div className="header-about text-xs">About {jobSeeker?.username}</div>
+              <div className="header-about text-xs">About Username</div>
               <div className="header-about-txt text-xs text-grey-100 text-justify ps-10 pe-10 pt-5 ">
               {jobSeeker?.description}
               </div>
@@ -93,4 +71,4 @@ function UserDescriptionPage() {
   );
 }
 
-export { UserDescriptionPage };
+export { UserProfilePage };

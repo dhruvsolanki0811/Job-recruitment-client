@@ -19,7 +19,6 @@ function CompanyDescription() {
       fetchJobs({ organization__name: username });
     }
   }, []);
-  console.log(jobList);
   return (
     <>
       <div className="main-wrapper">

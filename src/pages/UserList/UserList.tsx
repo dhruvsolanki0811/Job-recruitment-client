@@ -10,9 +10,10 @@ import placeHolder from "../../assets/unknown.png";
 import "./UserList.css";
 import { useNavigate } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
-import {useJobSeekerState} from "../../store/store"
+import {useJobSeekerState, useUserAuthStore} from "../../store/store"
 function UserList() {
   const navigate=useNavigate()
+  const{user}=useUserAuthStore()
   const {jobSeekerList,fetchJobseekers,loader}= useJobSeekerState()
   useEffect(()=>{
     fetchJobseekers()
@@ -29,8 +30,9 @@ function UserList() {
           {loader?
           <Loader></Loader>
           :<div className="people-grid flex p-3  w-full ">
-            {jobSeekerList.map((user) => (
-              <>
+            {jobSeekerList.filter((i)=>{
+              return user.userName==null? true: i.username!=user.userName}).map((user,index) => (
+              < >
                 <div onClick={()=>{navigate(`${user.username}`)}} className="people-box cursor-pointer flex flex-col  ps-3 pe-3">
                   <div className="follow-container flex justify-between items-center">
                     <div className="profile-pic  h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">

@@ -1,20 +1,22 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import "./FilterForm.css";
+import { useJobStore } from "../../store/JobStore";
+
 interface JobFiltersState {
   role: string;
   required_experience: [number, number];
   salary: [number, number];
-  location: string;
+  // location: string;
 }
 
 function FilterForm() {
   const [filters, setFilters] = useState<JobFiltersState>({
     role: "",
     required_experience: [0, 10],
-    salary: [0, 100000],
-    location: "",
+    salary: [0, 100],
+    // location: "",
   });
-
+  const {fetchJobs}=useJobStore()
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
@@ -35,12 +37,26 @@ function FilterForm() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    const filterSent: {
+      required_experience__lte?: number;
+      salary__lte?: number;
+      [key: string]: any; // This allows other properties with any value
+    } = {
+      'required_experience__lte': filters.required_experience[1],
+      'salary__lte': filters.salary[1],
+    };
+    
+    if (filters.role.length > 0) {
+      filterSent['role'] = filters.role;
+    }
+
+    fetchJobs(filterSent)
     // Handle the submission of filters (e.g., send a request to the server with the filters)
-    console.log("Filters submitted:", filters);
   };
+
   return (
     <>
-      <form className="p-4 flex flex-col gap-1 ">
+      <form className="p-4 flex flex-col gap-1">
         <input
           type="text"
           name="role"
@@ -48,15 +64,6 @@ function FilterForm() {
           value={filters.role}
           onChange={handleInputChange}
           className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
-        />
-
-        <input
-          type="text"
-          name="location"
-          placeholder="Location"
-          value={filters.location}
-          onChange={handleInputChange}
-          className="w-full text-[12px] h-8 border-[2px] p-2 rounded mt-3"
         />
 
         <label className="block mb-2 text-xs mt-2">
@@ -73,7 +80,7 @@ function FilterForm() {
             />
           </div>
           <div className="ml-2 text-xs mt-2">
-            ${filters.required_experience[1]} years
+            {filters.required_experience[1]} years
           </div>
         </label>
 
@@ -84,17 +91,17 @@ function FilterForm() {
               type="range"
               name="salary"
               min={0}
-              max={100000}
+              max={100}
               value={filters.salary[1]}
               onChange={handleSalaryChange}
               className="w-full appearance-none h-1 rounded-full bg-gray-300 outline-none"
             />
-            {/* <span className="ml-2">${filters.salary[1]}</span> */}
           </div>
-          <div className="ml-2 mt-2">${filters.salary[1]}</div>
+          <div className="ml-2 mt-2">${filters.salary[1]}Lpa</div>
         </label>
+
         <div className="btn-wrapper">
-          <button className="submit-btn text-xs " onClick={handleSubmit}>
+          <button className="submit-btn text-xs" onClick={handleSubmit}>
             Apply
           </button>
         </div>

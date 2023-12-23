@@ -5,12 +5,16 @@ import placeHolder from "../../assets/placeholder-organization.png";
 import { useNavigate } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
 import { useOrganizationStore } from "../../store/OrganizationStore";
+import { useUserAuthStore } from "../../store/store";
 
 function CompanyList() {
 const {organizationList,fetchOrganizations}= useOrganizationStore()
+const {user}=useUserAuthStore()
 useEffect(()=>{
   fetchOrganizations()
 },[])
+
+
 const navigate= useNavigate()
   return (
     <>
@@ -21,7 +25,7 @@ const navigate= useNavigate()
 
           <JobNav jobtype={{type:"Company",name:"Company"}}></JobNav>
           <div className="people-grid flex p-3  w-full ">
-            {organizationList.map((organization) => (
+            {organizationList.filter((i)=>{return user.userName==null? true: i.username!=user.userName}).map((organization) => (
               <>
                 <div onClick={()=>{navigate(`${organization.username.toString()}`)}} className="people-box cursor-pointer flex flex-col  ps-3">
                   <div className="profile-pic  flex flex-between items-center h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">

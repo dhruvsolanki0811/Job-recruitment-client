@@ -43,7 +43,6 @@ interface OrganizationFormData {
           set({loader:true})
           const response = await axios.get(`${APIBASEURL}/account/organization/${username}`);
           set({loader:false})
-            console.log(response.data)
           set({ organizationPage: response.data });
         }
         catch (err){
@@ -79,10 +78,6 @@ interface OrganizationFormData {
             }
           }
       
-          // Logging FormData for debugging
-          for (const pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-          }
       
           // Send the request
           const response = await axios.post(`${APIBASEURL}/account/create/organization`, formData, {

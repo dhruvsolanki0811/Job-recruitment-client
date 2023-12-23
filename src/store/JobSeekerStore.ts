@@ -1,10 +1,11 @@
 import { create } from 'zustand';
-import { APIBASEURL } from './store';
+import { APIBASEURL, useConnectionStore } from './store';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { ErrorResponse } from 'react-router-dom';
 
 export interface JobSeeker {
-  id: number;
+  id: number|null|undefined;
   username: string;
   email: string;
   firstname: string;
@@ -36,6 +37,7 @@ interface JobSeekerState {
   fetchSingleJobSeeker: (username: string) => Promise<void>;
   fetchJobseekers: () => Promise<void>;
   createUser: (data: CreateJobSeeker) => Promise<void>;
+  
   loader: boolean;
 }
 
@@ -46,7 +48,10 @@ export const useJobSeekerState = create<JobSeekerState>((set) => ({
   fetchSingleJobSeeker: async (username) => {
     try {
       set({ loader: true });
+      useConnectionStore.setState({status:null  })
       const response = await axios.get(`${APIBASEURL}/account/jobseeker/${username}`);
+      
+
       set({ loader: false, jobSeeker: response.data });
     } catch (err) {
       console.error(err);
@@ -55,7 +60,10 @@ export const useJobSeekerState = create<JobSeekerState>((set) => ({
   fetchJobseekers: async () => {
     try {
       set({ loader: true });
-      const response = await axios.get<JobSeeker[]>(`${APIBASEURL}/account/create/jobseeker`);
+      let response;
+ 
+      response = await axios.get<JobSeeker[]>(`${APIBASEURL}/account/create/jobseeker`);
+      
       set({ loader: false, jobSeekerList: response.data });
     } catch (err) {
       console.error(err);

@@ -5,18 +5,25 @@ import unknown from "../../assets/placeholder-organization.png";
 import "./JobDescriptionPage.css";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
 import { useParams } from "react-router-dom";
-import { useJobStore } from "../../store/store";
+import { useJobStore, useUserAuthStore } from "../../store/store";
 import { formatTimestampToDDMonthYYYY } from "../../utils.ts/dateutils";
 
 function JobDescriptionPage() {
   const { id } = useParams();
-  const { jobPage, fetchSingleJob, loader } = useJobStore();
+  const {user} =useUserAuthStore()
+  const { jobPage, fetchSingleJob, loader ,applied, applyJob} = useJobStore();
   useEffect(() => {
     if (id != null) {
       fetchSingleJob(id);
     }
   }, []);
-  console.log(jobPage);
+  const handleStatus=()=>{
+    if(!applied){
+      applyJob(user.userId,jobPage?.id)
+    
+    }
+    fetchSingleJob(id)
+  }
   return (
     <>
       <div className="main-wrapper">
@@ -41,9 +48,9 @@ function JobDescriptionPage() {
                       className="rounded-full h-14 w-14 object-contain"
                     />
                   )}
-                  <div className="follow-btn text-xs cursor-pointer hover:bg-white ps-2 pe-2 border-[1px] rounded border-solid border-black">
-                    Apply
-                  </div>
+                  {user.userType==='jobseeker'&&<div onClick={handleStatus} className="follow-btn text-xs cursor-pointer hover:bg-[#22C35E] hover:text-[white] ps-2 pe-2 border-[1px] rounded border-solid border-black">
+                    {applied?"Applied":"Apply"}
+                  </div>}
                 </div>
 
                 <div className="role-name mt-5 text-[1rem]">{jobPage?.role}</div>
@@ -74,7 +81,7 @@ function JobDescriptionPage() {
                   </div>
                 </div>
                 <div className="time-posted text-xs color-lgt-grey mt-4">
-                  Posted on <span className="text-black">{formatTimestampToDDMonthYYYY(jobPage?.created_at.toString)}</span>
+                  Posted on <span className="text-black">{formatTimestampToDDMonthYYYY(jobPage?.created_at)}</span>
                 </div>
               </div>
               <div className="skills-section p-7 flex flex-col w-full ">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   FavSection,
   JobNav,
@@ -7,10 +7,20 @@ import {
 } from "../../components/components";
 import { useNavigate } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
+import { useUserAuthStore,useJobStore } from "../../store/store";
 
 function AppliedJob() {
-  const navigate = useNavigate();
 
+    const {user}=useUserAuthStore()
+    const {jobList,fetchAppliedJob,jobPostedbyOrg}=useJobStore()
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if(user.userType=='jobseeker'){ 
+    fetchAppliedJob(user.userName)}
+    else{
+      jobPostedbyOrg(user.userName)
+    }
+  },[])
   return (
     <>
       <>
@@ -30,14 +40,14 @@ function AppliedJob() {
                   onClick={() => navigate("/applied")}
                   className="jobtype-container all-section cursor-pointer primary-text flex justify-center"
                 >
-                  Applied
+                  {user.userType==='organization'?'Job Posted':'Applied'}
                 </div>
               </div>
             </div>
             <div className="job-list flex flex-col ">
-              {/* {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((id) => (
-                <Jobcard job={{id:id}}></Jobcard>
-              ))} */}
+              {jobList.map((job) => (
+                <Jobcard job={job}></Jobcard>
+              ))}
             </div>
           </div>
           <FavSection page="Company"></FavSection>

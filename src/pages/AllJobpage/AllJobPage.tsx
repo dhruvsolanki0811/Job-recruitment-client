@@ -9,15 +9,15 @@ import {
 } from "../../components/components";
 import "./AllJobPage.css";
 import { useNavigate } from "react-router-dom";
-import {useJobStore} from "../../store/store"
+import {useJobSeekerState, useJobStore, useUserAuthStore} from "../../store/store"
 
 function AllJobPage() {
   const navigate = useNavigate();
   const {jobList,fetchJobs,loader} =useJobStore()
+  const {user}=useUserAuthStore()
   useEffect(()=>{
     fetchJobs()
   },[])
-  console.log(jobList)
   return (
     <>
       <div className="main-wrapper">
@@ -36,7 +36,8 @@ function AllJobPage() {
                 onClick={() => navigate("/applied")}
                 className="jobtype-container cursor-pointer primary-text flex justify-center"
               >
-                Applied
+                                  {user.userType==='organization'?'Job Posted':'Applied'}
+
               </div>
             </div>
           </div>
@@ -48,7 +49,7 @@ function AllJobPage() {
             ))}
           </div>}
         </div>
-        <FavSection page="All Job"></FavSection>
+        <FavSection page="All Job" ></FavSection>
       </div>
       <BottomBar />
       

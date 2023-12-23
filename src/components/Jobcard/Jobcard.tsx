@@ -24,7 +24,7 @@ const navigate=useNavigate()
         <div className="job-desc flex flex-col h-full gap-[1px]">
           <div className="title-sec flex text-xs gap-1 items-center ">
             <div className="title ">{job.role}</div>
-            <div className="org-name w- text-xs color-lgt-grey word-wrap-overflow w-24">at {job.organization_name.toLocaleUpperCase()}</div>
+            <div className="org-name w- text-xs color-lgt-grey word-wrap-overflow w-24">at {job.organization_name}</div>
           </div>
           <div className="about-job flex text-[11px] font-thin  gap-2 color-lgt-grey word-wrap-overflow">
             {job.employee_type} • ₹{job.salary}Lpa • {job.required_experience}Y experience • posted {formatTimestampToDDMonthYYYY(job.created_at)} 

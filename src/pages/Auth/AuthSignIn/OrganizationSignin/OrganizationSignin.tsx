@@ -123,14 +123,14 @@ function OrganizationSignin({}: OrganizationSigninProps) {
 
   return (
     <>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <div className="main-wrapper">
         <Sidebar></Sidebar>
         <div className="box-signin content-wrapper flex flex-col ">
           <div className="nav-section mt-6">
             <JobNav jobtype={{ type: 'User Signin', name: 'Organization Signin' }}></JobNav>
             <div className="login-container flex flex-col items-center h-full">
-              <div className="login-box flex flex-col items-center w-[25rem]">
+              <div className=" flex flex-col items-center w-[25rem]">
                 <div className="slider-login flex justify-between w-full">
                   <div className={`header-org flex justify-center items-center cursor-pointer `}>
                     Fill the below form to create a JobCom Profile

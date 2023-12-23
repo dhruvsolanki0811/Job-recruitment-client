@@ -2,15 +2,18 @@
 import "./Sidebar.css";
 import logo from "../../assets/logo.png";
 import unknown from "../../assets/unknown.png";
+import { AiOutlineAppstoreAdd } from "react-icons/ai";
 
 import { PiSuitcaseSimpleDuotone, PiHandshakeDuotone } from "react-icons/pi";
 import { IoPeopleOutline } from "react-icons/io5";
 import { HiOutlineBuildingOffice } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import { useUserAuthStore } from "../../store/AuthStore";
+import { IoIosLogOut } from "react-icons/io";
 
 function Sidebar() {
   const navigate = useNavigate();
-
+  const { user,logout } = useUserAuthStore();
   return (
     <>
       <div className="side-section ">
@@ -44,24 +47,49 @@ function Sidebar() {
             <HiOutlineBuildingOffice className="nav-items-logo"></HiOutlineBuildingOffice>
             Company
           </div>
-          <div
-            onClick={() => navigate("/followers")}
+         {user.userType=="jobseeker"? <div
+            onClick={() => navigate("/connections/connections")}
             className="nav-item btn-joblist flex items-center gap-1 text-[14px] font-medium m-3"
           >
             <PiHandshakeDuotone className="nav-items-logo"></PiHandshakeDuotone>
             Connections
+          </div>:<></>}
+          {user.userType=="organization"? <div
+            onClick={() => navigate("/organization/jobposting")}
+            className="nav-item btn-joblist flex items-center gap-1 text-[14px] font-medium m-3"
+          >
+            <AiOutlineAppstoreAdd className="nav-items-logo"></AiOutlineAppstoreAdd>
+            Post a Job
+          </div>:<></>}
+        </div>
+
+        <div
+          onClick={() => {
+            user.userType
+              ? navigate(`/${user.userType}/us`)
+              : navigate("/login");
+          }}
+          className="profile-name  flex  gap-1 items-center  justify-space-between me-5 ms-1 mt-2  flex-wrap   "
+        >
+          <img
+            className="profile-icon cursor-pointer ms-1 h-[10px]"
+            src={
+              user.userPic ? `http://127.0.0.1:8000/${user.userPic}` : unknown
+            }
+          ></img>
+          <div className="username-sec text-sm cursor-pointer font-medium">
+            {user.userName ? user.userName : "Login"}
           </div>
         </div>
 
-        <div className="profile-name  flex  gap-1 items-center  justify-space-between me-5 ms-1 mt-2  flex-wrap   ">
-          <img className="profile-icon cursor-pointer ms-1 " src={unknown}></img>
-          <div className="username-sec text-sm cursor-pointer font-medium">
-            Username
-          </div>
-          {/* <div className="about-circle cursor-pointer text-[8px] bg-green-500 rounded-full ps-1 pe-1">
-            About
-          </div> */}
-        </div>
+       {user.userId? <div
+            onClick={() => logout()}
+            className="nav-item btn-joblist flex items-center gap-1  mt-4 text-[14px] font-medium m-3"
+          >
+            <IoIosLogOut className="nav-items-logo"></IoIosLogOut>
+            Logout
+          </div>:<></>}
+
       </div>
     </>
   );
