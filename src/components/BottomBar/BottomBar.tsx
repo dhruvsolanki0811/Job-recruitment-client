@@ -5,6 +5,7 @@ import { PiHandshakeDuotone, PiSuitcaseDuotone } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import { LuUser2 } from "react-icons/lu";
 import { useUserAuthStore } from "../../store/store";
+import { AiOutlineAppstoreAdd } from "react-icons/ai";
 
 function BottomBar() {
   const navigate = useNavigate();
@@ -40,13 +41,20 @@ function BottomBar() {
               <HiOutlineBuildingOffice className="nav-items-logo"></HiOutlineBuildingOffice>
               Company
             </div>
-            <div
-              onClick={() => navigate("/followers")}
+            {user.userType==='jobseeker'&&<div
+              onClick={() => navigate("/connections/connections")}
               className="nav-item btn-joblist flex flex-col items-center gap-1 text-[10px] font-medium m-3"
             >
               <PiHandshakeDuotone className="nav-items-logo"></PiHandshakeDuotone>
               Connections
-            </div>
+            </div>}
+            {user.userType==='organization'&&<div
+              onClick={() => navigate("/organization/jobposting")}
+              className="nav-item btn-joblist flex flex-col items-center gap-1 text-[10px] font-medium m-3"
+            >
+              <AiOutlineAppstoreAdd className="nav-items-logo"></AiOutlineAppstoreAdd>
+              Post a Job
+            </div>}
             <div
               // onClick={() => navigate("/login")}
               onClick={toggleProfileDropdown}

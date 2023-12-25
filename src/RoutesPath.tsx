@@ -14,7 +14,8 @@ import {
   UserSignin,
   OrganizationProfilePage,
   OrganizationJobPosted,
-  ApplicantsList
+  ApplicantsList,
+  ErrorPage
 } from "./pages/pages";
 import { RestrictAuth } from "./pages/Auth/AuthRoutes/restrict-auth";
 import { RequireAuth } from "./pages/Auth/AuthRoutes/require-auth";
@@ -31,6 +32,8 @@ function RoutesPath() {
       <Route path="/login" element={<AuthLogin></AuthLogin>} />
       <Route path="/signup/user" element={<UserSignin></UserSignin>} />
       <Route path="/signup/organization" element={<OrganizationSignin></OrganizationSignin>} />
+      <Route path="*" element={<ErrorPage></ErrorPage>} />
+
       </Route>
 
       

@@ -138,8 +138,8 @@ function OrganizationSignin({}: OrganizationSigninProps) {
             <JobNav
               jobtype={{ type: "User Signin", name: "Organization Signin" }}
             ></JobNav>
-            <div className="login-container flex flex-col items-center h-full">
-              <div className=" flex flex-col items-center w-[25rem]">
+            <div className="login-container flex flex-col items-center h-full ms-[2.8rem] me-[2rem]">
+              <div className=" flex flex-col items-center w-[25rem] ">
                 <div className="slider-login flex justify-between w-full">
                   <div
                     className={`header-org flex justify-center items-center cursor-pointer `}
@@ -153,7 +153,7 @@ function OrganizationSignin({}: OrganizationSigninProps) {
                   <form
                     method="POST"
                     onSubmit={handleSubmit}
-                    className="login-box flex flex-col items-center w-[25rem]"
+                    className="login-box flex flex-col items-center w-[25rem] "
                   >
                     <input
                       type="text"

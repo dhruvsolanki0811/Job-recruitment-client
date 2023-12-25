@@ -13,3 +13,4 @@ export {CompanyDescription} from "./CompanyDescription/CompanyDescription"
 export {OrganizationProfilePage} from "./ProfileEditPage/OrganizationProfilePage/OrganizationProfilePage"
 export {OrganizationJobPosted} from './OrganizationJobPosted/OrganizationJobPosted'
 export {ApplicantsList} from './ApplicantsList/ApplicantsList'
+export {ErrorPage} from './ErrorPage/ErrorPage'

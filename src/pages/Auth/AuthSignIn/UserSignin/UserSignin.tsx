@@ -171,7 +171,7 @@ function UserSignin() {
               <form
                 method="POST"
                 onSubmit={handleSubmit}
-                className="login-box flex flex-col items-center  w-[25rem]  "
+                className="login-box flex flex-col items-center  w-[25rem] ms-3 me-3 "
               >
                 <input
                   type="text"
