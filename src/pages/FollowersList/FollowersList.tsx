@@ -111,12 +111,10 @@ function FollowersList() {
                           </div>
                           <div
                             onClick={async () => {
-                              await handleConnections("reject", user.id).then(
-                                () => {
+                                await handleReject(user.id).then(() => {
                                   setTrigger(!trigger);
-                                }
-                              );
-                            }}
+                                });
+                              }}
                             className="follow-btn text-xs ps-2 pe-2 border-[1px] rounded border-solid border-black hover:bg-red-500 hover:text-white cursor-pointer"
                           >
                             {"Reject"}
