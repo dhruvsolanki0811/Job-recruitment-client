@@ -44,7 +44,7 @@ function JobDescriptionPage() {
                     />
                   ) : (
                     <img
-                      src={`http://127.0.0.1:8000/media/${jobPage?.organization_profile_pic}`}
+                      src={`https://jobcom-media-1.s3.amazonaws.com/${jobPage?.organization_profile_pic}`}
                       className="rounded-full h-14 w-14 object-contain"
                     />
                   )}

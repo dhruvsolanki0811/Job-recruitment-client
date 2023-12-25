@@ -3,6 +3,7 @@ import {
   FavSection,
   JobNav,
   Jobcard,
+  Loader,
   Sidebar,
 } from "../../components/components";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +15,7 @@ import { formatTimestampToDDMonthYYYY } from "../../utils.ts/dateutils";
 function OrganizationJobPosted() {
 
     const {user}=useUserAuthStore()
-    const {jobList,jobPostedbyOrg}=useJobStore()
+    const {jobList,jobPostedbyOrg,loader}=useJobStore()
   const navigate = useNavigate();
   useEffect(()=>{
   
@@ -44,14 +45,15 @@ function OrganizationJobPosted() {
                 </div>
               </div>
             </div>
-            <div className="job-list flex flex-col ">
+            {loader?
+            <Loader></Loader>:<div className="job-list flex flex-col ">
               {jobList.map((job) => (
                  <>
                  <div  className="card-container w-full h-20 flex pt-2 pb-2 justify-between cursor-pointer">
                    <div onClick={()=>navigate(`/job/${job.id}`)}    className="org-logo w-20 h-full flex justify-center items-center p-2 overflow-hidden  ">
                      {(job.organization_profile_pic!=null)?
                      <img
-                     src={"http://127.0.0.1:8000/media/"+job.organization_profile_pic}
+                     src={"https://jobcom-media-1.s3.amazonaws.com/"+job.organization_profile_pic}
                      className="h-10 w-12 rounded-full object-contain"
                      alt=""
                    />:<img
@@ -93,7 +95,7 @@ function OrganizationJobPosted() {
                  </div>
                </>
               ))}
-            </div>
+            </div>}
           </div>
           <FavSection page="Company"></FavSection>
         </div>

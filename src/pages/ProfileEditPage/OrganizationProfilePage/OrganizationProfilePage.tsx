@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { BottomBar, FavSection, JobNav, Sidebar } from '../../../components/components';
+import { BottomBar, FavSection, JobNav, Loader, Sidebar } from '../../../components/components';
 import { useOrganizationStore, useUserAuthStore } from '../../../store/store';
 import unknown from "../../../assets/placeholder-organization.png";
 import { CiMail } from 'react-icons/ci';
 
 function OrganizationProfilePage() {
-  const { organizationPage, fetchSingleOrganization } = useOrganizationStore();
+  const { organizationPage, fetchSingleOrganization ,loader} = useOrganizationStore();
   const { user, accessToken } = useUserAuthStore();
 
   useEffect(() => {
@@ -19,11 +19,13 @@ function OrganizationProfilePage() {
     <>
       <div className="main-wrapper">
         <Sidebar></Sidebar>
-        <div className="people-content-wrapper flex flex-col ">
+        {loader ?
+        <Loader></Loader>
+        :<div className="people-content-wrapper flex flex-col ">
           <div className="nav-section"></div>
 
           <JobNav jobtype={{ type: "Company Description", name: "Linkedin" }}></JobNav>
-          <div className="people-grid flex flex-col p-3 w-full ">
+          {loader?<Loader></Loader>:<div className="people-grid flex  p-3 w-full ">
             <div className="intro-sec flex flex-col w-full justify-center mt-5x items-center">
               <img
                 src={organizationPage?.profile_pic == null ? unknown : organizationPage.profile_pic}
@@ -52,8 +54,8 @@ function OrganizationProfilePage() {
                 {organizationPage?.overview}
               </div>
             </div>
-          </div>
-        </div>
+          </div>}
+        </div>}
         <FavSection page="Company"></FavSection>
       </div>
       <BottomBar></BottomBar>

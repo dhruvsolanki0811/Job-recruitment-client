@@ -21,9 +21,8 @@ function UserDescriptionPage() {
         fetchSingleJobSeeker(username)
         statusCheck(username)
         }
-    },[trigger])
+    },[trigger,username])
     const handleRequest=async(e:HTMLInputElement)=>{
-        console.log(e.target.innerText)
         let type=e.target.innerText
         if(type=='Follow'){
           sendRequets(user.userId,jobSeeker?.id).then(()=>setTrigger(!trigger))
@@ -48,7 +47,7 @@ function UserDescriptionPage() {
           :<div className="people-grid flex p-3  w-full ">
             <div className="intro-sec flex flex-col  w-full justify-center mt-5x items-center">
               <img
-                src={(jobSeeker?.profile_pic==null)?unknown:`${jobSeeker?.profile_pic}/`}
+                src={(jobSeeker?.profile_pic==null)?unknown:`${jobSeeker?.profile_pic}`}
                 className="rounded-full h-[5rem] w-[5rem] object-contain"
               />
               <div className="follow-username-sec flex items-center gap-5 ">
@@ -66,7 +65,7 @@ function UserDescriptionPage() {
                 {jobSeeker?.email}
               </div>
               <div className="header-email text-xs color-lgt-grey mt-3 flex items-center gap-1 justify-center">
-                Professional Experience of {jobSeeker?.no_of_years_experience} years
+              Professional Experience {jobSeeker?.no_of_years_experience===0?'Fresher':`of ${jobSeeker?.no_of_years_experience} years`}
               </div>
               <div className="job-skills mt-2 flex flex-wrap justify-center items-center w-[70%] mt-5 gap-[9px] text-black">
                 {jobSeeker?.skills.map((skill) => {

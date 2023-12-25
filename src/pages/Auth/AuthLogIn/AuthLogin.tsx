@@ -3,14 +3,12 @@ import { JobNav, Loader, Sidebar } from "../../../components/components";
 import "./AuthLogin.css";
 import { useNavigate } from "react-router-dom";
 import { BottomBar } from "../../../components/BottomBar/BottomBar";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useUserAuthStore } from "../../../store/AuthStore";
 
-
-
 function AuthLogin() {
-const {login,loader}=useUserAuthStore()
+  const { login, loader } = useUserAuthStore();
   const navigate = useNavigate();
 
   const [isUserLogin, setIsUserLogin] = useState(true);
@@ -33,7 +31,6 @@ const {login,loader}=useUserAuthStore()
       } else if (name === "password") {
         setUserPassword(value);
       }
-      
     } else {
       if (name === "email") {
         setOrgEmail(value);
@@ -46,101 +43,108 @@ const {login,loader}=useUserAuthStore()
   const handleLogin = () => {
     // Implement your login logic here
     // You can use user and org email/password for authentication
-    if ((isUserLogin && (!userEmail || !userPassword)) || (!isUserLogin && (!orgEmail || !orgPassword))) {
-      toast.error('Please fill in all fields');
+    if (
+      (isUserLogin && (!userEmail || !userPassword)) ||
+      (!isUserLogin && (!orgEmail || !orgPassword))
+    ) {
+      toast.error("Please fill in all fields");
       return;
     }
 
-    if(isUserLogin){
-      login(userEmail,userPassword,"jobseeker")
-      setUserEmail("")
-      setUserPassword("")
-    }else{
-      login(orgEmail,orgPassword,"organization")
+    if (isUserLogin) {
+      login(userEmail, userPassword, "jobseeker");
+      setUserEmail("");
+      setUserPassword("");
+    } else {
+      login(orgEmail, orgPassword, "organization");
 
-      setOrgEmail("")
-    setOrgPassword("")
-
-  }
-    
-    
+      setOrgEmail("");
+      setOrgPassword("");
+    }
   };
 
   return (
     <>
-    {/* <ToastContainer></ToastContainer> */}
+      {/* <ToastContainer></ToastContainer> */}
       <div className="main-wrapper">
         <Sidebar></Sidebar>
 
         <div className="content-wrapper flex flex-col ">
           <div className="nav-section">
             <JobNav jobtype={{ type: "Login", name: "Login" }}></JobNav>
-            {loader?
-            <Loader></Loader>
-            :<div className="login-container flex flex-col items-center  h-full">
-              <div className="login-box flex flex-col items-center  w-[20rem] mt-4 ">
-                <div className="slider-login flex justify-between w-full">
-                  <div
-                    className={`header-user w-[50%] flex justify-center cursor-pointer ${
-                      isUserLogin ? "" : "hover:text-[#13883e]"
-                    }`}
-                    onClick={() => setIsUserLogin(true)}
-                    style={isUserLogin ? toggleStyle : {}}
-                  >
-                    User
+            {loader ? (
+              <Loader></Loader>
+            ) : (
+              <div className="login-container flex flex-col items-center  h-full">
+                <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  handleLogin()
+                }}
+                className="login-box flex flex-col items-center  w-[20rem] mt-4 ">
+                  <div className="slider-login flex justify-between w-full">
+                    <div
+                      className={`header-user w-[50%] flex justify-center cursor-pointer ${
+                        isUserLogin ? "" : "hover:text-[#13883e]"
+                      }`}
+                      onClick={() => setIsUserLogin(true)}
+                      style={isUserLogin ? toggleStyle : {}}
+                    >
+                      User
+                    </div>
+                    <div
+                      className={`header-org w-[50%] flex justify-center cursor-pointer ${
+                        isUserLogin ? "hover:text-[#13883e]" : ""
+                      }`}
+                      onClick={() => setIsUserLogin(false)}
+                      style={isUserLogin ? {} : toggleStyle}
+                    >
+                      Organization
+                    </div>
                   </div>
-                  <div
-                    className={`header-org w-[50%] flex justify-center cursor-pointer ${
-                      isUserLogin ? "hover:text-[#13883e]" : ""
-                    }`}
-                    onClick={() => setIsUserLogin(false)}
-                    style={isUserLogin ? {} : toggleStyle}
-                  >
-                    Organization
+                  <input
+                    type="text"
+                    name="email"
+                    placeholder="Email"
+                    value={isUserLogin ? userEmail : orgEmail}
+                    onChange={handleInputChange}
+                    className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+                  />
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={isUserLogin ? userPassword : orgPassword}
+                    onChange={handleInputChange}
+                    className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+                  />
+
+                  <div className="login-btn-wrapper ">
+                    <button
+                      onClick={handleLogin}
+                      className="submit-btn text-xs hover:bg-[#13883e]  "
+                    >
+                      Login
+                    </button>
                   </div>
-                </div>
-                <input
-                  type="text"
-                  name="email"
-                  placeholder="Email"
-                  value={isUserLogin ? userEmail : orgEmail}
-                  onChange={handleInputChange}
-                  className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
-                />
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={isUserLogin ? userPassword : orgPassword}
-                  onChange={handleInputChange}
-                  className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
-                />
 
-                <div className="login-btn-wrapper ">
-                  <button
-                    onClick={handleLogin}
-                    className="submit-btn text-xs hover:bg-[#13883e]  "
-                  >
-                    Login
-                  </button>
-                </div>
-
-                <div
-                  onClick={() => {
+                  <div
+                  onClick={()=>{
                     if (isUserLogin) {
                       navigate("/signup/user");
                     } else {
                       navigate("/signup/organization");
                     }
                   }}
-                  className="signin-head text-xs cursor-pointer hover:text-[#13883e]"
-                >
-                  {isUserLogin
-                    ? "Don't have a user account? Join Now"
-                    : "Hey! Join as an Organization!  "}
-                </div>
+                    className="signin-head text-xs cursor-pointer hover:text-[#13883e]"
+                  >
+                    {isUserLogin
+                      ? "Don't have a user account? Join Now"
+                      : "Hey! Join as an Organization!  "}
+                  </div>
+                </form>
               </div>
-            </div>}
+            )}
           </div>
         </div>
       </div>

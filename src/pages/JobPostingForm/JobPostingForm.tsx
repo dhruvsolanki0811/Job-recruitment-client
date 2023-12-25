@@ -137,7 +137,7 @@ function JobPostingForm() {
                 </div>
                 <div className="login-btn-wrapper">
                   <button className="submit-btn text-xs hover:bg-[#13883e]" onClick={handleSubmit}>
-                    SignUp
+                    Post
                   </button>
                 </div>
               </div>

@@ -5,26 +5,30 @@ import {
   JobNav,
   Jobcard,
   Sidebar,
-  Loader
+  Loader,
 } from "../../components/components";
 import "./AllJobPage.css";
 import { useNavigate } from "react-router-dom";
-import {useJobSeekerState, useJobStore, useUserAuthStore} from "../../store/store"
+import {
+  useJobSeekerState,
+  useJobStore,
+  useUserAuthStore,
+} from "../../store/store";
 
 function AllJobPage() {
   const navigate = useNavigate();
-  const {jobList,fetchJobs,loader} =useJobStore()
-  const {user}=useUserAuthStore()
-  useEffect(()=>{
-    fetchJobs()
-  },[])
+  const { jobList, fetchJobs, loader } = useJobStore();
+  const { user } = useUserAuthStore();
+  useEffect(() => {
+    fetchJobs();
+  }, []);
   return (
     <>
       <div className="main-wrapper">
         <Sidebar></Sidebar>
         <div className="content-wrapper flex flex-col ">
           <div className="nav-section">
-            <JobNav jobtype={{type:"All Jobs",name:"Jobs"}}></JobNav>
+            <JobNav jobtype={{ type: "All Jobs", name: "Jobs" }}></JobNav>
             <div className="section-jobtype w-full h-7 ps-5 pe-5 flex">
               <div
                 onClick={() => navigate("/")}
@@ -33,26 +37,34 @@ function AllJobPage() {
                 Jobs
               </div>
               <div
-                onClick={() => navigate(`${user.userType==='organization'?'/jobposted':'/applied'}`)}
+                onClick={() =>
+                  navigate(
+                    `${
+                      user.userType === "organization"
+                        ? "/jobposted"
+                        : "/applied"
+                    }`
+                  )
+                }
                 className="jobtype-container cursor-pointer primary-text flex justify-center"
               >
-                                  {user.userType==='organization'?'Job Posted':'Applied'}
-
+                {user.userType === "organization" ? "Job Posted" : "Applied"}
               </div>
             </div>
           </div>
-         {loader?
-        <Loader></Loader>
-         : <div className="job-list flex flex-col ">
-            {jobList.map((elem) => (
-              <Jobcard job={elem}></Jobcard>
-            ))}
-          </div>}
+          {loader ? (
+            <Loader></Loader>
+          ) : (
+            <div className="job-list flex flex-col ">
+              {jobList.map((elem) => (
+                <Jobcard job={elem}></Jobcard>
+              ))}
+            </div>
+          )}
         </div>
-        <FavSection page="All Job" ></FavSection>
+        <FavSection page="All Job"></FavSection>
       </div>
       <BottomBar />
-      
     </>
   );
 }

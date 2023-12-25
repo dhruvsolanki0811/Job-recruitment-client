@@ -27,7 +27,7 @@ interface CreateJobSeeker {
   no_of_years_experience: number | string;
   phone_number: string;
   skills: string[];
-  profile_picture: File | null;
+  profile_pic: File | null;
   resume: File | null;
 }
 
@@ -54,6 +54,8 @@ export const useJobSeekerState = create<JobSeekerState>((set) => ({
 
       set({ loader: false, jobSeeker: response.data });
     } catch (err) {
+      set({ loader: false });
+
       console.error(err);
     }
   },
@@ -66,6 +68,7 @@ export const useJobSeekerState = create<JobSeekerState>((set) => ({
       
       set({ loader: false, jobSeekerList: response.data });
     } catch (err) {
+      set({ loader: false });
       console.error(err);
     }
   },
@@ -87,10 +90,12 @@ export const useJobSeekerState = create<JobSeekerState>((set) => ({
           formData.append(key, value);
         }
       });
-  
-  
+      
+      // formData.forEach((value, key) => {
+      //   console.log(`${key}: ${value}`);
+      // });
       // Adjust the API endpoint based on your server requirements
-    //   const response = await axios.post(`${APIBASEURL}/account/create/jobseeker`, {formData});
+      // const response = await axios.post(`http://127.0.0.1:8000/api/account/create/jobseeker`, {formData});
       const response = await axios({
         method: 'post',
         url: `${APIBASEURL}/account/create/jobseeker`,
@@ -127,9 +132,11 @@ export const useJobSeekerState = create<JobSeekerState>((set) => ({
           Authorization:`Bearer ${localStorage.getItem('accessToken')}`
         }
       });
-      
+      set({ loader: false });
+
       return response.data      
     } catch (err) {
+      set({ loader: false });
       console.error(err);
     }
   }

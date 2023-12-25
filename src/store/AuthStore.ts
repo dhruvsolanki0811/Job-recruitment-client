@@ -30,11 +30,9 @@ export const useUserAuthStore = create<userAuth>()(
 
     const refreshToken = async (refreshTokenValue: string,userType:any) => {
       try {
-        console.log(refreshTokenValue,"popop")
-        const response = await axios.post(`http://127.0.0.1:8000/api/account/token/refresh`, {
+        const response = await axios.post(`https://job-recruitment-backend.onrender.com/api/account/token/refresh`, {
           'refresh': refreshTokenValue,
         });
-        console.log("Asasas")
         const { access, refresh } = response.data;
         
         set({ accessToken: access, refreshToken: refresh, });
@@ -43,7 +41,6 @@ export const useUserAuthStore = create<userAuth>()(
         // toast.info("Token refreshed");
       } catch (error) {
         console.error("Error refreshing token:",error);
-        console.log("Asasas")
         // Handle error (e.g., logout the user)
         set({ accessToken: null, refreshToken: null ,user:{userId:null,userName:null,userPic:null,userType:null}});
         clearTimeout(refreshTimeout); // Clear the refresh timeout on logout
@@ -68,21 +65,16 @@ export const useUserAuthStore = create<userAuth>()(
           const response = await axios.post(`${APIBASEURL}/account/${type}/login`, { email, password });
 
           const { access, refresh } = response.data;
-          // console.log(typeof response.data.user.username);
           const currUser={
             userName:response.data.user.username,
             userId:response.data.user.id,
             userPic:response.data.user.profile_pic,
             userType:type
           }
-          console.log(refresh,"pop")
           set({ accessToken: access, refreshToken: refresh, user:currUser });
-          // console.log(response.data.user.username);
           localStorage.setItem("accessToken", access);
           localStorage.setItem("refreshToken", refresh);
-          // localStorage.setItem("username", response.data.user.username);
-          console.log(refresh,"SSs")
-          // Schedule the next refresh after 5 minutes
+         
           refreshTimeout = setTimeout(() => refreshToken(refresh,type), 5 *1000);
           set({ loader: false });
           toast.done("Successfully login");

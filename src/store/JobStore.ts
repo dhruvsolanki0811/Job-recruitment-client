@@ -16,15 +16,16 @@ export interface Job {
     job_description: string;
     created_at: string;
   }
-    
+
   interface JobState {
       jobPage: Job | null;
       applied:boolean;
       jobList: Job[];
       loader:boolean;
+      filters:Object;
       applyJob:(userId:number|null|string,jobId:undefined|number|null|string)=>Promise<void>
       fetchSingleJob: (id:string|undefined) => Promise<void>;
-      fetchJobs: (filters?: Record<string, string | string[]>) => Promise<void>;
+      fetchJobs: (applied_filters?: Record<string, string | string[]>) => Promise<void>;
       sortJob:(type:string,order:string)=>void,
       fetchAppliedJob:(username:string|null)=>Promise<void>,
       create:(data:{
@@ -43,6 +44,7 @@ export interface Job {
       jobList: [],
       loader:false,
       applied:false,
+      filters:{},
       fetchSingleJob:async(id)=>{
         try{
           set({applied:false})
@@ -59,33 +61,38 @@ export interface Job {
           }
         }
         catch (err){
+          set({ loader: false });
+
         }
       },
-      fetchJobs: async (filters = {}) => {
+      fetchJobs: async (applied_filters = {}) => {
     set({ loader: true });
     try {
       // Convert the filters object to a URL query string
-      const queryString = Object.keys(filters)
+      useJobStore.setState({filters:{
+        ...useJobStore.getState().filters,
+        ...applied_filters
+      }})
+      
+      const queryString = Object.keys(useJobStore.getState().filters)
         .map((key) =>
-          Array.isArray(filters[key])
-            ? filters[key].map((value:any) => `${key}=${value}`).join('&')
-            : `${key}=${filters[key]}`
+          Array.isArray(useJobStore.getState().filters[key])
+            ? useJobStore.getState().filters[key].map((value:any) => `${key}=${value}`).join('&')
+            : `${key}=${useJobStore.getState().filters[key]}`
         )
         .join('&');
       // Append the query string to the API endpoint
       const apiUrl = queryString
         ? `${APIBASEURL}/jobs/jobprofile?${queryString}`
         : `${APIBASEURL}/jobs/jobprofile`;
-      let response;
+        let response;
       if(localStorage.getItem("accessToken")!=null){
        response = await axios.get(apiUrl,{headers:{
         Authorization:`Bearer ${localStorage.getItem("accessToken")}`
       }});
-      console.log(response)
     }
       else{
          response = await axios.get(apiUrl)
-         console.log(response.data)
       }
       set({ loader: false, jobList: response.data });
     } catch (error) {
@@ -126,6 +133,7 @@ export interface Job {
        return response.data.id
     } catch (err) {
       // Handle errors, for example:
+
       console.error('Error creating:', err);
       set({ loader: false });
       console.error(err);
@@ -156,15 +164,17 @@ export interface Job {
   jobPostedbyOrg:async (orgName:string|null)=>{
     
     try{
+    set({loader:true})
       const response = await axios.get(`${APIBASEURL}/account/organization/${orgName}`);
       set((state) => ({
         ...state,
         jobList: state?.jobList.filter((job) => job.organization_name=== response.data.name),
       })) ;  
+      set({loader:false})
     }
     catch(err){
       console.log(err)
-
+      set({loader:false})
     }
 
   },

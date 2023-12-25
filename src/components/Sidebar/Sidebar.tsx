@@ -13,7 +13,7 @@ import { IoIosLogOut } from "react-icons/io";
 
 function Sidebar() {
   const navigate = useNavigate();
-  const { user,logout } = useUserAuthStore();
+  const { user, logout } = useUserAuthStore();
   return (
     <>
       <div className="side-section ">
@@ -47,20 +47,28 @@ function Sidebar() {
             <HiOutlineBuildingOffice className="nav-items-logo"></HiOutlineBuildingOffice>
             Company
           </div>
-         {user.userType=="jobseeker"? <div
-            onClick={() => navigate("/connections/connections")}
-            className="nav-item btn-joblist flex items-center gap-1 text-[14px] font-medium m-3"
-          >
-            <PiHandshakeDuotone className="nav-items-logo"></PiHandshakeDuotone>
-            Connections
-          </div>:<></>}
-          {user.userType=="organization"? <div
-            onClick={() => navigate("/organization/jobposting")}
-            className="nav-item btn-joblist flex items-center gap-1 text-[14px] font-medium m-3"
-          >
-            <AiOutlineAppstoreAdd className="nav-items-logo"></AiOutlineAppstoreAdd>
-            Post a Job
-          </div>:<></>}
+          {user.userType == "jobseeker" ? (
+            <div
+              onClick={() => navigate("/connections/connections")}
+              className="nav-item btn-joblist flex items-center gap-1 text-[14px] font-medium m-3"
+            >
+              <PiHandshakeDuotone className="nav-items-logo"></PiHandshakeDuotone>
+              Connections
+            </div>
+          ) : (
+            <></>
+          )}
+          {user.userType == "organization" ? (
+            <div
+              onClick={() => navigate("/organization/jobposting")}
+              className="nav-item btn-joblist flex items-center gap-1 text-[14px] font-medium m-3"
+            >
+              <AiOutlineAppstoreAdd className="nav-items-logo"></AiOutlineAppstoreAdd>
+              Post a Job
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
 
         <div
@@ -74,7 +82,9 @@ function Sidebar() {
           <img
             className="profile-icon cursor-pointer ms-1 h-[10px]"
             src={
-              user.userPic ? `http://127.0.0.1:8000/${user.userPic}` : unknown
+              user.userPic
+                ? `${user.userPic}`
+                : unknown
             }
           ></img>
           <div className="username-sec text-sm cursor-pointer font-medium">
@@ -82,14 +92,17 @@ function Sidebar() {
           </div>
         </div>
 
-       {user.userId? <div
+        {user.userId ? (
+          <div
             onClick={() => logout()}
             className="nav-item btn-joblist flex items-center gap-1  mt-4 text-[14px] font-medium m-3"
           >
             <IoIosLogOut className="nav-items-logo"></IoIosLogOut>
             Logout
-          </div>:<></>}
-
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </>
   );

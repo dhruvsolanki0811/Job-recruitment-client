@@ -16,7 +16,7 @@ function FilterForm() {
     salary: [0, 100],
     // location: "",
   });
-  const {fetchJobs}=useJobStore()
+  const { fetchJobs } = useJobStore();
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
@@ -42,15 +42,15 @@ function FilterForm() {
       salary__lte?: number;
       [key: string]: any; // This allows other properties with any value
     } = {
-      'required_experience__lte': filters.required_experience[1],
-      'salary__lte': filters.salary[1],
+      required_experience__lte: filters.required_experience[1],
+      salary__lte: filters.salary[1],
     };
-    
+
     if (filters.role.length > 0) {
-      filterSent['role'] = filters.role;
+      filterSent["role"] = filters.role;
     }
 
-    fetchJobs(filterSent)
+    fetchJobs(filterSent);
     // Handle the submission of filters (e.g., send a request to the server with the filters)
   };
 

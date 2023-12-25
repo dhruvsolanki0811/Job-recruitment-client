@@ -44,7 +44,7 @@ function UserProfilePage() {
                 {jobSeeker?.email}
               </div>
               <div className="header-email text-xs color-lgt-grey mt-3 flex items-center gap-1 justify-center">
-                Professional Experience of {jobSeeker?.no_of_years_experience} years
+                Professional Experience {jobSeeker?.no_of_years_experience===0?'Fresher':`of ${jobSeeker?.no_of_years_experience} years`}
               </div>
               <div className="job-skills mt-2 flex flex-wrap justify-center items-center w-[70%] mt-5 gap-[9px] text-black">
                 {jobSeeker?.skills.map((skill) => {
@@ -57,7 +57,7 @@ function UserProfilePage() {
               </div>
             </div>
             <div className="about-sec flex flex-col justify-center mt-6 items-center">
-              <div className="header-about text-xs">About Username</div>
+              <div className="header-about text-xs">About {jobSeeker?.username}</div>
               <div className="header-about-txt text-xs text-grey-100 text-justify ps-10 pe-10 pt-5 ">
               {jobSeeker?.description}
               </div>

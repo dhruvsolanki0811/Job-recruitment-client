@@ -44,12 +44,14 @@ export const useConnectionStore=create<ConnectionStore>((set)=>{return {
             const response = await axios.get<JobSeeker[]>(`${APIBASEURL}/connections/${type}`,{headers:{
                 Authorization:`Bearer ${localStorage.getItem("accessToken")}`
             }});
-            console.log(response.data)
             
 
             set({ loader: false, connections: response.data });
             if(response.data){return response.data}
+            set({ loader: false });
+
           } catch (err) {
+            set({ loader: false });
             console.error(err);
           }
     },
@@ -61,7 +63,6 @@ export const useConnectionStore=create<ConnectionStore>((set)=>{return {
           Authorization:`Bearer ${localStorage.getItem('accessToken')}`
         }
       });
-      console.log(response.data)
       set({loader:false,status:response.data.connection_status})
       return response.data.connection_status 
     } catch (error) {

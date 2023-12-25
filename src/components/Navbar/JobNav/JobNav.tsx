@@ -14,25 +14,23 @@ type PropType = {
 };
 
 function JobNav({ jobtype }: { jobtype: PropType }) {
-  const { jobSeeker, fetchSingleJobSeeker ,} = useJobSeekerState();
-  const {fetchJobs,sortJob}=useJobStore()
+  const { jobSeeker, fetchSingleJobSeeker } = useJobSeekerState();
+  const { fetchJobs, sortJob } = useJobStore();
   const { username } = useParams();
   const [Search, setSearch] = useState<string>("");
   const handleSearchInput = (e: any) => {
     const { value } = e.target;
     setSearch(value);
-    if(value==""){
-      fetchJobs()
+    if (value == "") {
+      fetchJobs();
     }
   };
-  const handleEnter=(e:any)=>{
-      if (e.key === 'Enter') {
-        // Add your logic here, such as triggering a search function
-        fetchJobs({search:Search})
-      } 
-
-
-  }
+  const handleEnter = (e: any) => {
+    if (e.key === "Enter") {
+      // Add your logic here, such as triggering a search function
+      fetchJobs({ search: Search });
+    }
+  };
   useEffect(() => {
     if (jobtype.type == "Single User") {
       if (username != null) {
@@ -66,7 +64,7 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
 
   return (
     <>
-      {(jobtype.type === "Users"|| jobtype.type === "Applied") && (
+      {(jobtype.type === "Users" || jobtype.type === "Applied") && (
         <>
           <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 h-[5.8rem]">
             <div className="head-filter">{jobtype.name}</div>
@@ -78,10 +76,9 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
           <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 h-[5rem]">
             <div className="head-filter">{jobtype.name}</div>
           </div>
-          
         </>
       )}
-      {(jobtype.type === "All Jobs" ) && (
+      {jobtype.type === "All Jobs" && (
         <>
           <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 h-[3rem]">
             <div className="head-filter">{jobtype.name}</div>
@@ -109,7 +106,9 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
                   >
                     <div className="py-1" role="none">
                       <div
-                        onClick={()=>{sortJob("posted","asc")}}
+                        onClick={() => {
+                          sortJob("posted", "asc");
+                        }}
                         className="text-gray-700  block px-4 py-2 text-[12px]"
                         role="menuitem"
                         id="menu-item-0"
@@ -117,7 +116,9 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
                         Recently Posted
                       </div>
                       <div
-                      onClick={()=>{sortJob("salary","asc")}}
+                        onClick={() => {
+                          sortJob("salary", "asc");
+                        }}
                         className="text-gray-700 block px-4 py-2 text-[12px]"
                         role="menuitem"
                         id="menu-item-1"
@@ -125,7 +126,9 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
                         Salary Low-High
                       </div>
                       <div
-                      onClick={()=>{sortJob("salary","des")}}
+                        onClick={() => {
+                          sortJob("salary", "des");
+                        }}
                         className="text-gray-700 block px-4 py-2 text-[12px]"
                         role="menuitem"
                         id="menu-item-2"
@@ -139,14 +142,21 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
             </div>
           </div>
 
-         { jobtype.type === "All Jobs"&&<div className="search-section w-full h-19 ps-5 pt-1 pb-2 pe-5  ">
-            <div className="input-search-container w-full flex justify-center items-center roundedfull ps-1 pe-1 ">
-              <input type="text" placeholder="Search" className="search-box" value={Search}
-        onChange={handleSearchInput}
-        onKeyDown={handleEnter}/>
-              <CiSearch className="cursor-pointer"></CiSearch>
+          {jobtype.type === "All Jobs" && (
+            <div className="search-section w-full h-19 ps-5 pt-1 pb-2 pe-5  ">
+              <div className="input-search-container w-full flex justify-center items-center roundedfull ps-1 pe-1 ">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="search-box"
+                  value={Search}
+                  onChange={handleSearchInput}
+                  onKeyDown={handleEnter}
+                />
+                <CiSearch className="cursor-pointer"></CiSearch>
+              </div>
             </div>
-          </div>}
+          )}
         </>
       )}
       {(jobtype.type == "Jobs" ||

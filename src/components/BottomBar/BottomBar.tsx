@@ -9,7 +9,7 @@ import { useUserAuthStore } from "../../store/store";
 function BottomBar() {
   const navigate = useNavigate();
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
-  const { user,logout } = useUserAuthStore();
+  const { user, logout } = useUserAuthStore();
   const toggleProfileDropdown = () => {
     setShowProfileDropdown(!showProfileDropdown);
   };
@@ -56,15 +56,19 @@ function BottomBar() {
               Profile
               {showProfileDropdown && (
                 <div className="dropdown-menu  absolute mt-[-3rem]  bg-white text-xs border rounded-md p-2 w-15  flex flex-col justify-center">
-                  {user.userId==null?
+                  {user.userId == null ? (
                     <>
-                      <p onClick={()=>navigate('/login')}>Login</p>
-                      <p onClick={()=>navigate('/signup/user')}>Signin</p>
-                    </>:<>
-                    <p onClick={()=>navigate(`/${user.userType}/us`)}>Profile</p>
-                    <p onClick={()=>logout()}>Logout</p>
+                      <p onClick={() => navigate("/login")}>Login</p>
+                      <p onClick={() => navigate("/signup/user")}>Signin</p>
                     </>
-                  }
+                  ) : (
+                    <>
+                      <p onClick={() => navigate(`/${user.userType}/us`)}>
+                        Profile
+                      </p>
+                      <p onClick={() => logout()}>Logout</p>
+                    </>
+                  )}
                 </div>
               )}
             </div>

@@ -44,6 +44,7 @@ interface OrganizationFormData {
           const response = await axios.get(`${APIBASEURL}/account/organization/${username}`);
           set({loader:false})
           set({ organizationPage: response.data });
+          return response.data
         }
         catch (err){
             console.log(err)
