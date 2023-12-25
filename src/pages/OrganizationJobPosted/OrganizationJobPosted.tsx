@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import {
   FavSection,
   JobNav,
-  Jobcard,
   Loader,
   Sidebar,
 } from "../../components/components";

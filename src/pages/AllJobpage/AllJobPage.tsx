@@ -10,7 +10,6 @@ import {
 import "./AllJobPage.css";
 import { useNavigate } from "react-router-dom";
 import {
-  useJobSeekerState,
   useJobStore,
   useUserAuthStore,
 } from "../../store/store";

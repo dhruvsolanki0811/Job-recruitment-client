@@ -6,7 +6,7 @@ import placeHolder from "../../assets/placeholder-organization.png";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { FilterForm } from "../components";
 import { useUserAuthStore } from "../../store/AuthStore";
-import { useFetcher, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useJobSeekerState } from "../../store/JobSeekerStore";
 import { useEffect, useState } from "react";
 import { useOrganizationStore } from "../../store/OrganizationStore";

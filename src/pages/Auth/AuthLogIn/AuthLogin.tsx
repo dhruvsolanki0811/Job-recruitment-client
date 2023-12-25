@@ -3,7 +3,7 @@ import { JobNav, Loader, Sidebar } from "../../../components/components";
 import "./AuthLogin.css";
 import { useNavigate } from "react-router-dom";
 import { BottomBar } from "../../../components/BottomBar/BottomBar";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUserAuthStore } from "../../../store/AuthStore";
 

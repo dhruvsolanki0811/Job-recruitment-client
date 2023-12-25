@@ -81,9 +81,9 @@ interface OrganizationFormData {
       
       
           // Send the request
-          const response = await axios.post(`${APIBASEURL}/account/create/organization`, formData, {
+           await axios.post(`${APIBASEURL}/account/create/organization`, formData, {
             headers: {
-              'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+              'Content-Type': `multipart/form-data`,
             },
           });
       
@@ -104,8 +104,8 @@ interface OrganizationFormData {
           
           else {
             toast.error('An error occurred. Please check the console for details.');
-            for (const [key, value] of Object.entries(err?.response?.data)) {
-                toast.error(value[0])
+            for (const [_, value] of Object.entries<{ [key: string]: string[] }>(err?.response?.data || {})) {
+              toast.error(value[0]);
             }
           }
         }

@@ -1,6 +1,5 @@
 import "./Jobcard.css";
 import orgPlaceHolder from "../../assets/placeholder-organization.png";
-import { IoBookmarkOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { Job } from "../../store/JobStore";
 import { formatTimestampToDDMonthYYYY } from "../../utils.ts/dateutils";

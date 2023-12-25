@@ -1,27 +1,25 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { FavSection, JobNav, Loader, Sidebar } from "../../components/components";
 import placeHolder from "../../assets/unknown.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
-import { useConnectionStore } from "../../store/ConnectionStore";
 import { useJobSeekerState } from "../../store/JobSeekerStore";
 import { useJobStore } from "../../store/JobStore";
 
 function ApplicantsList() {
   let { jobId } = useParams();
-  const [connections, setConnections] = useState(new Array());
-  const [trigger, setTrigger] = useState(false);
+  const [connections, setConnections] = useState<any>(new Array());
   const { fetchSingleJob, jobPage } = useJobStore();
   //   const {}=useConnectionStore()
   const { fetchApplicants ,loader} = useJobSeekerState();
   useEffect(() => {
     if (jobId != null) {
       fetchSingleJob(jobId);
-      fetchApplicants(jobId).then((response) => {
+      fetchApplicants(parseInt(jobId)).then((response) => {
         setConnections(response);
       });
     }
-  }, [jobId, trigger]);
+  }, [jobId]);
 
   const navigate = useNavigate();
 
@@ -41,7 +39,7 @@ function ApplicantsList() {
             ></JobNav>
           </div>
           <div className="people-grid flex p-3  w-full ">
-            {connections?.map((user) => (
+            {connections?.map((user:any) => (
               <>
                 <div
                   onClick={() => {

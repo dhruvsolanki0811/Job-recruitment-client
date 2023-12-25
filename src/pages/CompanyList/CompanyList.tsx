@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import "./CompanyList.css";
 import { FavSection, JobNav, Loader, Sidebar } from "../../components/components";
 import placeHolder from "../../assets/placeholder-organization.png";

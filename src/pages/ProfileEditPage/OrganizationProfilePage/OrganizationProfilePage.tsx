@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import { BottomBar, FavSection, JobNav, Loader, Sidebar } from '../../../components/components';
 import { useOrganizationStore, useUserAuthStore } from '../../../store/store';
 import unknown from "../../../assets/placeholder-organization.png";

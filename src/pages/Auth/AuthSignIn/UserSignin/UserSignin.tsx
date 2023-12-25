@@ -4,7 +4,7 @@ import unknown from "../../../../assets/unknown.png";
 import { BottomBar } from "../../../../components/BottomBar/BottomBar";
 import "./UserSignin.css";
 import { useJobSeekerState } from "../../../../store/store";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 interface FormData {
   username: string;
@@ -23,7 +23,6 @@ interface FormData {
 function UserSignin() {
   const { createUser, loader } = useJobSeekerState();
   const [inputListValue, setListValue] = useState<string>("");
-  const [Success, setSuccess] = useState<boolean>(false);
 
   const [formData, setFormData] = useState<FormData>({
     username: "",

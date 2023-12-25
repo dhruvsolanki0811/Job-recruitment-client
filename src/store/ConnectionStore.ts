@@ -1,13 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-import { APIBASEURL, useJobStore } from "./store";
-import { toast } from "react-toastify";
-import { devtools,persist } from "zustand/middleware";
-
-type DevtoolsStore = {
-    showDevtools: boolean;
-    setShowDevtools: (showDevtools: boolean) => void;
-  };
+import { APIBASEURL } from "./store";
 
   export interface JobSeeker {
     id: number;
@@ -28,32 +21,31 @@ interface ConnectionStore {
   status:null|string;
   fetchConnections: (type:string|null|undefined) => Promise<void>;
   statusCheck:(target:string  )=>Promise<void>;
-  sendRequets:(user1:number|null,user2:number|null)=>Promise<void>
+  sendRequets:(user1:number|null|any,user2:number|null|any)=>Promise<void>
   handleConnections:(type:string|null,id:any)=>Promise<void>
-  handleReject:(userId:number|null)=>Promise<void>,
+  handleReject:(userId:number|null|any)=>Promise<void>,
   loader: boolean;
 }
 
-export const useConnectionStore=create<ConnectionStore>((set)=>{return {
-    connections:[],
-    loader:false,
-    status:null,
-    fetchConnections:async(type)=>{
-        try {
-            set({ loader: true });
-            const response = await axios.get<JobSeeker[]>(`${APIBASEURL}/connections/${type}`,{headers:{
-                Authorization:`Bearer ${localStorage.getItem("accessToken")}`
-            }});
-            
+export const useConnectionStore = create<ConnectionStore>((set) => {
+  return {
+    connections: [],
+    loader: false,
+    status: null,
+    fetchConnections: async (type) => {
+      try {
+        set({ loader: true });
+        const response = await axios.get<JobSeeker[]>(`${APIBASEURL}/connections/${type}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        });
 
-            set({ loader: false, connections: response.data });
-            if(response.data){return response.data}
-            set({ loader: false });
-
-          } catch (err) {
-            set({ loader: false });
-            console.error(err);
-          }
+        set({ loader: false, connections: response.data });
+      } catch (err) {
+        set({ loader: false });
+        console.error(err);
+      }
     },
   statusCheck:async(target)=>{
     
@@ -83,7 +75,7 @@ export const useConnectionStore=create<ConnectionStore>((set)=>{return {
   },
   handleConnections:async(type,id)=>{
         try{
-          const response=axios.patch(`${APIBASEURL}/connections/${type}/${id}`,{},{
+          axios.patch(`${APIBASEURL}/connections/${type}/${id}`,{},{
             headers:{
               Authorization:`Bearer ${localStorage.getItem('accessToken')}`
             }

@@ -3,7 +3,7 @@ const months = [
     "July", "August", "September", "October", "November", "December"
   ];
 
- export function formatTimestampToDDMonthYYYY(timestamp:string):string {
+ export function formatTimestampToDDMonthYYYY(timestamp:any):string {
 
   
     const dateObject = new Date(timestamp);

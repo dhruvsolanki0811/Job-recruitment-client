@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
 import { APIBASEURL } from "./store";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export interface Job {
@@ -74,12 +73,18 @@ export interface Job {
         ...applied_filters
       }})
       
-      const queryString = Object.keys(useJobStore.getState().filters)
-        .map((key) =>
-          Array.isArray(useJobStore.getState().filters[key])
-            ? useJobStore.getState().filters[key].map((value:any) => `${key}=${value}`).join('&')
-            : `${key}=${useJobStore.getState().filters[key]}`
-        )
+      const filters = useJobStore.getState().filters;
+
+      const queryString = Object.keys(filters)
+        .map((key) => {
+          const filterValue = filters[key as keyof typeof filters];
+
+          if (Array.isArray(filterValue)) {
+            return filterValue.map((value: any) => `${key}=${value}`).join('&');
+          } else {
+            return `${key}=${filterValue}`;
+          }
+        })
         .join('&');
       // Append the query string to the API endpoint
       const apiUrl = queryString
@@ -133,12 +138,12 @@ export interface Job {
        return response.data.id
     } catch (err) {
       // Handle errors, for example:
-
       console.error('Error creating:', err);
       set({ loader: false });
       console.error(err);
-      if (err?.response?.data?.error) {
-        toast.error(err?.response.data.error);
+    
+      if ((err as any)?.response?.data?.error) {
+        toast.error((err as any)?.response.data.error);
       } else {
         toast.error("Some server Error");
       }
@@ -180,7 +185,7 @@ export interface Job {
   },
   applyJob:async(userId,jobId)=>{
      try{
-      const response=axios.post(`${APIBASEURL}/applicants/application`,{
+      axios.post(`${APIBASEURL}/applicants/application`,{
         "status": "pending",
       "job_profile": jobId,
       "job_seeker": userId

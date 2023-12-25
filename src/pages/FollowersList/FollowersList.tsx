@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { FavSection, JobNav, Sidebar } from "../../components/components";
 import placeHolder from "../../assets/unknown.png";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,7 +15,7 @@ function FollowersList() {
 
   useEffect(() => {
     if (page != null) {
-      fetchConnections(page).then((response) => {
+      fetchConnections(page).then((response:any) => {
         setConnections(response);
       });
     }
@@ -58,7 +58,7 @@ function FollowersList() {
             </div>
           </div>
           <div className="people-grid flex p-3  w-full ">
-            {connections.map((user) => (
+            {connections.map((user:any) => (
               <>
                 <div className="people-box flex flex-col  ps-3 pe-3">
                   <div className="follow-container flex justify-between items-center">
@@ -66,9 +66,9 @@ function FollowersList() {
                       <img
                         className=" object-cover  h-8 "
                         src={
-                          user.profile_pic == null
+                          user?.profile_pic == null
                             ? placeHolder
-                            : user.profile_pic
+                            : user?.profile_pic
                         }
                       ></img>
                     </div>

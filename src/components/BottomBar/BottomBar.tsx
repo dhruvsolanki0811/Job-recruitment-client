@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { HiOutlineBuildingOffice } from "react-icons/hi2";
 import { IoPeopleOutline } from "react-icons/io5";
 import { PiHandshakeDuotone, PiSuitcaseDuotone } from "react-icons/pi";

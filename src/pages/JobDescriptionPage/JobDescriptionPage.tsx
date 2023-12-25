@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { FavSection, JobNav, Sidebar,Loader } from "../../components/components";
 import unknown from "../../assets/placeholder-organization.png";
 

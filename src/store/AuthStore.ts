@@ -3,7 +3,6 @@ import axios from "axios";
 import { APIBASEURL, useJobStore } from "./store";
 import { toast } from "react-toastify";
 import { devtools,persist } from "zustand/middleware";
-import { stringify } from "postcss";
 
 type DevtoolsStore = {
   showDevtools: boolean;
@@ -81,8 +80,8 @@ export const useUserAuthStore = create<userAuth>()(
         } catch (err) {
           set({ loader: false });
           console.error(err);
-          if (err?.response?.data?.error) {
-            toast.error(err?.response.data.error);
+          if ((err as any)?.response?.data?.error) {
+            toast.error((err as any)?.response.data.error);
           } else {
             toast.error("Some server Error");
           }

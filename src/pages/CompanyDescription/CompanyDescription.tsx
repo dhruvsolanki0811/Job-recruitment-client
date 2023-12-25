@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { FavSection, JobNav, Sidebar } from "../../components/components";
 import { CiMail } from "react-icons/ci";
 import unknown from "../../assets/placeholder-organization.png";
@@ -15,7 +15,7 @@ function CompanyDescription() {
   const { username } = useParams();
   useEffect(() => {
     if (username != null) {
-      fetchSingleOrganization(username).then((response)=>{
+      fetchSingleOrganization(username).then((response:any)=>{
         fetchJobs({ organization__name: response.name})
       });
       

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { FavSection, JobNav, Loader, Sidebar } from "../../components/components";
 import unknown from "../../assets/unknown.png";
 import { CiMail } from "react-icons/ci";
@@ -12,7 +12,7 @@ import { useConnectionStore, useUserAuthStore } from "../../store/store";
 
 function UserDescriptionPage() {
     const {username }=useParams()
-    const {status,statusCheck,handleReject,sendRequets,handleConnections}=useConnectionStore()
+    const {status,statusCheck,handleReject,sendRequets}=useConnectionStore()
     const {user}=useUserAuthStore()
     const {fetchSingleJobSeeker,jobSeeker,loader}=useJobSeekerState()
     const [trigger,setTrigger]=useState(false)
@@ -22,16 +22,14 @@ function UserDescriptionPage() {
         statusCheck(username)
         }
     },[trigger,username])
-    const handleRequest=async(e:HTMLInputElement)=>{
-        let type=e.target.innerText
-        if(type=='Follow'){
-          sendRequets(user.userId,jobSeeker?.id).then(()=>setTrigger(!trigger))
-        }
-        else if(type=='Requested'){
-          handleReject(jobSeeker?.id).then(()=>setTrigger(!trigger))
-        }
-
-
+    const handleRequest = async (e: React.MouseEvent<HTMLDivElement>) => {
+      let type = e.currentTarget.innerText; // Use 'currentTarget' instead of 'target'
+      
+      if (type === 'Follow') {
+        sendRequets(user.userId, jobSeeker?.id).then(() => setTrigger(!trigger));
+      } else if (type === 'Requested') {
+        handleReject(jobSeeker?.id).then(() => setTrigger(!trigger));
+      }
     }
     return (
     <>

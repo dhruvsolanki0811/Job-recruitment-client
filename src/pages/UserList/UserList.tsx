@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import {
   FavSection,
   JobNav,
-  Jobcard,
   Sidebar,
   Loader
 } from "../../components/components";
@@ -31,7 +30,7 @@ function UserList() {
           <Loader></Loader>
           :<div className="people-grid flex p-3  w-full ">
             {jobSeekerList.filter((i)=>{
-              return user.userName==null? true: i.username!=user.userName}).map((user,index) => (
+              return user.userName==null? true: i.username!=user.userName}).map((user) => (
               < >
                 <div onClick={()=>{navigate(`${user.username}`)}} className="people-box cursor-pointer flex flex-col  ps-3 pe-3">
                   <div className="follow-container flex justify-between items-center">

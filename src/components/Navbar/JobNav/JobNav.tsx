@@ -4,7 +4,6 @@ import { GoSortDesc } from "react-icons/go";
 import "../Nav.css";
 import { useState, useRef, useEffect } from "react";
 import unknown from "../../../assets/unknown.png";
-import { JobSeeker } from "../../../store/JobSeekerStore";
 import { useJobSeekerState, useJobStore } from "../../../store/store";
 import { useParams } from "react-router-dom";
 
