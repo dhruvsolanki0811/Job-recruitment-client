@@ -1,5 +1,5 @@
 import  { useEffect, useState } from "react";
-import { FavSection, JobNav, Sidebar } from "../../components/components";
+import { FavSection, JobNav, Loader, Sidebar } from "../../components/components";
 import placeHolder from "../../assets/unknown.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
@@ -10,7 +10,7 @@ function FollowersList() {
   const [connections, setConnections] = useState([]);
   const [trigger, setTrigger] = useState(false);
 
-  const { fetchConnections, handleConnections, handleReject } =
+  const { fetchConnections, handleConnections, handleReject,loader } =
     useConnectionStore();
 
   useEffect(() => {
@@ -57,8 +57,10 @@ function FollowersList() {
               </div>
             </div>
           </div>
-          <div className="people-grid flex p-3  w-full ">
-            {connections.map((user:any) => (
+          {loader ?
+          <Loader></Loader>
+          :<div className="people-grid flex p-3  w-full ">
+            {connections && connections.map((user:any) => (
               <>
                 <div className="people-box flex flex-col  ps-3 pe-3">
                   <div className="follow-container flex justify-between items-center">
@@ -132,7 +134,7 @@ function FollowersList() {
                 </div>
               </>
             ))}
-          </div>
+          </div>}
         </div>
         <FavSection page="Connections"></FavSection>
       </div>

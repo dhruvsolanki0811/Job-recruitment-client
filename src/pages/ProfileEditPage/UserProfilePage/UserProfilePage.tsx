@@ -28,7 +28,7 @@ function UserProfilePage() {
           :<div className="people-grid flex p-3  w-full ">
             <div className="intro-sec flex flex-col  w-full justify-center mt-5x items-center">
               <img
-                src={(jobSeeker?.profile_pic==null)?unknown:`${jobSeeker?.profile_pic}/`}
+                src={(jobSeeker?.profile_pic==null)?unknown:`${jobSeeker?.profile_pic}`}
                 className="rounded-full h-[5rem] w-[5rem] object-contain"
               />
               <div className="follow-username-sec flex items-center gap-5 ">

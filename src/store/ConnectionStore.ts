@@ -19,7 +19,7 @@ import { APIBASEURL } from "./store";
 interface ConnectionStore {
   connections: JobSeeker[];
   status:null|string;
-  fetchConnections: (type:string|null|undefined) => Promise<void>;
+  fetchConnections: (type:string|null|undefined) => Promise<void|JobSeeker[]>;
   statusCheck:(target:string  )=>Promise<void>;
   sendRequets:(user1:number|null|any,user2:number|null|any)=>Promise<void>
   handleConnections:(type:string|null,id:any)=>Promise<void>
@@ -42,6 +42,7 @@ export const useConnectionStore = create<ConnectionStore>((set) => {
         });
 
         set({ loader: false, connections: response.data });
+        return response.data
       } catch (err) {
         set({ loader: false });
         console.error(err);
@@ -58,7 +59,7 @@ export const useConnectionStore = create<ConnectionStore>((set) => {
       set({loader:false,status:response.data.connection_status})
       return response.data.connection_status 
     } catch (error) {
-      console.error(error,"ASs")
+      console.error(error)
     }
   },
   sendRequets:async(user1,user2)=>{
