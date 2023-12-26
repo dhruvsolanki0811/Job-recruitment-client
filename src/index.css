@@ -56,6 +56,16 @@
     width: 25%;
     margin-left: 1rem; ;
   }
+
+  .modal-bg {
+    display: block;
+  }
+  .modal-content{
+    display: block;
+  }
+  .nav-filter{
+    display: flex;
+  } 
 }
 
 

@@ -16,6 +16,7 @@ import {
 
 function AllJobPage() {
   const navigate = useNavigate();
+  
   const { jobList, fetchJobs, loader } = useJobStore();
   const { user } = useUserAuthStore();
   useEffect(() => {
@@ -67,5 +68,8 @@ function AllJobPage() {
     </>
   );
 }
+
+
+
 
 export { AllJobPage };

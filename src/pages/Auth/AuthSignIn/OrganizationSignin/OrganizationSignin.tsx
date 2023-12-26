@@ -90,10 +90,10 @@ function OrganizationSignin({}: OrganizationSigninProps) {
       toast.error("Name is required");
       return;
     }
-    if (formState.profile_pic === null) {
-      toast.error("Profile pic is required");
-      return;
-    }
+    // if (formState.profile_pic === null) {
+    //   toast.error("Profile pic is required");
+    //   return;
+    // }
     if (!formState.username.trim()) {
       toast.error("Username is required");
       return;
@@ -257,12 +257,15 @@ function OrganizationSignin({}: OrganizationSigninProps) {
                         onChange={handleImageChange}
                         style={{ display: "none" }}
                       />
-                      <label
-                        htmlFor="imageInput"
-                        className=" h-8 text-xs text-[#22C55E] hover:bg-[#13883e] hover:text-white px-2 py-2 text-xs   border-none rounded cursor-pointer select-none inline-block mt-4"
-                      >
-                        Choose a profile picture
-                      </label>
+                      <div className="flex flex-col justify-center items-center" >
+                  <label
+                    htmlFor="imageInput"
+                    className=" h-8 text-xs text-[#22C55E] hover:bg-[#13883e] hover:text-white px-2 py-2 text-xs   border-none rounded cursor-pointer select-none inline-block mt-4"
+                  >
+                    Choose a profile picture
+                  </label>
+                      <div className="optional text-xs text-[#a4a8ae]">Optional</div>
+                      </div>
                     </div>
                     {/* Submit button */}
                     <div className="login-btn-wrapper ">

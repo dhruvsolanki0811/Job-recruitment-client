@@ -114,10 +114,10 @@ function UserSignin() {
     e: React.FormEvent<HTMLFormElement | HTMLButtonElement>
   ) => {
     e.preventDefault(); // Prevent
-    if (!formData.profile_pic || !formData.resume) {
-      toast.error("Please upload both a profile picture and a resume.");
-      return;
-    }
+    // if (!formData.profile_pic || !formData.resume) {
+    //   toast.error("Please upload both a profile picture and a resume.");
+    //   return;
+    // }
 
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -133,10 +133,10 @@ function UserSignin() {
     }
 
     // Check if profile picture and resume are present
-    if (!formData.profile_pic || !formData.resume) {
-      toast.error("Please upload both a profile picture and a resume.");
-      return;
-    }
+    // if (!formData.profile_pic || !formData.resume) {
+    //   toast.error("Please upload both a profile picture and a resume.");
+    //   return;
+    // }
     createUser(formData);
     setFormData({
       username: "",
@@ -314,14 +314,17 @@ function UserSignin() {
                     onChange={handleImageChange}
                     style={{ display: "none" }}
                   />
+                  <div className="flex flex-col justify-center items-center" >
                   <label
                     htmlFor="imageInput"
                     className=" h-8 text-xs text-[#22C55E] hover:bg-[#13883e] hover:text-white px-2 py-2 text-xs   border-none rounded cursor-pointer select-none inline-block mt-4"
                   >
                     Choose a profile picture
                   </label>
+                      <div className="optional text-xs text-[#a4a8ae]">Optional</div>
+                      </div>
                 </div>
-
+                
                 <div className="flex items-center justify-center flex-col">
                   <input
                     type="file"
@@ -329,12 +332,17 @@ function UserSignin() {
                     onChange={handleFileChange}
                     style={{ display: "none" }}
                   />
+                  <div className="flex flex-col items-center text-xs text-[#22C55E]">
                   <label
                     htmlFor="fileInput"
                     className=" h-8 text-xs text-[#22C55E] hover:bg-[#13883e] hover:text-white px-2 py-2 text-xs   border-none rounded cursor-pointer select-none inline-block mt-4"
                   >
                     Upload your resume
-                  </label>
+                    </label>
+
+                    <div className="optional text-xs text-[#a4a8ae]">Optional</div>
+                      
+                  </div>
                   {formData.resume && (
                     <div>Selected file: {formData.resume.name}</div>
                   )}
