@@ -1,18 +1,15 @@
-import  { useEffect } from "react";
 import "./CompanyList.css";
 import { FavSection, JobNav, Loader, Sidebar } from "../../components/components";
 import placeHolder from "../../assets/placeholder-organization.png";
 import { useNavigate } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
-import { useOrganizationStore } from "../../store/OrganizationStore";
 import { useUserAuthStore } from "../../store/store";
+import { useFetchAllOrganizations } from "../../hooks/useOrganizationData";
 
 function CompanyList() {
-  const { organizationList, fetchOrganizations,loader } = useOrganizationStore();
   const { user } = useUserAuthStore();
-  useEffect(() => {
-    fetchOrganizations();
-  }, []);
+  const{data:organizations,isLoading:orgLoader}=useFetchAllOrganizations()
+ 
 
   const navigate = useNavigate();
   return (
@@ -23,10 +20,10 @@ function CompanyList() {
           <div className="nav-section"></div>
 
           <JobNav jobtype={{ type: "Company", name: "Company" }}></JobNav>
-          {loader ?
+          {orgLoader ?
           <Loader></Loader>
-          :<div className="people-grid flex p-3  w-full ">
-            {organizationList
+          :organizations?(<div className="people-grid flex p-3  w-full ">
+            {organizations
               .filter((i) => {
                 return user.userName == null
                   ? true
@@ -59,7 +56,7 @@ function CompanyList() {
                   </div>
                 </>
               ))}
-          </div>}
+          </div>):<></>}
         </div>
         <FavSection page="Company"></FavSection>
       </div>

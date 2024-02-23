@@ -1,30 +1,24 @@
-import  { useEffect } from 'react';
 import { BottomBar, FavSection, JobNav, Loader, Sidebar } from '../../../components/components';
-import { useOrganizationStore, useUserAuthStore } from '../../../store/store';
+import {  useUserAuthStore } from '../../../store/store';
 import unknown from "../../../assets/placeholder-organization.png";
 import { CiMail } from 'react-icons/ci';
+import { useFetchSingleOrganization } from '../../../hooks/useOrganizationData';
 
 function OrganizationProfilePage() {
-  const { organizationPage, fetchSingleOrganization ,loader} = useOrganizationStore();
-  const { user, accessToken } = useUserAuthStore();
-
-  useEffect(() => {
-    if (user.userName != null && accessToken != null) {
-      fetchSingleOrganization(user.userName); // Assuming accessToken is the correct parameter
-    }
-  }, [user.userName]);
+  const { user } = useUserAuthStore();
+  const userName=user.userName?user.userName:""
+  const {data:organizationPage,isLoading:loader}=useFetchSingleOrganization(userName)
+  
   
 
   return (
     <>
       <div className="main-wrapper">
         <Sidebar></Sidebar>
-        {loader ?
-        <Loader></Loader>
-        :<div className="people-content-wrapper flex flex-col ">
+        <div className="people-content-wrapper flex flex-col ">
           <div className="nav-section"></div>
 
-          <JobNav jobtype={{ type: "Company Description", name: "Linkedin" }}></JobNav>
+          <JobNav jobtype={{ type: "Company Description", name: organizationPage?.name?organizationPage.name:"" }}></JobNav>
           {loader?<Loader></Loader>:<div className="people-grid flex  p-3 w-full ">
             <div className="intro-sec flex flex-col w-full justify-center mt-5x items-center">
               <img
@@ -55,7 +49,7 @@ function OrganizationProfilePage() {
               </div>
             </div>
           </div>}
-        </div>}
+        </div>
         <FavSection page="Company"></FavSection>
       </div>
       <BottomBar></BottomBar>

@@ -1,12 +1,14 @@
 import "./Jobcard.css";
 import orgPlaceHolder from "../../assets/placeholder-organization.png";
 import { useNavigate } from "react-router-dom";
-import { Job } from "../../store/JobStore";
+import { Job } from "../../types/types" ;
 import { formatTimestampToDDMonthYYYY } from "../../utils.ts/dateutils";
 function Jobcard({ job }: { job: Job }) {
   const navigate = useNavigate();
+  
   return (
-    <>
+  
+  <>
       <div
         onClick={() => navigate(`/job/${job.id}`)}
         className="card-container w-full h-20 flex pt-2 pb-2 justify-between cursor-pointer"
@@ -15,7 +17,7 @@ function Jobcard({ job }: { job: Job }) {
           {job.organization_profile_pic != null ? (
             <img
               src={
-                `https://jobcom-media-1.s3.amazonaws.com/${job.organization_profile_pic}`
+                `https://res.cloudinary.com/dlkqz4nqp/image/upload/v1/${job.organization_profile_pic}`
               }
               className="h-10 w-12 rounded-full object-contain"
               alt=""
@@ -52,8 +54,8 @@ function Jobcard({ job }: { job: Job }) {
             })}
 
             {job.skills_required.length > 3 && (
-              <div className="skills text-[11px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
-                {job.skills_required.length - 3}
+              <div className="skills text-[11px]  pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+              +{job.skills_required.length - 3}
               </div>
             )}
           </div>

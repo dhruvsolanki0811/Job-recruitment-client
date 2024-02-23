@@ -27,13 +27,11 @@ function RoutesPath() {
       <Route path="/" element={<AllJobPage></AllJobPage>} />
       <Route path="/users" element={<UserList></UserList>} />
       <Route path="/company" element={<CompanyList></CompanyList>} />
-      
+      <Route path="*" element={<ErrorPage></ErrorPage>} />      
       <Route element={<RestrictAuth></RestrictAuth>}>
       <Route path="/login" element={<AuthLogin></AuthLogin>} />
       <Route path="/signup/user" element={<UserSignin></UserSignin>} />
       <Route path="/signup/organization" element={<OrganizationSignin></OrganizationSignin>} />
-      <Route path="*" element={<ErrorPage></ErrorPage>} />
-
       </Route>
 
       
