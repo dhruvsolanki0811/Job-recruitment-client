@@ -1,25 +1,19 @@
-import  { useEffect, useState } from "react";
 import { FavSection, JobNav, Loader, Sidebar } from "../../components/components";
 import placeHolder from "../../assets/unknown.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
-import { useConnectionStore } from "../../store/ConnectionStore";
+import { useFetchUsersConnections, useHandleConnection, useHandleRejection } from "../../hooks/useConnectionsData";
+import { useUserAuthStore } from "../../store/AuthStore";
 
 function FollowersList() {
   let { page } = useParams();
-  const [connections, setConnections] = useState([]);
-  const [trigger, setTrigger] = useState(false);
-
-  const { fetchConnections, handleConnections, handleReject,loader } =
-    useConnectionStore();
-
-  useEffect(() => {
-    if (page != null) {
-      fetchConnections(page).then((response:any) => {
-        setConnections(response);
-      });
-    }
-  }, [page, trigger]);
+  const {user}=useUserAuthStore()
+  const userName=user.userName?user.userName:""
+  const{mutate:handleConnections,isLoading:handleConnectionLoading}=useHandleConnection(userName)
+  const {mutate:handleReject ,isLoading:handleRejectionLoading}= useHandleRejection(userName)
+  const pageType=page?page:""
+  const {data:connections,isLoading:loader,isFetching}=useFetchUsersConnections(pageType,userName)
+  
 
   const navigate = useNavigate();
 
@@ -57,7 +51,7 @@ function FollowersList() {
               </div>
             </div>
           </div>
-          {loader ?
+          {loader || isFetching ||handleConnectionLoading||handleRejectionLoading?
           <Loader></Loader>
           :<div className="people-grid flex p-3  w-full ">
             {connections && connections.map((user:any) => (
@@ -77,10 +71,9 @@ function FollowersList() {
                     <div className="flex gap-3 items-center">
                       {page == "connections" && (
                         <div
-                          onClick={async () => {
-                            await handleReject(user.id).then(() => {
-                              setTrigger(!trigger);
-                            });
+                          onClick={() => {
+                            
+                            handleReject(user.id)
                           }}
                           className="follow-btn text-xs ps-2 pe-2 border-[1px] rounded border-solid border-black hover:bg-red-500 hover:text-white cursor-pointer"
                         >
@@ -99,21 +92,20 @@ function FollowersList() {
                         <>
                           <div
                             onClick={async () => {
-                              await handleConnections("accept", user.id).then(
-                                () => {
-                                  setTrigger(!trigger);
-                                }
-                              );
+                              // await handleConnections("accept", user.id).then(
+                              //   () => {
+                              //     setTrigger(!trigger);
+                              //   }
+                              // );
+                              handleConnections(user.id)
                             }}
                             className="follow-btn text-xs ps-2 pe-2 border-[1px] rounded border-solid border-black hover:bg-[#22C55E] hover:text-white cursor-pointer"
                           >
                             {"Accept"}
                           </div>
                           <div
-                            onClick={async () => {
-                                await handleReject(user.id).then(() => {
-                                  setTrigger(!trigger);
-                                });
+                            onClick={ () => {                                
+                                handleReject(user.id)
                               }}
                             className="follow-btn text-xs ps-2 pe-2 border-[1px] rounded border-solid border-black hover:bg-red-500 hover:text-white cursor-pointer"
                           >

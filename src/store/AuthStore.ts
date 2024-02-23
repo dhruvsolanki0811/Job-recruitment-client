@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-import { APIBASEURL, useJobStore } from "./store";
+import { APIBASEURL } from "./store";
 import { toast } from "react-toastify";
 import { devtools,persist } from "zustand/middleware";
 
@@ -10,8 +10,7 @@ type DevtoolsStore = {
 };
 
 interface userAuth extends DevtoolsStore {
-  accessToken: string | null;
-  refreshToken: string | null;
+  
   user:{
     userId:number|null,
     userName:string|null,
@@ -29,19 +28,19 @@ export const useUserAuthStore = create<userAuth>()(
 
     const refreshToken = async (refreshTokenValue: string,userType:any) => {
       try {
-        const response = await axios.post(`https://job-recruitment-backend.onrender.com/api/account/token/refresh`, {
+        const response = await axios.post(`${APIBASEURL}/account/token/refresh`, {
           'refresh': refreshTokenValue,
         });
         const { access, refresh } = response.data;
         
-        set({ accessToken: access, refreshToken: refresh, });
+        
         localStorage.setItem("accessToken", access);
         localStorage.setItem("refreshToken", refresh);
         // toast.info("Token refreshed");
       } catch (error) {
         console.error("Error refreshing token:",error);
         // Handle error (e.g., logout the user)
-        set({ accessToken: null, refreshToken: null ,user:{userId:null,userName:null,userPic:null,userType:null}});
+        set({ user:{userId:null,userName:null,userPic:null,userType:null}});
         clearTimeout(refreshTimeout); // Clear the refresh timeout on logout
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
@@ -70,7 +69,7 @@ export const useUserAuthStore = create<userAuth>()(
             userPic:response.data.user.profile_pic,
             userType:type
           }
-          set({ accessToken: access, refreshToken: refresh, user:currUser });
+          set({  user:currUser });
           localStorage.setItem("accessToken", access);
           localStorage.setItem("refreshToken", refresh);
          
@@ -91,8 +90,7 @@ export const useUserAuthStore = create<userAuth>()(
         clearTimeout(refreshTimeout); // Clear the refresh timeout on logout
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
-        useJobStore.getState().fetchJobs()
-        set({ accessToken: null, refreshToken: null,user:{userId:null,userName:null,userPic:null,userType:null} });
+        set({ user:{userId:null,userName:null,userPic:null,userType:null} });
         toast.done("Successfully logged out");
       },
     };

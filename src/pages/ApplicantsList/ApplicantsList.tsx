@@ -1,25 +1,16 @@
-import  { useEffect, useState } from "react";
 import { FavSection, JobNav, Loader, Sidebar } from "../../components/components";
 import placeHolder from "../../assets/unknown.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
-import { useJobSeekerState } from "../../store/JobSeekerStore";
-import { useJobStore } from "../../store/JobStore";
+import { useFetchSingleJob } from "../../hooks/useJobData";
+import { useFetchJobApplicantsForSingleJob } from "../../hooks/useJobseekerData";
 
 function ApplicantsList() {
   let { jobId } = useParams();
-  const [connections, setConnections] = useState<any>(new Array());
-  const { fetchSingleJob, jobPage } = useJobStore();
-  //   const {}=useConnectionStore()
-  const { fetchApplicants ,loader} = useJobSeekerState();
-  useEffect(() => {
-    if (jobId != null) {
-      fetchSingleJob(jobId);
-      fetchApplicants(parseInt(jobId)).then((response) => {
-        setConnections(response);
-      });
-    }
-  }, [jobId]);
+  const jobID=jobId?jobId:""
+  const{data:jobPage,isLoading:jobLoader}=useFetchSingleJob(jobID)
+  const{data:connections,isLoading:applicantLoader}=useFetchJobApplicantsForSingleJob(jobID)
+  
 
   const navigate = useNavigate();
 
@@ -27,25 +18,25 @@ function ApplicantsList() {
     <>
       <div className="main-wrapper">
         <Sidebar></Sidebar>
-        {loader?
-        <Loader></Loader>
-        :<div className="content-wrapper flex flex-col ">
+        <div className="content-wrapper flex flex-col ">
           <div className="nav-section">
             <JobNav
               jobtype={{
                 type: "Applied",
-                name: `Applicant for ${jobPage?.role} at ${jobPage?.organization_name}`,
+                name: jobPage?.role && jobPage.organization_name?`Applicants for ${jobPage?.role} at ${jobPage?.organization_name}`:"",
               }}
             ></JobNav>
           </div>
-          <div className="people-grid flex p-3  w-full ">
+          {applicantLoader&& jobLoader?
+        <Loader></Loader>
+        :  <div className="people-grid flex p-3  w-full ">
             {connections?.map((user:any) => (
               <>
                 <div
                   onClick={() => {
                     navigate(`/users/${user.username}`);
                   }}
-                  className="people-box flex flex-col  ps-3 pe-3"
+                  className="people-box cursor-pointer flex flex-col  ps-3 pe-3"
                 >
                   <div className="follow-container flex justify-between items-center">
                     <div className="profile-pic  h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">
@@ -78,8 +69,8 @@ function ApplicantsList() {
                 </div>
               </>
             ))}
-          </div>
-        </div>}
+          </div>}
+        </div>
         <FavSection page="Connections"></FavSection>
       </div>
       <BottomBar></BottomBar>

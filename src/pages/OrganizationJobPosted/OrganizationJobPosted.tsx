@@ -1,4 +1,3 @@
-import  { useEffect } from "react";
 import {
   FavSection,
   JobNav,
@@ -7,20 +6,18 @@ import {
 } from "../../components/components";
 import { useNavigate } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
-import { useUserAuthStore,useJobStore } from "../../store/store";
+import { useUserAuthStore } from "../../store/store";
 import orgPlaceHolder from "../../assets/placeholder-organization.png";
 import { formatTimestampToDDMonthYYYY } from "../../utils.ts/dateutils";
+import { useFetchOrganizationJobs } from "../../hooks/useJobData";
 
 function OrganizationJobPosted() {
 
     const {user}=useUserAuthStore()
-    const {jobList,jobPostedbyOrg,loader}=useJobStore()
+    const orgName=user.userName?user.userName:""
+    const{data:jobList,isLoading:loader}=useFetchOrganizationJobs(orgName)
   const navigate = useNavigate();
-  useEffect(()=>{
   
-      jobPostedbyOrg(user.userName)
-    
-  },[])
   return (
     <>
       <>
@@ -46,13 +43,13 @@ function OrganizationJobPosted() {
             </div>
             {loader?
             <Loader></Loader>:<div className="job-list flex flex-col ">
-              {jobList.map((job) => (
+              {jobList&&jobList.map((job) => (
                  <>
                  <div  className="card-container w-full h-20 flex pt-2 pb-2 justify-between cursor-pointer">
                    <div onClick={()=>navigate(`/job/${job.id}`)}    className="org-logo w-20 h-full flex justify-center items-center p-2 overflow-hidden  ">
                      {(job.organization_profile_pic!=null)?
                      <img
-                     src={"https://jobcom-media-1.s3.amazonaws.com/"+job.organization_profile_pic}
+                     src={"https://res.cloudinary.com/dlkqz4nqp/image/upload/v1/"+job.organization_profile_pic}
                      className="h-10 w-12 rounded-full object-contain"
                      alt=""
                    />:<img

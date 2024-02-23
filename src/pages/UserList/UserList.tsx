@@ -1,4 +1,3 @@
-import  { useEffect } from "react";
 import {
   FavSection,
   JobNav,
@@ -9,14 +8,13 @@ import placeHolder from "../../assets/unknown.png";
 import "./UserList.css";
 import { useNavigate } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
-import {useJobSeekerState, useUserAuthStore} from "../../store/store"
+import { useUserAuthStore} from "../../store/store"
+import { useFetchAllJobseeker } from "../../hooks/useJobseekerData";
 function UserList() {
   const navigate=useNavigate()
   const{user}=useUserAuthStore()
-  const {jobSeekerList,fetchJobseekers,loader}= useJobSeekerState()
-  useEffect(()=>{
-    fetchJobseekers()
-  },[])
+  const {data:jobseekers,isLoading:jsloader}=useFetchAllJobseeker()
+  
   return (
     <>
 
@@ -26,10 +24,10 @@ function UserList() {
           <div className="nav-section"></div>
 
           <JobNav jobtype={{type:"Users",name:"User"}}></JobNav>
-          {loader?
+          {jsloader?
           <Loader></Loader>
-          :<div className="people-grid flex p-3  w-full ">
-            {jobSeekerList.filter((i)=>{
+          :(jobseekers?<div className="people-grid flex p-3  w-full ">
+            {jobseekers.filter((i)=>{
               return user.userName==null? true: i.username!=user.userName}).map((user) => (
               < >
                 <div onClick={()=>{navigate(`${user.username}`)}} className="people-box cursor-pointer flex flex-col  ps-3 pe-3">
@@ -61,7 +59,7 @@ function UserList() {
                 </div>
               </>
             ))}
-          </div>}
+          </div>:<></>)}
         </div>
         <FavSection page="Users"></FavSection>
       </div>

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
 import {
   FavSection,
@@ -9,19 +8,23 @@ import {
 } from "../../components/components";
 import "./AllJobPage.css";
 import { useNavigate } from "react-router-dom";
-import {
-  useJobStore,
-  useUserAuthStore,
-} from "../../store/store";
+import {  useUserAuthStore } from "../../store/store";
+import { useFetchAllJobs } from "../../hooks/useJobData";
+import { isFilterApplied } from "../../utils.ts/filterutils";
+import { useFilterStore } from "../../store/FilterStore";
+import { useEffect } from "react";
 
 function AllJobPage() {
   const navigate = useNavigate();
-  
-  const { jobList, fetchJobs, loader } = useJobStore();
+  const {filters,setfilteredJobs,filteredJobs}=useFilterStore()
+  const { data: jobLists, isLoading: jobloader } = useFetchAllJobs();
+  useEffect(()=>{
+    if(jobLists){
+      setfilteredJobs(jobLists)
+    }
+    
+  },[jobloader,isFilterApplied(filters)])
   const { user } = useUserAuthStore();
-  useEffect(() => {
-    fetchJobs();
-  }, []);
   return (
     <>
       <div className="main-wrapper">
@@ -52,14 +55,17 @@ function AllJobPage() {
               </div>
             </div>
           </div>
-          {loader ? (
+          { jobloader  ? (
             <Loader></Loader>
-          ) : (
+          ) : 
+          filteredJobs ? (
             <div className="job-list flex flex-col ">
-              {jobList.map((elem) => (
+              {filteredJobs ?.map((elem) => (
                 <Jobcard job={elem}></Jobcard>
               ))}
             </div>
+          ) : (
+            <></>
           )}
         </div>
         <FavSection page="All Job"></FavSection>
@@ -68,8 +74,5 @@ function AllJobPage() {
     </>
   );
 }
-
-
-
 
 export { AllJobPage };

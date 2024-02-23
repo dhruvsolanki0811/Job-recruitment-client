@@ -1,18 +1,14 @@
-import  { useEffect } from 'react';
 import { BottomBar, FavSection, JobNav, Loader, Sidebar } from '../../../components/components';
-import { useJobSeekerState, useUserAuthStore } from '../../../store/store';
+import {  useUserAuthStore } from '../../../store/store';
 import unknown from "../../../assets/placeholder-organization.png";
 import { CiMail } from 'react-icons/ci';
+import { useFetchSingleJobSeeker } from '../../../hooks/useJobseekerData';
 
 function UserProfilePage() {
-  const { jobSeeker, fetchSingleJobSeeker,loader } = useJobSeekerState();
-  const { user, accessToken } = useUserAuthStore();
-
-  useEffect(() => {
-    if (user.userName != null && accessToken != null) {
-      fetchSingleJobSeeker(user.userName); // Assuming accessToken is the correct parameter
-    }
-  }, [user.userName]);
+  const { user } = useUserAuthStore();
+  const userName=user.userName?user.userName:""
+  const {data:jobSeeker,isLoading:loader}=useFetchSingleJobSeeker(userName)
+  
   
 
   return (
@@ -22,7 +18,7 @@ function UserProfilePage() {
         <div className="people-content-wrapper flex flex-col ">
           <div className="nav-section"></div>
 
-          <JobNav jobtype={{type:"Single User",name:`${jobSeeker?.username}`}}></JobNav>
+          <JobNav jobtype={{type:"User Profile",name:jobSeeker?.username ? `${jobSeeker?.username}`:""}}></JobNav>
           {loader?
           <Loader></Loader>
           :<div className="people-grid flex p-3  w-full ">

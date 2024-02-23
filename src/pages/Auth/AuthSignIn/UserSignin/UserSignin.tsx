@@ -3,10 +3,12 @@ import { JobNav, Loader, Sidebar } from "../../../../components/components";
 import unknown from "../../../../assets/unknown.png";
 import { BottomBar } from "../../../../components/BottomBar/BottomBar";
 import "./UserSignin.css";
-import { useJobSeekerState } from "../../../../store/store";
+import { APIBASEURL } from "../../../../store/store";
 import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-interface FormData {
+import axios from "axios";
+import { useMutation, useQueryClient } from "react-query";
+interface SeekerFormData {
   username: string;
   firstname: string;
   lastname: string;
@@ -20,11 +22,40 @@ interface FormData {
   resume: File | null;
 }
 
-function UserSignin() {
-  const { createUser, loader } = useJobSeekerState();
-  const [inputListValue, setListValue] = useState<string>("");
+const createJobseeker=async(data:SeekerFormData)=>{
+  const formData = new FormData();
 
-  const [formData, setFormData] = useState<FormData>({
+      // Append fields to the FormData object
+      Object.entries(data).forEach(([key, value]) => {
+        if (value instanceof File) {
+          formData.append(key, value);
+        } else if (Array.isArray(value)) {
+          formData.append("skills", JSON.stringify(value));
+        } else {
+          if (value != null) {
+            formData.append(key, value);
+          }
+        }
+      });
+      await axios({
+        method: "post",
+        url: `${APIBASEURL}/account/create/jobseeker`,
+        data: formData,
+        headers: {
+          "Content-Type": `multipart/form-data`,
+        },
+      });
+
+}
+
+function UserSignin() {
+  const [inputListValue, setListValue] = useState<string>("")
+  const queryClient=useQueryClient()
+  const{mutate:createUser,isLoading:loader}=useMutation(createJobseeker,{onSuccess:async()=>{
+    toast.info("Welldone you are now part of Jobcom community");
+    queryClient.invalidateQueries('all-jobseeker')
+  }})
+  const [formData, setFormData] = useState<SeekerFormData>({
     username: "",
     firstname: "",
     lastname: "",
@@ -39,7 +70,7 @@ function UserSignin() {
   });
 
   const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLInputElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement >
   ) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({

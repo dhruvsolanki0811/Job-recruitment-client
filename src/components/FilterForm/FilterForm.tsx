@@ -1,6 +1,7 @@
-import  { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import "./FilterForm.css";
-import { useJobStore } from "../../store/JobStore";
+import { useFilterStore } from "../../store/FilterStore";
+import { useFetchFilteredJobs } from "../../hooks/useJobData";
 
 interface JobFiltersState {
   role: string;
@@ -16,9 +17,11 @@ function FilterForm() {
     salary: [0, 100],
     // location: "",
   });
-  const { fetchJobs } = useJobStore();
+  const { setFilter, filters: gloabalFilter } = useFilterStore();
+  const {refetch}=useFetchFilteredJobs()
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
   };
 
@@ -45,15 +48,41 @@ function FilterForm() {
       required_experience__lte: filters.required_experience[1],
       salary__lte: filters.salary[1],
     };
-
+    if (filterSent.required_experience__lte == 10) {
+      delete filterSent.required_experience__lte;
+    }
+    if (filterSent.salary__lte == 100) {
+      delete filterSent.salary__lte;
+    }
     if (filters.role.length > 0) {
       filterSent["role"] = filters.role;
     }
-
-    fetchJobs(filterSent);
+    setFilter({ ...gloabalFilter, ...filterSent });
+    refetch()
+    // fetchJobs(filterSent);
     // Handle the submission of filters (e.g., send a request to the server with the filters)
   };
+  const clearFilters=(e:FormEvent)=>{
+    e.preventDefault()
+    const newFilters={...gloabalFilter}
+    if(newFilters.required_experience__lte){
+    delete newFilters.required_experience__lte}
 
+    if(newFilters.role){
+      delete newFilters.role
+    }
+    if(newFilters.salary__lte){
+      delete newFilters.salary__lte
+    }
+    setFilter({...newFilters})
+    setFilters({
+      role: "",
+      required_experience: [0, 10],
+      salary: [0, 100],
+      // location: "",
+    })
+    refetch()
+  }
   return (
     <>
       <form className="p-4 flex flex-col gap-1">
@@ -100,9 +129,12 @@ function FilterForm() {
           <div className="ml-2 mt-2">${filters.salary[1]}Lpa</div>
         </label>
 
-        <div className="btn-wrapper">
+        <div className="btn-wrapper flex gap-2">
           <button className="submit-btn text-xs" onClick={handleSubmit}>
             Apply
+          </button>
+          <button className="submit-btn text-xs" onClick={clearFilters}>
+            Clear
           </button>
         </div>
       </form>

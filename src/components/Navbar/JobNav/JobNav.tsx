@@ -4,10 +4,12 @@ import { GoSortDesc } from "react-icons/go";
 import "../Nav.css";
 import { useState, useRef, useEffect } from "react";
 import unknown from "../../../assets/unknown.png";
-import { useJobSeekerState, useJobStore } from "../../../store/store";
 import { useParams } from "react-router-dom";
 import { MdOutlineFilterAlt } from "react-icons/md";
 import { FilterForm } from "../../components";
+import { useFilterStore } from "../../../store/FilterStore";
+import { useFetchFilteredJobs } from "../../../hooks/useJobData";
+import { useFetchSingleJobSeeker } from "../../../hooks/useJobseekerData";
 
 type PropType = {
   name: string;
@@ -15,30 +17,33 @@ type PropType = {
 };
 
 function JobNav({ jobtype }: { jobtype: PropType }) {
-  const { jobSeeker, fetchSingleJobSeeker } = useJobSeekerState();
-  const { fetchJobs, sortJob } = useJobStore();
-  const { username } = useParams();
   const [Search, setSearch] = useState<string>("");
+  const { username } = useParams();
+  const { filters, setFilter, setfilteredJobs, sortJob } = useFilterStore();
+  const { refetch } = useFetchFilteredJobs();
+  const userName = username ? username : "";
+  const { data: jobSeeker } = useFetchSingleJobSeeker(userName);
+
   const handleSearchInput = (e: any) => {
     const { value } = e.target;
-    setSearch(value);
+    setSearch(() => {
+      return value;
+    });
+
+    setFilter({ ...filters, search: value });
     if (value == "") {
-      fetchJobs();
+      const newFilter = { ...filters };
+      delete newFilter.search;
+      setFilter({ ...newFilter });
+      setfilteredJobs([]);
     }
   };
   const handleEnter = (e: any) => {
     if (e.key === "Enter") {
-      // Add your logic here, such as triggering a search function
-      fetchJobs({ search: Search });
+      refetch();
     }
   };
-  useEffect(() => {
-    if (jobtype.type == "Single User") {
-      if (username != null) {
-        fetchSingleJobSeeker(username);
-      }
-    }
-  }, []);
+
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -95,14 +100,12 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
             <div className="head-filter">{jobtype.name}</div>
             <div className="flex  gap-3">
               {/* Modal Trigger Button */}
-              <div onClick={openModal} className="nav-filter hidden gap-1 flex   justify-center items-center">
-                < MdOutlineFilterAlt 
-                  
-                  className="cursor-pointer text-[20px]"
-                />
-                <div
-                  className="filter-btn-text text-[20px] text-xs flex-nowrap cursor-pointer"
-                >
+              <div
+                onClick={openModal}
+                className="nav-filter hidden gap-1 flex   justify-center items-center"
+              >
+                <MdOutlineFilterAlt className="cursor-pointer text-[20px]" />
+                <div className="filter-btn-text text-[20px] text-xs flex-nowrap cursor-pointer">
                   Filter
                 </div>
               </div>
@@ -223,6 +226,16 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
           </div>
         </>
       )}
+
+      {jobtype.type == "User Profile" && (
+        <>
+          <div className="filters-tab w-full flex gap-4 items-center ps-5 pe-5 h-[3.2rem]">
+            <div className="username-container flex gap-3    items-center">
+              {jobtype?.name}
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }
@@ -231,10 +244,13 @@ function ModalContent({ closeModal }: { closeModal: () => void }) {
   // Add your modal content here
   return (
     <div className="modal-content p-2">
-      <div className="w-full flex justify-end" >
-        <span className="cursor-pointer"onClick={closeModal}>X</span></div>
+      <div className="w-full flex justify-end">
+        <span className="cursor-pointer" onClick={closeModal}>
+          X
+        </span>
+      </div>
       <h5>Filter</h5>
-        <FilterForm></FilterForm>
+      <FilterForm></FilterForm>
       {/* <button
         onClick={closeModal}
         className="bg-blue-500 text-white px-4 py-2 rounded"

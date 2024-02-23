@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   JobNav,
@@ -8,7 +8,9 @@ import {
   Loader,
 } from "../../../../components/components";
 import unknown from "../../../../assets/placeholder-organization.png";
-import { useOrganizationStore } from "../../../../store/OrganizationStore";
+import { APIBASEURL } from "../../../../store/store";
+import axios from "axios";
+import { useMutation, useQueryClient } from "react-query";
 
 interface OrganizationSigninProps {}
 
@@ -23,9 +25,41 @@ interface OrganizationFormData {
   website: string;
   profile_pic: File | null;
 }
+const addOrganization = async (data: OrganizationFormData) => {
+  const formData = new FormData();
 
+  // Append fields to the FormData object
+  for (const [key, value] of Object.entries(data)) {
+    if (Array.isArray(value)) {
+      formData.append(key, JSON.stringify(value));
+    } else if (value instanceof File) {
+      if (value != null) {
+        formData.append(key, value);
+      }
+    } else {
+      if (value != null) {
+        formData.append(key, value);
+      }
+    }
+  }
+
+  // Send the request
+  await axios.post(`${APIBASEURL}/account/create/organization`, formData, {
+    headers: {
+      "Content-Type": `multipart/form-data`,
+    },
+  });
+
+  // Display success message
+};
 function OrganizationSignin({}: OrganizationSigninProps) {
-  const { createOrganization, loader } = useOrganizationStore();
+  const queryClient=useQueryClient()
+  const {mutate:createOrganization,isLoading:loader}=useMutation(addOrganization,{
+    onSuccess:async()=>{
+      toast.info('You are an Organization on JobCom');
+      queryClient.invalidateQueries("all-organizations")
+    }
+  })
   const [formState, setFormState] = useState<OrganizationFormData>({
     name: "",
     username: "",
@@ -257,14 +291,16 @@ function OrganizationSignin({}: OrganizationSigninProps) {
                         onChange={handleImageChange}
                         style={{ display: "none" }}
                       />
-                      <div className="flex flex-col justify-center items-center" >
-                  <label
-                    htmlFor="imageInput"
-                    className=" h-8 text-xs text-[#22C55E] hover:bg-[#13883e] hover:text-white px-2 py-2 text-xs   border-none rounded cursor-pointer select-none inline-block mt-4"
-                  >
-                    Choose a profile picture
-                  </label>
-                      <div className="optional text-xs text-[#a4a8ae]">Optional</div>
+                      <div className="flex flex-col justify-center items-center">
+                        <label
+                          htmlFor="imageInput"
+                          className=" h-8 text-xs text-[#22C55E] hover:bg-[#13883e] hover:text-white px-2 py-2 text-xs   border-none rounded cursor-pointer select-none inline-block mt-4"
+                        >
+                          Choose a profile picture
+                        </label>
+                        <div className="optional text-xs text-[#a4a8ae]">
+                          Optional
+                        </div>
                       </div>
                     </div>
                     {/* Submit button */}

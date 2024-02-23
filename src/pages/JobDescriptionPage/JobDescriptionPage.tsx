@@ -1,28 +1,27 @@
-import { useEffect } from "react";
 import { FavSection, JobNav, Sidebar,Loader } from "../../components/components";
 import unknown from "../../assets/placeholder-organization.png";
 
 import "./JobDescriptionPage.css";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
 import { useParams } from "react-router-dom";
-import { useJobStore, useUserAuthStore } from "../../store/store";
+import {  useUserAuthStore } from "../../store/store";
 import { formatTimestampToDDMonthYYYY } from "../../utils.ts/dateutils";
+import {  useApplyJob, useFetchSingleJob, useFetchStatusOfApplication } from "../../hooks/useJobData";
 
 function JobDescriptionPage() {
   const { id } = useParams();
   const {user} =useUserAuthStore()
-  const { jobPage, fetchSingleJob, loader ,applied, applyJob} = useJobStore();
-  useEffect(() => {
-    if (id != null) {
-      fetchSingleJob(id);
-    }
-  }, []);
+  const jobId= id?id:""
+  const authUser=user.userName?user.userName:""
+  const {mutate:applyJob}=useApplyJob(jobId)
+  const {data:applied,isLoading:applyLoading}=useFetchStatusOfApplication(jobId,authUser)
+  const {data:jobPage,isLoading:jobloader}=useFetchSingleJob(jobId)
+  
   const handleStatus=()=>{
-    if(!applied){
-      applyJob(user.userId,jobPage?.id)
+    if(!applied&&jobPage?.id){
+      applyJob(String(jobPage?.id))
     
     }
-    fetchSingleJob(id)
   }
   return (
     <>
@@ -30,9 +29,10 @@ function JobDescriptionPage() {
         <Sidebar></Sidebar>
         <div className="people-content-wrapper flex flex-col ">
           <div className="nav-section"></div>
-          <JobNav jobtype={{type:"Jobs",name:`Jobs at ${jobPage?.organization_name}`} }></JobNav>
-          {loader ? (
-            <Loader></Loader>
+
+          <JobNav jobtype={{type:"Jobs",name:jobPage?.organization_name?`Jobs at ${jobPage?.organization_name}`:""} }></JobNav>
+          {jobloader ||applyLoading ? (
+            <Loader message=""></Loader>
           ) : (
             <div className="desc-section flex flex w-full flex-col">
               <div className="job-desc-section p-7 flex flex-col w-full ">
@@ -44,7 +44,7 @@ function JobDescriptionPage() {
                     />
                   ) : (
                     <img
-                      src={`https://jobcom-media-1.s3.amazonaws.com/${jobPage?.organization_profile_pic}`}
+                      src={`https://res.cloudinary.com/dlkqz4nqp/image/upload/v1/${jobPage?.organization_profile_pic}`}
                       className="rounded-full h-14 w-14 object-contain"
                     />
                   )}

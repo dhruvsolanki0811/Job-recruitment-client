@@ -1,13 +1,12 @@
 import React, { ChangeEvent, useState } from "react";
 import { FavSection, Sidebar } from "../../components/components";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
-import { useJobStore, useUserAuthStore } from "../../store/store";
-import { useNavigate } from "react-router-dom";
+import {  useUserAuthStore } from "../../store/store";
+import { useCreateJob } from "../../hooks/useJobData";
 
 function JobPostingForm() {
   const {user}=useUserAuthStore()
-  const navigate=useNavigate()
-  const {create}=useJobStore()
+  const {mutate:create}=useCreateJob()
   const [jobDetails, setJobDetails] = useState({
     role: "",
     description: "",
@@ -59,7 +58,9 @@ function JobPostingForm() {
       employee_type:jobDetails.type,
       salary:jobDetails.salary,
       skills_required:jobDetails.skills
-    }).then((id)=>{navigate(`/job/${id}`)})
+    })
+    // .then((id)=>{navigate(`/job/${id}`)})
+    
   };
 
   return (
