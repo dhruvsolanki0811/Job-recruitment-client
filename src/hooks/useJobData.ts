@@ -5,6 +5,7 @@ import { Job } from "../types/types";
 import { useFilterStore } from "../store/FilterStore";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { axiosInstance } from "../axios/axios";
 
 export const useFetchAllJobs = () => {
   const fetchAllJobs = async (): Promise<Job[]> => {
@@ -70,9 +71,9 @@ export const useFetchSingleJob = (jobId: string) => {
 
 export const useFetchAppliedJob = (username: string) => {
   const fetchAppliedJob = async (): Promise<Job[]> => {
-    const apiUrl = `${APIBASEURL}/applicants/user_applied_jobs/${username}`;
+    const apiUrl = `/applicants/user_applied_jobs/${username}`;
 
-    const response = await axios.get(apiUrl, {
+    const response = await axiosInstance.get(apiUrl, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
@@ -85,8 +86,8 @@ export const useFetchAppliedJob = (username: string) => {
 export const useFetchStatusOfApplication = (id: string, userName: string) => {
   const fetchStatusOfApplication = async () => {
     let token = localStorage.getItem("accessToken");
-    const response = await axios.get(
-      `${APIBASEURL}/applicants/status/${id}`,
+    const response = await axiosInstance.get(
+      `/applicants/status/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -116,7 +117,7 @@ export const useCreateJob=()=>{
   const createJob=async(data:JobData)=>{
     const accessToken=localStorage.getItem('accessToken')
 
-      const response = await axios.post(`${APIBASEURL}/jobs/jobprofile`, data,{
+      const response = await axiosInstance.post(`/jobs/jobprofile`, data,{
         headers: {
           Authorization: `Bearer ${accessToken}`,
           // Other headers if needed
@@ -135,7 +136,7 @@ export const useCreateJob=()=>{
 export const useApplyJob=(jobId:string)=>{
   const {user}=useUserAuthStore()
   const applyJob=async(jobId:string)=>{
-    axios.post(`${APIBASEURL}/applicants/application`,{
+    axiosInstance.post(`/applicants/application`,{
       "status": "pending",
     "job_profile": jobId,
     "job_seeker": user.userId

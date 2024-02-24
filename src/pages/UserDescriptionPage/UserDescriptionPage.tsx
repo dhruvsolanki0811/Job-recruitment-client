@@ -16,7 +16,10 @@ function UserDescriptionPage() {
     const userName=username?username:""
     const{data:jobSeeker,isLoading:loader}=useFetchSingleJobSeeker(userName)
     const currUser=user.userName?user.userName:""
+    
     const {data:status,isLoading:statusLoading,isFetching}=useFetchConnectionStatus(currUser,userName)
+    
+    
     const {mutate:handleReject}=useHandleRejection(userName)
     const userID=jobSeeker?.id?String(jobSeeker.id):""
     const {mutate:sendRequets}=useCreateConnection(userID,userName)
