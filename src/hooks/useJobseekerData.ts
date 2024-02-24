@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useQuery } from 'react-query'
 import { APIBASEURL } from '../store/store'
 import {  JobSeeker } from '../types/types'
+import { axiosInstance } from '../axios/axios'
 
 
 const fetchAllJobseeker = async ():Promise<JobSeeker[]>  => {
@@ -29,8 +30,8 @@ const fetchAllJobseeker = async ():Promise<JobSeeker[]>  => {
 
 export const useFetchJobApplicantsForSingleJob=(jobId:string)=>{
   const fetchJobApplicantsForSingleJob=async()=>{
-    const response = await axios.get<JobSeeker[]>(
-      `${APIBASEURL}/applicants/job_applications/${jobId}`,
+    const response = await axiosInstance.get<JobSeeker[]>(
+      `/applicants/job_applications/${jobId}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

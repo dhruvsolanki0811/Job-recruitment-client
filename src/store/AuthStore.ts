@@ -1,6 +1,4 @@
 import { create } from "zustand";
-import axios from "axios";
-import { APIBASEURL } from "./store";
 import { toast } from "react-toastify";
 import { devtools,persist } from "zustand/middleware";
 
@@ -10,84 +8,24 @@ type DevtoolsStore = {
 };
 
 interface userAuth extends DevtoolsStore {
-  
   user:{
     userId:number|null,
     userName:string|null,
     userPic:string|null,
     userType:string|null
   }
-  loader: boolean;
-  login: (email: string, password: string, type: string) => Promise<void>;
   logout: () => void;
 }
 
 export const useUserAuthStore = create<userAuth>()(
   devtools(persist((set) => {
-    let refreshTimeout: any | null = null;
-
-    const refreshToken = async (refreshTokenValue: string,userType:any) => {
-      try {
-        const response = await axios.post(`${APIBASEURL}/account/token/refresh`, {
-          'refresh': refreshTokenValue,
-        });
-        const { access, refresh } = response.data;
-        
-        
-        localStorage.setItem("accessToken", access);
-        localStorage.setItem("refreshToken", refresh);
-        // toast.info("Token refreshed");
-      } catch (error) {
-        console.error("Error refreshing token:",error);
-        // Handle error (e.g., logout the user)
-        set({ user:{userId:null,userName:null,userPic:null,userType:null}});
-        clearTimeout(refreshTimeout); // Clear the refresh timeout on logout
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-      } finally {
-        // Schedule the next refresh after 5 minutes
-        refreshTimeout = setTimeout(() => refreshToken(refreshTokenValue,userType), 5 * 60 * 1000);
-      }
-    };
-
     return {
-      loader: false,
-      accessToken: null,
-      refreshToken: null,
       user:{userId:null,userName:null,userPic:null,userType:null},
       showDevtools: false, // Initial value for devtools visibility
       setShowDevtools: (showDevtools) => set({ showDevtools }),
-      login: async (email, password, type) => {
-        try {
-          set({ loader: true });
-          const response = await axios.post(`${APIBASEURL}/account/${type}/login`, { email, password });
-
-          const { access, refresh } = response.data;
-          const currUser={
-            userName:response.data.user.username,
-            userId:response.data.user.id,
-            userPic:response.data.user.profile_pic,
-            userType:type
-          }
-          set({  user:currUser });
-          localStorage.setItem("accessToken", access);
-          localStorage.setItem("refreshToken", refresh);
-         
-          refreshTimeout = setTimeout(() => refreshToken(refresh,type), 5 *1000);
-          set({ loader: false });
-          toast.done("Successfully login");
-        } catch (err) {
-          set({ loader: false });
-          console.error(err);
-          if ((err as any)?.response?.data?.error) {
-            toast.error((err as any)?.response.data.error);
-          } else {
-            toast.error("Some server Error");
-          }
-        }
-      },
+      
       logout: () => {
-        clearTimeout(refreshTimeout); // Clear the refresh timeout on logout
+        //clearTimeout(refreshTimeout); // Clear the refresh timeout on logout
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         set({ user:{userId:null,userName:null,userPic:null,userType:null} });

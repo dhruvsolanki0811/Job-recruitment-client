@@ -5,10 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { BottomBar } from "../../../components/BottomBar/BottomBar";
 import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useUserAuthStore } from "../../../store/AuthStore";
+import { useLoginHook } from "../../../hooks/useAuthData";
 
 function AuthLogin() {
-  const { login, loader } = useUserAuthStore();
+  
+  const{mutate:login,isLoading:loader}=useLoginHook()
   const navigate = useNavigate();
 
   const [isUserLogin, setIsUserLogin] = useState(true);
@@ -52,11 +53,11 @@ function AuthLogin() {
     }
 
     if (isUserLogin) {
-      login(userEmail, userPassword, "jobseeker");
+      login({email:userEmail, password:userPassword,type: "jobseeker"});
       setUserEmail("");
       setUserPassword("");
     } else {
-      login(orgEmail, orgPassword, "organization");
+      login({email:orgEmail,password: orgPassword,type: "organization"});
 
       setOrgEmail("");
       setOrgPassword("");

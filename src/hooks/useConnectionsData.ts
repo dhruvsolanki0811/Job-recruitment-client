@@ -1,12 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { APIBASEURL, useUserAuthStore } from "../store/store";
+import {  useUserAuthStore } from "../store/store";
 import {  JobSeeker } from "../types/types";
-import axios from "axios";
+import { axiosInstance } from "../axios/axios";
 
 export const useFetchUsersConnections = (type: string, userName: string) => {
   const fetchUsersConnections = async () => {
-    const response = await axios.get<JobSeeker[]>(
-      `${APIBASEURL}/connections/${type}`,
+    const response = 
+    await axiosInstance.get<JobSeeker[]>
+    // await axios.get<JobSeeker[]>
+    (
+      `/connections/${type}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -22,9 +25,11 @@ export const useFetchConnectionStatus = (
   username: string,
   targetUser: string
 ) => {
+  const {user}=useUserAuthStore()
   const fetchConnectionStatus = async () => {
-    const response = await axios.get(
-      `${APIBASEURL}/connections/status/${targetUser}`,
+    if(user.userName){
+    const response = await axiosInstance.get(
+      `/connections/status/${targetUser}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -32,6 +37,9 @@ export const useFetchConnectionStatus = (
       }
     );
     return response.data;
+    }else{
+      return { data: null, isLoading: false, isFetching: false }
+    }
   };
   return useQuery(
     ["status-connection", username, targetUser],
@@ -43,8 +51,8 @@ export const useHandleRejection = (userId: string) => {
  const{user}= useUserAuthStore()
   const removeConnection = async (targetUser: string) => {
     console.log(targetUser)
-    const response = await axios.delete(
-      `${APIBASEURL}/connections/delete/${targetUser}`,
+    const response = await axiosInstance.delete(
+      `/connections/delete/${targetUser}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -67,7 +75,7 @@ export const useHandleRejection = (userId: string) => {
 
 export const useHandleConnection = (userId: string) => {
   const addConnection = async (id:string) => {
-    const response = await axios.patch(`${APIBASEURL}/connections/accept/${id}`,{},{
+    const response = await axiosInstance.patch(`/connections/accept/${id}`,{},{
       headers:{
         Authorization:`Bearer ${localStorage.getItem('accessToken')}`
       }
@@ -88,7 +96,7 @@ export const useHandleConnection = (userId: string) => {
 export const useCreateConnection=(user2:string,user2Name:string)=>{
   const {user}=useUserAuthStore()
   const createConnection=async()=>{
-    const response =await axios.post(`${APIBASEURL}/connections/create`,{ "user1":user.userId,
+    const response =await axiosInstance.post(`/connections/create`,{ "user1":user.userId,
       "user2":user2},{
         headers:{
           Authorization:`Bearer ${localStorage.getItem('accessToken')}`
