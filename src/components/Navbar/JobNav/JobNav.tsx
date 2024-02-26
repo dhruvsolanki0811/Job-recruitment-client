@@ -82,14 +82,14 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
     <>
       {(jobtype.type === "Users" || jobtype.type === "Applied") && (
         <>
-          <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 h-[5.8rem]">
+          <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 p-5">
             <div className="head-filter">{jobtype.name}</div>
           </div>
         </>
       )}
       {(jobtype.type === "Login" || jobtype.type === "User Signin") && (
         <>
-          <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 h-[5rem]">
+          <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 p-4">
             <div className="head-filter">{jobtype.name}</div>
           </div>
         </>
@@ -201,7 +201,7 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
         jobtype.type == "Company" ||
         jobtype.type == "Connections") && (
         <>
-          <div className="filters-tab w-full flex gap-4 items-center ps-5 pe-5 h-[4.7rem]">
+          <div className="filters-tab w-full flex gap-4 items-center ps-5 pe-5 p-5">
             <div className="head-filter">{jobtype.name}</div>
           </div>
         </>
@@ -209,9 +209,9 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
 
       {jobtype.type == "Single User" && (
         <>
-          <div className="filters-tab w-full flex gap-4 items-center ps-5 pe-5 h-[3.2rem]">
+          <div className="filters-tab w-full flex gap-4 items-center ps-5 pe-5 p-5">
             <div className="username-container flex gap-3    items-center">
-              <div className=" h-8 w-6">
+              <div className=" h-8 w-8">
                 <img
                   className=" object-cover overflow-hidden rounded-full h-full"
                   src={
@@ -229,7 +229,7 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
 
       {jobtype.type == "User Profile" && (
         <>
-          <div className="filters-tab w-full flex gap-4 items-center ps-5 pe-5 h-[3.2rem]">
+          <div className="filters-tab w-full flex gap-4 items-center ps-5 pe-5 p-5">
             <div className="username-container flex gap-3    items-center">
               {jobtype?.name}
             </div>

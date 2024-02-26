@@ -5,8 +5,9 @@ import "./JobDescriptionPage.css";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
 import { useParams } from "react-router-dom";
 import {  useUserAuthStore } from "../../store/store";
-import { formatTimestampToDDMonthYYYY } from "../../utils.ts/dateutils";
+import { formatTimestampToDDMonthYYYY } from "../../utils/dateutils";
 import {  useApplyJob, useFetchSingleJob, useFetchStatusOfApplication } from "../../hooks/useJobData";
+import DevIcon from "../../components/Devicon/Devicon";
 
 function JobDescriptionPage() {
   const { id } = useParams();
@@ -90,7 +91,8 @@ function JobDescriptionPage() {
                   <div className="job-skills mt-2 flex flex-wrap items-center w-full gap-[9px] text-black">
                     {jobPage?.skills_required.map((skill) => {
                       return (
-                        <div className="skills text-[11px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+                        <div className="skills flex items-center gap-1 pt-1 pb-1 text-[12px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+                         <DevIcon skillName={skill}></DevIcon>
                           {skill}
                         </div>
                       );

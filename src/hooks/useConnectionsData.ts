@@ -50,7 +50,6 @@ export const useFetchConnectionStatus = (
 export const useHandleRejection = (userId: string) => {
  const{user}= useUserAuthStore()
   const removeConnection = async (targetUser: string) => {
-    console.log(targetUser)
     const response = await axiosInstance.delete(
       `/connections/delete/${targetUser}`,
       {

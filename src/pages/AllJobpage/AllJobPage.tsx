@@ -10,7 +10,7 @@ import "./AllJobPage.css";
 import { useNavigate } from "react-router-dom";
 import {  useUserAuthStore } from "../../store/store";
 import { useFetchAllJobs } from "../../hooks/useJobData";
-import { isFilterApplied } from "../../utils.ts/filterutils";
+import { isFilterApplied } from "../../utils/filterutils";
 import { useFilterStore } from "../../store/FilterStore";
 import { useEffect } from "react";
 

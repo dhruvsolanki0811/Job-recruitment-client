@@ -168,18 +168,14 @@ function OrganizationSignin({}: OrganizationSigninProps) {
       <div className="main-wrapper">
         <Sidebar></Sidebar>
         <div className="box-signin content-wrapper flex flex-col ">
-          <div className="nav-section mt-6">
+          <div className="nav-section">
             <JobNav
-              jobtype={{ type: "User Signin", name: "Organization Signin" }}
+              jobtype={{ type: "User Signin", name: "Fill the below form to create a JobCom Profile" }}
             ></JobNav>
             <div className="login-container flex flex-col items-center h-full ms-[2.8rem] me-[2rem]">
               <div className=" flex flex-col items-center w-[25rem] ">
                 <div className="slider-login flex justify-between w-full">
-                  <div
-                    className={`header-org flex justify-center items-center cursor-pointer `}
-                  >
-                    Fill the below form to create a JobCom Profile
-                  </div>
+                  
                 </div>
                 {loader ? (
                   <Loader></Loader>

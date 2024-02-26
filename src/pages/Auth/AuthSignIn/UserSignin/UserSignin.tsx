@@ -8,6 +8,7 @@ import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
+import DevIcon from "../../../../components/Devicon/Devicon";
 interface SeekerFormData {
   username: string;
   firstname: string;
@@ -192,7 +193,7 @@ function UserSignin() {
         <Sidebar></Sidebar>
 
         <div className="box-signin content-wrapper flex flex-col ">
-          <div className="nav-section mt-6">
+          <div className="nav-section  ">
             <JobNav
               jobtype={{ type: "User Signin", name: "User Signin" }}
             ></JobNav>
@@ -202,7 +203,7 @@ function UserSignin() {
               <form
                 method="POST"
                 onSubmit={handleSubmit}
-                className="login-box flex flex-col items-center  w-[25rem] ms-3 me-3 "
+                className="login-box flex mt-2 mb-3 flex-col items-center  w-[25rem] ms-3 me-3 "
               >
                 <input
                   type="text"
@@ -288,6 +289,7 @@ function UserSignin() {
                       className="flex gap-2 items-center primary-text ps-2 pe-2 border-[0.2px] border-solid border-[#888c91] rounded-[10px] hover:bg-[#13883e] hover:text-white"
                       key={index}
                     >
+                      <DevIcon skillName={skill} ></DevIcon>
                       {skill}
                       <div
                         className="cancel-button cursor-pointer"

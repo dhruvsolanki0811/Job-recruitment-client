@@ -2,7 +2,8 @@ import "./Jobcard.css";
 import orgPlaceHolder from "../../assets/placeholder-organization.png";
 import { useNavigate } from "react-router-dom";
 import { Job } from "../../types/types" ;
-import { formatTimestampToDDMonthYYYY } from "../../utils.ts/dateutils";
+import { formatTimestampToDDMonthYYYY } from "../../utils/dateutils";
+import DevIcon from "../Devicon/Devicon";
 function Jobcard({ job }: { job: Job }) {
   const navigate = useNavigate();
   
@@ -19,7 +20,7 @@ function Jobcard({ job }: { job: Job }) {
               src={
                 `https://res.cloudinary.com/dlkqz4nqp/image/upload/v1/${job.organization_profile_pic}`
               }
-              className="h-10 w-12 rounded-full object-contain"
+              className="h-12 w-12 rounded-full object-contain"
               alt=""
             />
           ) : (
@@ -45,9 +46,10 @@ function Jobcard({ job }: { job: Job }) {
             {(job.skills_required.length < 3
               ? job.skills_required
               : job.skills_required.slice(0, 3)
-            ).map((skill) => {
+            ).map((skill,i) => {
               return (
-                <div className="skills text-[11px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+                <div key={i } className="skills flex gap-1 items-center text-[12px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+                  <DevIcon skillName={skill}></DevIcon>
                   {skill}
                 </div>
               );

@@ -5,7 +5,6 @@ export function isFilterApplied(filter:Filter) {
     if (Object.keys(filter).length === 0 ){
         return false
     }
-    console.log(filter)
     if (filter.search && filter.search === "") {
         return false;
     }

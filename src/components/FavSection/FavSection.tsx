@@ -79,9 +79,9 @@ function FavSection({ page }: pageType) {
                   return 0.5 - randNum;
                 })
                 .slice(0, 3)
-                .map((seeker: any) => {
+                .map((seeker: any,i) => {
                   return (
-                    <>
+                    <div key={i}>
                       <div
                         onClick={() => {
                           navigate(`/users/${seeker.username}`);
@@ -105,7 +105,7 @@ function FavSection({ page }: pageType) {
                       <div className="people-desc color-lgt-grey w-full text-[10px] ps-2 pe-2 mb-1">
                         {seeker.description}
                       </div>
-                    </>
+                    </div>
                   );
                 })
             ) : (
@@ -137,9 +137,9 @@ function FavSection({ page }: pageType) {
                 })
                 .slice(0, 3)
               
-              .map((org: any) => {
+              .map((org: any,i) => {
                 return (
-                  <>
+                  <div key={i}>
                     <div
                       onClick={() => {
                         navigate(`/company/${org.username}`);
@@ -163,7 +163,7 @@ function FavSection({ page }: pageType) {
                     <div className="people-desc color-lgt-grey w-full text-[10px] ps-2 pe-2 mb-1">
                       {org.overview}
                     </div>
-                  </>
+                    </div>
                 );
               }):<></>}
             </div>

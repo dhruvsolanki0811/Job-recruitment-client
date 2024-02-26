@@ -8,8 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
 import { useUserAuthStore } from "../../store/store";
 import orgPlaceHolder from "../../assets/placeholder-organization.png";
-import { formatTimestampToDDMonthYYYY } from "../../utils.ts/dateutils";
+import { formatTimestampToDDMonthYYYY } from "../../utils/dateutils";
 import { useFetchOrganizationJobs } from "../../hooks/useJobData";
+import DevIcon from "../../components/Devicon/Devicon";
 
 function OrganizationJobPosted() {
 
@@ -50,7 +51,7 @@ function OrganizationJobPosted() {
                      {(job.organization_profile_pic!=null)?
                      <img
                      src={"https://res.cloudinary.com/dlkqz4nqp/image/upload/v1/"+job.organization_profile_pic}
-                     className="h-10 w-12 rounded-full object-contain"
+                     className="h-12 w-12 rounded-full object-contain"
                      alt=""
                    />:<img
                        src={orgPlaceHolder}
@@ -71,14 +72,15 @@ function OrganizationJobPosted() {
                      <div className="job-skills mt-2 flex items-center w-full gap-[9px] text-black">
                        {(job.skills_required.length<3?job.skills_required:job.skills_required.slice(0,3)).map((skill) => {
                          return (
-                           <div className="skills text-[11px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+                           <div className="skills flex gap-1 items-center text-[12px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+                             <DevIcon skillName={skill}></DevIcon>
                              {skill}
                            </div>
                          );
                        })}
            
                        {(job.skills_required.length>3) && <div className="skills text-[11px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
-                         {job.skills_required.length-3}
+                         +{job.skills_required.length-3}
                        </div>}
                      </div>
                    </div>

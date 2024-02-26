@@ -8,7 +8,7 @@ import { CiMail } from "react-icons/ci";
 import unknown from "../../assets/placeholder-organization.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
-import { formatTimestampToDDMonthYYYY } from "../../utils.ts/dateutils";
+import { formatTimestampToDDMonthYYYY } from "../../utils/dateutils";
 import { useFetchOrganizationJobs } from "../../hooks/useJobData";
 import { useFetchSingleOrganization } from "../../hooks/useOrganizationData";
 

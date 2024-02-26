@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import {  useUserAuthStore } from "../../store/store";
 import { useFetchSingleJobSeeker } from "../../hooks/useJobseekerData";
 import { useCreateConnection, useFetchConnectionStatus, useHandleRejection } from "../../hooks/useConnectionsData";
+import DevIcon from "../../components/Devicon/Devicon";
 
 function UserDescriptionPage() {
     const {username }=useParams()
@@ -71,7 +72,8 @@ function UserDescriptionPage() {
               <div className="job-skills mt-2 flex flex-wrap justify-center items-center w-[70%] mt-5 gap-[9px] text-black">
                 {jobSeeker?.skills.map((skill) => {
                   return (
-                    <div className="skills text-[11px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+                    <div className="skills flex items-center gap-1 text-[12px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+                      <DevIcon skillName={skill}></DevIcon>
                       {skill}
                     </div>
                   );

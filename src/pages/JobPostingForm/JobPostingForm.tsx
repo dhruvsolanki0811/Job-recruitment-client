@@ -3,6 +3,7 @@ import { FavSection, Sidebar } from "../../components/components";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
 import {  useUserAuthStore } from "../../store/store";
 import { useCreateJob } from "../../hooks/useJobData";
+import DevIcon from "../../components/Devicon/Devicon";
 
 function JobPostingForm() {
   const {user}=useUserAuthStore()
@@ -118,6 +119,7 @@ function JobPostingForm() {
                 <div className="flex w-full gap-3 flex-wrap">
                   {jobDetails.skills.map((skill, index) => (
                     <div className="flex gap-2 items-center primary-text ps-2 pe-2 border-[0.2px] border-solid border-[#888c91] rounded-[10px] hover:bg-[#13883e] hover:text-white" key={index}>
+                      <DevIcon skillName={skill}></DevIcon>
                       {skill}
                       <div
                         className="cancel-button cursor-pointer"
