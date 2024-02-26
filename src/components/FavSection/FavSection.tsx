@@ -102,7 +102,7 @@ function FavSection({ page }: pageType) {
                           {seeker.username}
                         </div>
                       </div>
-                      <div className="people-desc color-lgt-grey w-full text-[10px] ps-2 pe-2 mb-1">
+                      <div className="people-desc color-lgt-grey w-full text-[10px] mt-2 pe-2 mb-1">
                         {seeker.description}
                       </div>
                     </div>
@@ -160,7 +160,7 @@ function FavSection({ page }: pageType) {
                         {org.name}
                       </div>
                     </div>
-                    <div className="people-desc color-lgt-grey w-full text-[10px] ps-2 pe-2 mb-1">
+                    <div className="people-desc color-lgt-grey w-full text-[10px] mt-2 pe-2 mb-1">
                       {org.overview}
                     </div>
                     </div>
