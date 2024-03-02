@@ -27,16 +27,16 @@ function AppliedJob() {
               <JobNav
                 jobtype={{ type: "Applied", name: "Jobs you've applied" }}
               ></JobNav>
-              <div className="section-jobtype w-full h-7 ps-5 pe-5 flex">
+              <div className="section-jobtype w-full h-9 ps-5 pe-5 flex">
                 <div
                   onClick={() => navigate("/")}
-                  className="jobtype-container  cursor-pointer primary-text flex justify-center"
+                  className="jobtype-container  cursor-pointer primary-text flex justify-center h-full items-center "
                 >
                   Jobs
                 </div>
                 <div
                   onClick={() => navigate("/applied")}
-                  className="jobtype-container all-section cursor-pointer primary-text flex justify-center"
+                  className="jobtype-container all-section cursor-pointer primary-text flex justify-center h-full items-center"
                 >
                   {user.userType === "organization" ? "Job Posted" : "Applied"}
                 </div>

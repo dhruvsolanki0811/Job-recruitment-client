@@ -1,9 +1,12 @@
 import "./Sidebar.css";
 import logo from "../../assets/logo.png";
-import unknown from "../../assets/unknown.png";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
+import { TbUserQuestion } from "react-icons/tb";
 
-import { PiSuitcaseSimpleDuotone, PiHandshakeDuotone } from "react-icons/pi";
+import {
+  PiSuitcaseSimpleDuotone,
+  PiHandshake,
+} from "react-icons/pi";
 import { IoPeopleOutline } from "react-icons/io5";
 import { HiOutlineBuildingOffice } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
@@ -16,32 +19,32 @@ function Sidebar() {
   return (
     <>
       <div className="side-section ">
-        <div className="logo flex flex-nowrap  w-full">
-          <div className="logo-container h-24 ob">
+        
+          <div className="logo-container flex  h-[7rem] ob">
             <img
               className="logo object-cover overflow-hidden h-full"
               src={logo}
             ></img>
-          </div>
+          
         </div>
         <div className="nav-items flex flex-col w-full">
           <div
             onClick={() => navigate("/")}
-            className="nav-item btn-joblist flex items-center gap-1 text-[14px]  font-medium	m-3"
+            className="nav-item hover:bg-[#22C55E] hover:text-white flex items-center gap-2 text-[16px]  font-medium	p-2 m-1"
           >
             <PiSuitcaseSimpleDuotone className="nav-items-logo"></PiSuitcaseSimpleDuotone>
             JobList
           </div>
           <div
             onClick={() => navigate("/users")}
-            className="nav-item btn-joblist flex items-center gap-1 text-[14px] font-medium m-3 "
+            className="nav-item hover:bg-[#22C55E] hover:text-white flex items-center gap-2 text-[16px] font-medium p-2 m-1 "
           >
             <IoPeopleOutline className="nav-items-logo"></IoPeopleOutline>
             People
           </div>
           <div
             onClick={() => navigate("/company")}
-            className="nav-item btn-joblist flex items-center gap-1 text-[14px] font-medium m-3"
+            className="nav-item hover:bg-[#22C55E] hover:text-white flex items-center gap-2 text-[16px] font-medium p-2 m-1"
           >
             <HiOutlineBuildingOffice className="nav-items-logo"></HiOutlineBuildingOffice>
             Company
@@ -49,9 +52,9 @@ function Sidebar() {
           {user.userType == "jobseeker" ? (
             <div
               onClick={() => navigate("/connections/connections")}
-              className="nav-item btn-joblist flex items-center gap-1 text-[14px] font-medium m-3"
+              className="nav-item hover:bg-[#22C55E] hover:text-white flex items-center gap-2 text-[16px] font-medium p-2 m-1"
             >
-              <PiHandshakeDuotone className="nav-items-logo"></PiHandshakeDuotone>
+              <PiHandshake className="nav-items-logo text-[22px]"></PiHandshake>
               Connections
             </div>
           ) : (
@@ -60,7 +63,7 @@ function Sidebar() {
           {user.userType == "organization" ? (
             <div
               onClick={() => navigate("/organization/jobposting")}
-              className="nav-item btn-joblist flex items-center gap-1 text-[14px] font-medium m-3"
+              className="nav-item hover:bg-[#22C55E] hover:text-white flex items-center gap-2 text-[16px] font-medium p-2 m-1"
             >
               <AiOutlineAppstoreAdd className="nav-items-logo"></AiOutlineAppstoreAdd>
               Post a Job
@@ -68,40 +71,37 @@ function Sidebar() {
           ) : (
             <></>
           )}
-        </div>
-
-        <div
-          onClick={() => {
-            user.userType
-              ? navigate(`/${user.userType}/us`)
-              : navigate("/login");
-          }}
-          className="profile-name  flex  gap-1 items-center  justify-space-between me-5 ms-1 mt-2  flex-wrap   "
-        >
-          <img
-            className="profile-icon cursor-pointer ms-1 h-[10px]"
-            src={
-              user.userPic
-                ? `${user.userPic}`
-                : unknown
-            }
-          ></img>
-          <div className="username-sec text-sm cursor-pointer font-medium">
-            {user.userName ? user.userName : "Login"}
-          </div>
-        </div>
-
-        {user.userId ? (
           <div
-            onClick={() => logout()}
-            className="nav-item btn-joblist flex items-center gap-1  mt-4 text-[14px] font-medium m-3"
+            onClick={() => {
+              user.userType
+                ? navigate(`/${user.userType}/us`)
+                : navigate("/login");
+            }}
+            className="nav-item hover:bg-[#22C55E] hover:text-white flex items-center gap-2 text-[16px] font-medium p-2 m-1"
           >
-            <IoIosLogOut className="nav-items-logo"></IoIosLogOut>
-            Logout
+            {user.userPic?<img
+              className="cursor-pointer rounded-full w-[1.5rem] h-[1.4rem]"
+              src={`${user.userPic}` }
+            ></img>:
+        <TbUserQuestion className="nav-items-logo"/>
+
+            }
+            <div className="username-sec text-[16px] cursor-pointer font-medium">
+              {user.userName ? user.userName : "Login"}
+            </div>
           </div>
-        ) : (
-          <></>
-        )}
+          {user.userId ? (
+            <div
+              onClick={() => logout()}
+              className="nav-item hover:bg-[#22C55E] hover:text-white flex items-center gap-2   text-[16px] font-medium p-2 m-1"
+            >
+              <IoIosLogOut className="nav-items-logo"></IoIosLogOut>
+              Logout
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
     </>
   );

@@ -32,10 +32,10 @@ function AllJobPage() {
         <div className="content-wrapper flex flex-col ">
           <div className="nav-section">
             <JobNav jobtype={{ type: "All Jobs", name: "Jobs" }}></JobNav>
-            <div className="section-jobtype w-full h-7 ps-5 pe-5 flex">
+            <div className="section-jobtype w-full h-9 ps-5 pe-5 flex ">
               <div
                 onClick={() => navigate("/")}
-                className="jobtype-container cursor-pointer all-section primary-text flex justify-center"
+                className="jobtype-container cursor-pointer all-section primary-text flex justify-center items-center"
               >
                 Jobs
               </div>
@@ -49,7 +49,7 @@ function AllJobPage() {
                     }`
                   )
                 }
-                className="jobtype-container cursor-pointer primary-text flex justify-center"
+                className="jobtype-container cursor-pointer primary-text flex justify-center  items-center"
               >
                 {user.userType === "organization" ? "Job Posted" : "Applied"}
               </div>

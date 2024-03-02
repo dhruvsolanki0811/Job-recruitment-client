@@ -85,17 +85,17 @@ function FilterForm() {
   }
   return (
     <>
-      <form className="p-4 flex flex-col gap-1">
+      <form className="flex ps-2 pe-2 pt-3 pb-3 flex-col gap-1">
         <input
           type="text"
           name="role"
           placeholder="Role"
           value={filters.role}
           onChange={handleInputChange}
-          className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+          className="w-full text-[14px] h-9 border-[2px] p-2 rounded"
         />
 
-        <label className="block mb-2 text-xs mt-2">
+        <label className="block mb-2 text-[13px] mt-2">
           Required Experience:
           <div className="flex items-center mt-2">
             <input
@@ -108,12 +108,12 @@ function FilterForm() {
               className="w-full appearance-none h-1  rounded-full bg-gray-300 outline-none"
             />
           </div>
-          <div className="ml-2 text-xs mt-2">
+          <div className=" text-[13px] mt-2">
             {filters.required_experience[1]} years
           </div>
         </label>
 
-        <label className="block mb-2 text-xs mt-2">
+        <label className="block mb-2 text-[13px] mt-2">
           Salary:
           <div className="flex items-center mt-2">
             <input
@@ -123,17 +123,17 @@ function FilterForm() {
               max={100}
               value={filters.salary[1]}
               onChange={handleSalaryChange}
-              className="w-full appearance-none h-1 rounded-full bg-gray-300 outline-none"
+              className="w-full appearance-none h-1 rounded-full bg-gray-300 outline-none "
             />
           </div>
-          <div className="ml-2 mt-2">${filters.salary[1]}Lpa</div>
+          <div className="text-[13px] mt-2">${filters.salary[1]}Lpa</div>
         </label>
 
-        <div className="btn-wrapper flex gap-2">
-          <button className="submit-btn text-xs" onClick={handleSubmit}>
+        <div className="btn-wrapper flex gap-2 mt-2">
+          <button className="submit-btn text-[13px] font-medium	" onClick={handleSubmit}>
             Apply
           </button>
-          <button className="submit-btn text-xs" onClick={clearFilters}>
+          <button className="submit-btn text-[13px]  font-medium	" onClick={clearFilters}>
             Clear
           </button>
         </div>

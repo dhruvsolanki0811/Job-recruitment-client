@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import {  useState } from "react";
 import { useFetchAllJobseeker } from "../../hooks/useJobseekerData";
 import { useFetchAllOrganizations } from "../../hooks/useOrganizationData";
+import { TbUserQuestion } from "react-icons/tb";
+import { JobSeeker } from "../../types/types";
 type pageType = {
   page: "Users" | "All Job" | "Company" | "Connections";
 };
@@ -36,19 +38,22 @@ function FavSection({ page }: pageType) {
             }}
             className="username-container cursor-pointer flex gap-1    items-center"
           >
-            <div className=" h-8 w-6">
-              <img
+            <div className=" h-5 w-6">
+              {user.userPic?<img
                 className=" object-cover overflow-hidden h-full"
-                src={user.userName == null ? logo : `${user.userPic}`}
-              ></img>
+                src={`${user.userPic}`}
+              ></img>:<TbUserQuestion className="nav-items-logo"/>
+            }
             </div>
-            {user.userName ? user.userName : "login"}
+            <div className="text-[14px] ">
+            {user.userName ? user.userName : "Login"}
+            </div>
           </div>
           <IoIosNotificationsOutline className="text-[20px] "></IoIosNotificationsOutline>
         </div>
         {page === "All Job" && (
-          <div className="filter-section w-full flex flex-col  mt-1">
-            <div className="text-holder  text-xs font-medium ms-3 me-3">
+          <div className="filter-section w-full flex flex-col  mt-3">
+            <div className="text-holder  text-[14px] font-medium ms-3 me-3">
               Filters
             </div>
             <FilterForm></FilterForm>
@@ -60,12 +65,12 @@ function FavSection({ page }: pageType) {
             onClick={() => {
               navigate("/");
             }}
-            className="text-holder cursor-pointer flex justify-between items-center text-xs font-medium ms-3 me-3"
+            className="text-holder cursor-pointer flex justify-between items-center text-[14px] font-medium ms-3 me-3 "
           >
             People on JobCom
             <FaArrowRightLong />
           </div>
-          <div className="user-desc flex flex-col gap-[2px] w-full ps-2 pe-2">
+          <div className="user-desc flex flex-col gap-[2px] w-full ps-2 pe-2 mt-1">
             {jobseekers ? (
               jobseekers
                 .filter((seeker) => {
@@ -79,18 +84,18 @@ function FavSection({ page }: pageType) {
                   return 0.5 - randNum;
                 })
                 .slice(0, 3)
-                .map((seeker: any,i) => {
+                .map((seeker: JobSeeker,i) => {
                   return (
-                    <div key={i}>
+                    <div key={i} >
                       <div
                         onClick={() => {
                           navigate(`/users/${seeker.username}`);
                         }}
                         className="profile-pic-follow cursor-pointer flex flex-between items-center"
                       >
-                        <div className="profile-pic  flex flex-between justify-center items-center h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">
+                        <div className="profile-pic  flex flex-between justify-center items-center h-[2.1rem] w-[2.1rem] mt-2 overflow-hidden border-[1px] rounded-full">
                           <img
-                            className="   h-8 "
+                            className="object-contain h-full w-full"
                             src={
                               seeker.profile_pic == null
                                 ? logo
@@ -98,11 +103,11 @@ function FavSection({ page }: pageType) {
                             }
                           ></img>
                         </div>
-                        <div className="people-username text-xs mt-3 ms-2">
-                          {seeker.username}
+                        <div className="people-username text-[12px] mt-2 ms-[4px]">
+                          {seeker.firstname} {seeker.lastname} 
                         </div>
                       </div>
-                      <div className="people-desc color-lgt-grey w-full text-[10px] mt-2 pe-2 mb-1">
+                      <div className="people-desc color-lgt-grey w-full text-[11px] mt-2 pe-2 mb-1">
                         {seeker.description}
                       </div>
                     </div>
@@ -119,12 +124,12 @@ function FavSection({ page }: pageType) {
               onClick={() => {
                 navigate(`/company`);
               }}
-              className="text-holder cursor-pointer flex mb-2 justify-between items-center text-xs font-medium ms-3 me-3"
+              className="text-holder cursor-pointer flex justify-between items-center text-[14px] font-medium ms-3 me-3"
             >
               Organizations on JobCom
               <FaArrowRightLong />
             </div>
-            <div className="user-desc flex flex-col gap-[2px] w-full ps-2 pe-2">
+            <div className="user-desc flex flex-col gap-[2px] w-full ps-2 pe-2 mt-1 ps-3">
               {organizations?organizations.filter((seeker) => {
                   if (user.userId == seeker.id) {
                     return false;
@@ -146,9 +151,9 @@ function FavSection({ page }: pageType) {
                       }}
                       className="profile-pic-follow cursor-pointer mt-1 flex flex-between items-center"
                     >
-                      <div className="profile-pic  flex flex-between justify-center items-center h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">
+                      <div className="profile-pic h-[2.1rem] w-[2.1rem] flex flex-between justify-center items-center h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">
                         <img
-                          className=" object-contain  h-8 "
+                          className=" object-contain  h-full w-full"
                           src={
                             org.profile_pic == null
                               ? placeHolder
@@ -156,11 +161,11 @@ function FavSection({ page }: pageType) {
                           }
                         ></img>
                       </div>
-                      <div className="people-username text-xs mt-3 ms-2">
+                      <div className="people-username text-[12px] mt-2 ms-2">
                         {org.name}
                       </div>
                     </div>
-                    <div className="people-desc color-lgt-grey w-full text-[10px] mt-2 pe-2 mb-1">
+                    <div className="people-desc color-lgt-grey w-full text-[11px] mt-2 pe-2 mb-1">
                       {org.overview}
                     </div>
                     </div>

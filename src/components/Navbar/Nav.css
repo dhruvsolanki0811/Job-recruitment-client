@@ -4,11 +4,11 @@
   overflow: hidden;
 }
 .search-box {
-  height: 1.6rem;
+  height: 1.8rem;
   width: 95%;
   outline: none;
   border: none;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .filters-tab {

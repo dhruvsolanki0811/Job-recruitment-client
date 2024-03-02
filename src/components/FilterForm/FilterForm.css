@@ -1,6 +1,7 @@
 .submit-btn {
   padding-inline: 10px;
-  padding-block: 4px;
+  padding-block: 3px;
   border-radius: 10px;
-  background-color: rgba(38, 118, 248, 0.5);
+  background-color:#22C55E;
+  color:white ;
 }

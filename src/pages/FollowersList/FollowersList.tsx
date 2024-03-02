@@ -26,12 +26,12 @@ function FollowersList() {
             <JobNav
               jobtype={{ type: "Connections", name: "Connections" }}
             ></JobNav>
-            <div className="section-jobtype w-full h-7 ps-5 pe-5 flex">
+            <div className="section-jobtype w-full h-9 ps-5 pe-5 flex  ">
               <div
                 onClick={() => navigate("/connections/connections")}
                 className={`jobtype-container cursor-pointer ${
                   page == "connections" && "all-section"
-                } primary-text flex justify-center`}
+                } primary-text flex justify-center items-center h-full`}
               >
                 Connections
               </div>
@@ -43,7 +43,7 @@ function FollowersList() {
                 </div> */}
               <div
                 onClick={() => navigate("/connections/received")}
-                className={`jobtype-container cursor-pointer  primary-text flex justify-center ${
+                className={`jobtype-container cursor-pointer  primary-text flex justify-center items-center h-full ${
                   page == "received" && "all-section"
                 }`}
               >

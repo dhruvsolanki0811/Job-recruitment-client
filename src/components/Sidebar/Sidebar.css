@@ -17,6 +17,7 @@
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 400;
+  border: 1px solid #22C55E;
 }
 
 .nav-items-logo {

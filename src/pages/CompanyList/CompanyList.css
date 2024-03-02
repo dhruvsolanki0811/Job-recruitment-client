@@ -8,7 +8,6 @@
   align-items: center;
   flex-direction: column;
   font-size: 14.5px;
-  gap: 10px;
 }
 .company-grid {
   justify-content: center;

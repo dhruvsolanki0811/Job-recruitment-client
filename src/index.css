@@ -69,7 +69,7 @@
 }
 
 
-@media only screen and (max-width: 560px) {
+@media only screen and (max-width: 600px) {
   .fav-section{
     display: none;
   }
@@ -86,5 +86,8 @@
   }
   .footer-bar{
     display: block;
+  }
+  .nav-item{
+    border: none;
   }
 }

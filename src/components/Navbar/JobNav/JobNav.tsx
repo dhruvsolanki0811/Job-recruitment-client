@@ -97,7 +97,7 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
       {jobtype.type === "All Jobs" && (
         <>
           <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 h-[3rem]">
-            <div className="head-filter">{jobtype.name}</div>
+            <div className="head-filter text-[16px]">{jobtype.name}</div>
             <div className="flex  gap-3">
               {/* Modal Trigger Button */}
               <div
@@ -180,7 +180,7 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
             </div>
           </div>
           {jobtype.type === "All Jobs" && (
-            <div className="search-section w-full h-19 ps-5 pt-1 pb-2 pe-5  ">
+            <div className="search-section w-full h-19 ps-5 pt-3 pb-3 pe-5  ">
               <div className="input-search-container w-full flex justify-center items-center roundedfull ps-1 pe-1 ">
                 <input
                   type="text"

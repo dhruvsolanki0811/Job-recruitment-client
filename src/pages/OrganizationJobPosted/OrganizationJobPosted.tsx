@@ -27,16 +27,16 @@ function OrganizationJobPosted() {
           <div className="content-wrapper flex flex-col ">
             <div className="nav-section">
               <JobNav jobtype={{type:"Applied",name:"Jobs you have posted "}}></JobNav>
-              <div className="section-jobtype w-full h-7 ps-5 pe-5 flex">
+              <div className="section-jobtype w-full h-9 ps-5 pe-5 flex">
                 <div
                   onClick={() => navigate("/")}
-                  className="jobtype-container  cursor-pointer primary-text flex justify-center"
+                  className="jobtype-container  cursor-pointer primary-text flex justify-center items-center h-full"
                 >
                   Jobs
                 </div>
                 <div
                   onClick={() => navigate("/jobposted")}
-                  className="jobtype-container all-section cursor-pointer primary-text flex justify-center"
+                  className="jobtype-container all-section cursor-pointer primary-text flex justify-center items-center h-full"
                 >
                   {'Job Posted'}
                 </div>
@@ -46,29 +46,36 @@ function OrganizationJobPosted() {
             <Loader></Loader>:<div className="job-list flex flex-col ">
               {jobList&&jobList.map((job) => (
                  <>
-                 <div  className="card-container w-full h-20 flex pt-2 pb-2 justify-between cursor-pointer">
-                   <div onClick={()=>navigate(`/job/${job.id}`)}    className="org-logo w-20 h-full flex justify-center items-center p-2 overflow-hidden  ">
+                 <div  className="card-container w-full min-h-[6rem] mt-2 flex flex-nowrap pt-2 pb-2 ps-1 pe-1  cursor-pointer border-b-[1px] border-b-solid border-b-[#22C55E]">
+                   <div onClick={()=>navigate(`/job/${job.id}`)}    className="org-logo  h-full flex justify-center items-center ">
+                   <div className="logo-container h-[50px] w-[50px] overflow-hidden ">
                      {(job.organization_profile_pic!=null)?
                      <img
                      src={"https://res.cloudinary.com/dlkqz4nqp/image/upload/v1/"+job.organization_profile_pic}
-                     className="h-12 w-12 rounded-full object-contain"
+                     className="h-full w-full rounded-full fill"
                      alt=""
                    />:<img
                        src={orgPlaceHolder}
-                       className="h-10 w-12 rounded-full object-contain"
+                       className="h-full w-full rounded-full fill"
                        alt=""
                      />}
+
                    </div>
-                   <div className="job-desc flex flex-col h-full gap-[1px]">
+                   </div>
+                   <div className="job-desc flex flex-col h-full gap-[1px] ps-2 ">
                      
-                     <div className="title-sec flex text-xs gap-1 items-center ">
+                     <div className="title-sec flex text-[14px] gap-1 items-center ">
                        <div className="title ">{job.role}</div>
-                       <div className="org-name w- text-xs color-lgt-grey word-wrap-overflow w-24">at {job.organization_name}</div>
+                       <div className="org-name w- text-[14px] color-lgt-grey word-wrap-overflow w-24">at {job.organization_name}</div>
+                       <div onClick={()=>{navigate(`/applicantslist/${job.id}`)}} className="follow-btn text-xs ps-2 pe-2 border-[1px] rounded border-solid hover:border-black  cursor-pointer">
+                        Applicants
+                    </div>
                      </div>
-                     <div className="about-job flex text-[11px] font-thin  gap-2 color-lgt-grey word-wrap-overflow">
+                     <div className="about-job flex text-[13px] font-thin  gap-2 color-lgt-grey truncate ">
                        {job.employee_type} • ₹{job.salary}Lpa • {job.required_experience}Y experience • posted {formatTimestampToDDMonthYYYY(job.created_at)} 
 
                      </div>
+
                      <div className="job-skills mt-2 flex items-center w-full gap-[9px] text-black">
                        {(job.skills_required.length<3?job.skills_required:job.skills_required.slice(0,3)).map((skill) => {
                          return (
@@ -79,17 +86,11 @@ function OrganizationJobPosted() {
                          );
                        })}
            
-                       {(job.skills_required.length>3) && <div className="skills text-[11px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+                       {(job.skills_required.length>3) && <div className="skills text-[12px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
                          +{job.skills_required.length-3}
                        </div>}
                      </div>
                    </div>
-                   
-                <div onClick={()=>{navigate(`/applicantslist/${job.id}`)}}className="job-bookmark flex h-full justify-center items-center me-2">
-                    <div className="follow-btn text-xs ps-2 pe-2 border-[1px] rounded border-solid hover:border-black  cursor-pointer">
-                    See Applicants
-                    </div>
-                </div>
                  </div>
                </>
               ))}
