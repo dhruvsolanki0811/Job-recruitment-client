@@ -20,11 +20,14 @@
 }
 .people-box {
   box-sizing: border-box;
-  min-width: 17rem;
-  max-width: 17rem;
-  height: 100px;
+  min-width: 20rem;
+  max-width: 20rem;
   border: 1px solid rgb(225 228 232);
   border-radius: 10px;
+  padding: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
 }
 
 .people-grid::-webkit-scrollbar {

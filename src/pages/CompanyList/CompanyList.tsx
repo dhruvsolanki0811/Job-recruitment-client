@@ -37,9 +37,9 @@ function CompanyList() {
                     }}
                     className="people-box cursor-pointer flex flex-col  ps-3"
                   >
-                    <div className="profile-pic  flex flex-between items-center h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">
+                    <div className="profile-pic  flex flex-between items-center h-[3rem] w-[3rem] mt-2 overflow-hidden border-[1px] rounded-full">
                       <img
-                        className=" object-cover  h-8 "
+                        className=" object-fill  h-full w-full"
                         src={
                           organization.profile_pic == null
                             ? placeHolder
@@ -47,10 +47,14 @@ function CompanyList() {
                         }
                       ></img>
                     </div>
-                    <div className="people-username text-xs mt-1">
-                      {organization.name}
+                    <div className="org-username text-[14px] mt-1">
+                        {organization.name} @{organization.username} 
                     </div>
-                    <div className="people-desc color-lgt-grey w-full text-[10px] pe-4 mb-1">
+                    <div className="org-desc text-[13px] mt-1 color-lgt-grey">
+                    {organization.location} 
+                    </div>
+                    
+                    <div className=" color-lgt-grey w-full text-[11px] pe-4 text-three-line mt-1">
                       {organization.overview}
                     </div>
                   </div>

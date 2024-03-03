@@ -14,7 +14,7 @@ function Jobcard({ job }: { job: Job }) {
         onClick={() => navigate(`/job/${job.id}`)}
         className="card-container w-full min-h-[6rem] mt-2 flex flex-nowrap pt-2 pb-2 ps-1 pe-1  cursor-pointer border-b-[1px] border-b-solid border-b-[#22C55E] "
       >
-        <div className="org-logo  h-full flex justify-center items-center  ">
+        <div className="org-logo  h-full flex justify-center mt-2 ms-1 ">
          <div className="logo-container h-[50px] w-[50px] overflow-hidden ">
           {job.organization_profile_pic != null ? (
             <img
@@ -40,7 +40,7 @@ function Jobcard({ job }: { job: Job }) {
               at {job.organization_name}
             </div>
           </div>
-          <div className="about-job flex text-[13px] font-thin  gap-2 color-lgt-grey word-wrap-overflow ">
+          <div className="about-job flex text-[13px] font-thin  gap-2 color-lgt-grey  ">
             {job.employee_type} • ₹{job.salary}Lpa • {job.required_experience}Y
             experience • posted {formatTimestampToDDMonthYYYY(job.created_at)}
             
