@@ -25,8 +25,7 @@ function FollowersList() {
   const pageType = page ? page : "";
   const {
     data: connections,
-    isLoading: loader,
-    isFetching,
+    isLoading: loader
   } = useFetchUsersConnections(pageType, userName);
 
   const navigate = useNavigate();
