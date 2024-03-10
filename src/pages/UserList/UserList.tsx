@@ -18,7 +18,7 @@ function UserList() {
 
   return (
     <>
-      <div className="main-wrapper scrollable-content flex-1">
+      <div className="main-wrapper flex-1">
         <Sidebar></Sidebar>
         <div className="people-content-wrapper flex flex-col ">
           <div className="nav-section">
@@ -28,7 +28,7 @@ function UserList() {
           {jsloader ? (
             <Loader></Loader>
           ) : jobseekers ? (
-            <div className="people-grid flex p-3  w-full ">
+            <div className="people-grid scrollable-content mb-[3.9rem] flex p-3 w-full ">
               {jobseekers
                 .filter((i) => {
                   return user.userName == null

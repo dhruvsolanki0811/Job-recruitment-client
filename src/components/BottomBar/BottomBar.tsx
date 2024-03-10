@@ -17,7 +17,7 @@ function BottomBar() {
   };
   return (
     <>
-      <footer className="footer-bar fixed bottom-[0] shadow-2xl  w-full bg-white ">
+      <footer className="footer-bar fixed h-[3.8rem] bottom-[0] shadow-2xl  w-full bg-white ">
           <div className="flex  justify-center gap-1">
             <div
               onClick={() => navigate("/")}

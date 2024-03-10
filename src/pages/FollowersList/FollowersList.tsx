@@ -67,7 +67,7 @@ function FollowersList() {
           {loader || handleConnectionLoading || handleRejectionLoading ? (
             <Loader></Loader>
           ) : (
-            <div className="people-grid scrollable-content flex p-3  w-full ">
+            <div className="people-grid scrollable-content mb-[3.9rem]  flex p-3  w-full ">
               {connections &&
                 connections.map((user: any) => (
                   <>

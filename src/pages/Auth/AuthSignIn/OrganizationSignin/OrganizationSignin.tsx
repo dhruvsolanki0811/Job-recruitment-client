@@ -180,7 +180,7 @@ function OrganizationSignin({}: OrganizationSigninProps) {
             ></JobNav>
           </div>
 
-          <div className="scrollable-content flex flex-col  items-center w-full    ">
+          <div className="scrollable-content mb-[3.9rem]  flex flex-col  items-center w-full    ">
             <div className="slider-login flex justify-between w-full"></div>
             {loader ? (
               <Loader></Loader>

@@ -206,7 +206,7 @@ function UserSignin() {
           {loader ? (
             <Loader></Loader>
           ) : (
-            <div className="scrollable-content overflow-hidden  flex flex-col  items-center w-full ">
+            <div className="scrollable-content mb-[3.9rem]  overflow-hidden  flex flex-col  items-center w-full ">
               <form
                 method="POST"
                 onSubmit={handleSubmit}
