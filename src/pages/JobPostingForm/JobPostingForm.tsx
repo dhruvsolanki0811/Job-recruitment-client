@@ -1,13 +1,13 @@
 import React, { ChangeEvent, useState } from "react";
-import { FavSection, Sidebar } from "../../components/components";
+import { FavSection, Sidebar, JobNav } from "../../components/components";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
-import {  useUserAuthStore } from "../../store/store";
+import { useUserAuthStore } from "../../store/store";
 import { useCreateJob } from "../../hooks/useJobData";
 import DevIcon from "../../components/Devicon/Devicon";
 
 function JobPostingForm() {
-  const {user}=useUserAuthStore()
-  const {mutate:create}=useCreateJob()
+  const { user } = useUserAuthStore();
+  const { mutate: create } = useCreateJob();
   const [jobDetails, setJobDetails] = useState({
     role: "",
     description: "",
@@ -19,7 +19,9 @@ function JobPostingForm() {
 
   const [inputListValue, setListValue] = useState("");
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setJobDetails((prevDetails) => ({
       ...prevDetails,
@@ -31,13 +33,12 @@ function JobPostingForm() {
     setListValue(e.target.value);
   };
 
-
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key ==='Enter' && inputListValue.trim() !== "") {
-      setJobDetails((prevDetails:any) => ({
+    if (e.key === "Enter" && inputListValue.trim() !== "") {
+      setJobDetails((prevDetails: any) => ({
         ...prevDetails,
         skills: [inputListValue, ...prevDetails.skills.slice(0, 14)],
-      }))
+      }));
       setListValue("");
     }
   };
@@ -52,24 +53,26 @@ function JobPostingForm() {
   const handleSubmit = () => {
     // Log the form details (you can replace this with your submission logic)
     create({
-      organization_id:user.userId,
-      role:jobDetails.role,
-      job_description:jobDetails.description,
-      required_experience:jobDetails.experience,
-      employee_type:jobDetails.type,
-      salary:jobDetails.salary,
-      skills_required:jobDetails.skills
-    })
+      organization_id: user.userId,
+      role: jobDetails.role,
+      job_description: jobDetails.description,
+      required_experience: jobDetails.experience,
+      employee_type: jobDetails.type,
+      salary: jobDetails.salary,
+      skills_required: jobDetails.skills,
+    });
     // .then((id)=>{navigate(`/job/${id}`)})
-    
   };
 
   return (
     <>
       <div className="main-wrapper">
         <Sidebar />
-        <div className="box-signin content-wrapper flex flex-col">
-          <div className="nav-section mt-6">
+        <div className="content-wrapper flex flex-col">
+          <div className="nav-section">
+            <JobNav jobtype={{ name: "Post a Job", type: "Login" }}></JobNav>
+          </div>
+          <div className="box-signin w-full scrollable-content  flex flex-col mt-5">
             <div className="login-container flex flex-col items-center h-full">
               <div className="login-box flex flex-col items-center w-[25rem]">
                 <div className="slider-login flex justify-between w-full">
@@ -118,7 +121,10 @@ function JobPostingForm() {
                 />
                 <div className="flex w-full gap-3 flex-wrap">
                   {jobDetails.skills.map((skill, index) => (
-                    <div className="flex gap-2 items-center primary-text ps-2 pe-2 border-[0.2px] border-solid border-[#888c91] rounded-[10px] hover:bg-[#13883e] hover:text-white" key={index}>
+                    <div
+                      className="flex gap-2 items-center primary-text ps-2 pe-2 border-[0.2px] border-solid border-[#888c91] rounded-[10px] hover:bg-[#13883e] hover:text-white"
+                      key={index}
+                    >
                       <DevIcon skillName={skill}></DevIcon>
                       {skill}
                       <div
@@ -139,16 +145,19 @@ function JobPostingForm() {
                   />
                 </div>
                 <div className="login-btn-wrapper">
-                  <button className="submit-btn text-xs hover:bg-[#13883e]" onClick={handleSubmit}>
+                  <button
+                    className="submit-btn text-xs hover:bg-[#13883e]"
+                    onClick={handleSubmit}
+                  >
                     Post
                   </button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <FavSection page="Company" />
+        </div>{" "}
       </div>
+      <FavSection page="Company" />
       <BottomBar />
     </>
   );

@@ -94,14 +94,15 @@ function FavSection({ page }: pageType) {
                         className="profile-pic-follow cursor-pointer flex flex-between items-center"
                       >
                         <div className="profile-pic  flex flex-between justify-center items-center h-[2.1rem] w-[2.1rem] mt-2 overflow-hidden border-[1px] rounded-full">
+                          {seeker.profile_pic == null?<img
+                            className="object-contain  h-full w-full"
+                            src= {logo}
+                          ></img>:
                           <img
-                            className="object-contain h-full w-full"
-                            src={
-                              seeker.profile_pic == null
-                                ? logo
-                                : `${seeker.profile_pic}`
-                            }
-                          ></img>
+                            className="object-fill  h-full w-full"
+                            src={`${seeker.profile_pic}`}
+            
+                          ></img>}
                         </div>
                         <div className="people-username text-[12px] mt-2 ms-[4px]">
                           {seeker.firstname} {seeker.lastname} 
@@ -151,7 +152,7 @@ function FavSection({ page }: pageType) {
                       }}
                       className="profile-pic-follow cursor-pointer mt-1 flex flex-between items-center"
                     >
-                      <div className="profile-pic h-[2.1rem] w-[2.1rem] flex flex-between justify-center items-center h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">
+                      <div className="profile-pic h-[2.1rem] w-[2.1rem] flex flex-between justify-center items-center  mt-2 overflow-hidden border-[1px] rounded-full">
                         <img
                           className=" object-contain  h-full w-full"
                           src={

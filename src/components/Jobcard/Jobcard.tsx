@@ -12,7 +12,7 @@ function Jobcard({ job }: { job: Job }) {
   <>
       <div
         onClick={() => navigate(`/job/${job.id}`)}
-        className="card-container w-full min-h-[6rem] mt-2 flex flex-nowrap pt-2 pb-2 ps-1 pe-1  cursor-pointer border-b-[1px] border-b-solid border-b-[#22C55E] "
+        className="card-container w-full min-h-[6rem] mt-2 flex flex-nowrap pt-2 pb-2 ps-1 pe-1  cursor-pointer border-b-[1px] border-b-solid border-b-[lgt-grey]  "
       >
         <div className="org-logo  h-full flex justify-center mt-2 ms-1 ">
          <div className="logo-container h-[50px] w-[50px] overflow-hidden ">

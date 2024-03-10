@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { LuUser2 } from "react-icons/lu";
 import { useUserAuthStore } from "../../store/store";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
+import "./BottomBar.css"
 
 function BottomBar() {
   const navigate = useNavigate();
@@ -16,9 +17,8 @@ function BottomBar() {
   };
   return (
     <>
-      <footer className="footer-bar  fixed bottom-0 w-full bg-white  p-2">
-        <nav>
-          <ul className="flex  justify-center gap-1">
+      <footer className="footer-bar fixed bottom-[0] shadow-2xl  w-full bg-white ">
+          <div className="flex  justify-center gap-1">
             <div
               onClick={() => navigate("/")}
               className="nav-item btn-joblist flex flex-col items-center gap-1 text-[12px]  font-medium	m-3"
@@ -45,7 +45,7 @@ function BottomBar() {
               className="nav-item btn-joblist flex flex-col items-center gap-1 text-[12px] font-medium m-3"
             >
               <PiHandshakeDuotone className="nav-items-logo"></PiHandshakeDuotone>
-              Connections
+              Connects
             </div>}
             {user.userType==='organization'&&<div
               onClick={() => navigate("/organization/jobposting")}
@@ -79,8 +79,7 @@ function BottomBar() {
                 </div>
               )}
             </div>
-          </ul>
-        </nav>
+          </div>
       </footer>
     </>
   );

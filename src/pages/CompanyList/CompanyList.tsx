@@ -14,15 +14,16 @@ function CompanyList() {
   const navigate = useNavigate();
   return (
     <>
-      <div className="main-wrapper">
+      <div className="main-wrapper ">
         <Sidebar></Sidebar>
         <div className="people-content-wrapper flex flex-col ">
-          <div className="nav-section"></div>
+          <div className="nav-section">
 
           <JobNav jobtype={{ type: "Company", name: "Company" }}></JobNav>
+          </div>
           {orgLoader ?
           <Loader></Loader>
-          :organizations?(<div className="people-grid flex p-3  w-full ">
+          :organizations?(<div className="people-grid scrollable-content flex ps-3 pe-3 pt-3 p w-full  ">
             {organizations
               .filter((i) => {
                 return user.userName == null

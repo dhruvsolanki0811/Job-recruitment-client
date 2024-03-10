@@ -84,6 +84,7 @@ export const useFetchAppliedJob = (username: string) => {
 };
 
 export const useFetchStatusOfApplication = (id: string, userName: string) => {
+  const isAuthenticated=userName.length>0;
   const fetchStatusOfApplication = async () => {
     let token = localStorage.getItem("accessToken");
     const response = await axiosInstance.get(
@@ -97,7 +98,7 @@ export const useFetchStatusOfApplication = (id: string, userName: string) => {
     );
     return response.data
   };
-  return useQuery(["hasApplied", id, userName], fetchStatusOfApplication);
+  return useQuery(["hasApplied", id, userName], fetchStatusOfApplication,{enabled:isAuthenticated});
 };
 
 

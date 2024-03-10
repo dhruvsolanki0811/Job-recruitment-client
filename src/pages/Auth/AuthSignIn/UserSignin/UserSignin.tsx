@@ -4,7 +4,7 @@ import unknown from "../../../../assets/unknown.png";
 import { BottomBar } from "../../../../components/BottomBar/BottomBar";
 import "./UserSignin.css";
 import { APIBASEURL } from "../../../../store/store";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
@@ -23,39 +23,43 @@ interface SeekerFormData {
   resume: File | null;
 }
 
-const createJobseeker=async(data:SeekerFormData)=>{
+const createJobseeker = async (data: SeekerFormData) => {
   const formData = new FormData();
 
-      // Append fields to the FormData object
-      Object.entries(data).forEach(([key, value]) => {
-        if (value instanceof File) {
-          formData.append(key, value);
-        } else if (Array.isArray(value)) {
-          formData.append("skills", JSON.stringify(value));
-        } else {
-          if (value != null) {
-            formData.append(key, value);
-          }
-        }
-      });
-      await axios({
-        method: "post",
-        url: `${APIBASEURL}/account/create/jobseeker`,
-        data: formData,
-        headers: {
-          "Content-Type": `multipart/form-data`,
-        },
-      });
-
-}
+  // Append fields to the FormData object
+  Object.entries(data).forEach(([key, value]) => {
+    if (value instanceof File) {
+      formData.append(key, value);
+    } else if (Array.isArray(value)) {
+      formData.append("skills", JSON.stringify(value));
+    } else {
+      if (value != null) {
+        formData.append(key, value);
+      }
+    }
+  });
+  await axios({
+    method: "post",
+    url: `${APIBASEURL}/account/create/jobseeker`,
+    data: formData,
+    headers: {
+      "Content-Type": `multipart/form-data`,
+    },
+  });
+};
 
 function UserSignin() {
-  const [inputListValue, setListValue] = useState<string>("")
-  const queryClient=useQueryClient()
-  const{mutate:createUser,isLoading:loader}=useMutation(createJobseeker,{onSuccess:async()=>{
-    toast.info("Welldone you are now part of Jobcom community");
-    queryClient.invalidateQueries('all-jobseeker')
-  }})
+  const [inputListValue, setListValue] = useState<string>("");
+  const queryClient = useQueryClient();
+  const { mutate: createUser, isLoading: loader } = useMutation(
+    createJobseeker,
+    {
+      onSuccess: async () => {
+        toast.info("Welldone you are now part of Jobcom community");
+        queryClient.invalidateQueries("all-jobseeker");
+      },
+    }
+  );
   const [formData, setFormData] = useState<SeekerFormData>({
     username: "",
     firstname: "",
@@ -71,7 +75,7 @@ function UserSignin() {
   });
 
   const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement >
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -197,13 +201,16 @@ function UserSignin() {
             <JobNav
               jobtype={{ type: "User Signin", name: "User Signin" }}
             ></JobNav>
-            {loader ? (
-              <Loader></Loader>
-            ) : (
+          </div>
+
+          {loader ? (
+            <Loader></Loader>
+          ) : (
+            <div className="scrollable-content overflow-hidden  flex flex-col  items-center w-full ">
               <form
                 method="POST"
                 onSubmit={handleSubmit}
-                className="login-box flex mt-2 mb-3 flex-col items-center  w-[25rem] ms-3 me-3 "
+                className="login-box flex mt-3 mb-3 flex-col items-center justify-center w-[25rem] ms-3 me-3 "
               >
                 <input
                   type="text"
@@ -212,7 +219,7 @@ function UserSignin() {
                   value={formData.username}
                   required
                   onChange={handleInputChange}
-                  className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+                  className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
                 />
                 <div className="name-input flex w-full gap-2">
                   <input
@@ -222,7 +229,7 @@ function UserSignin() {
                     required
                     value={formData.firstname}
                     onChange={handleInputChange}
-                    className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+                    className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
                   />
                   <input
                     type="text"
@@ -231,7 +238,7 @@ function UserSignin() {
                     required
                     value={formData.lastname}
                     onChange={handleInputChange}
-                    className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+                    className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
                   />
                 </div>
                 <input
@@ -241,7 +248,7 @@ function UserSignin() {
                   placeholder="Email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+                  className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
                 />
                 <input
                   type="password"
@@ -250,7 +257,7 @@ function UserSignin() {
                   placeholder="Password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+                  className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
                 />
                 <textarea
                   name="description"
@@ -269,7 +276,7 @@ function UserSignin() {
                   min={0}
                   max={20}
                   onChange={handleInputChange}
-                  className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+                  className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
                 />
                 <input
                   type="tel"
@@ -281,7 +288,7 @@ function UserSignin() {
                   // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                   value={formData.phone_number}
                   onChange={handleInputChange}
-                  className="w-full text-[12px] h-8 border-[2px] p-2 rounded "
+                  className="w-full text-[13px] h-10 border-[2px] p-2 rounded "
                 />
                 <div className="flex w-full gap-3 flex-wrap">
                   {formData.skills.map((skill, index) => (
@@ -289,7 +296,7 @@ function UserSignin() {
                       className="flex gap-2 items-center primary-text ps-2 pe-2 border-[0.2px] border-solid border-[#888c91] rounded-[10px] hover:bg-[#13883e] hover:text-white"
                       key={index}
                     >
-                      <DevIcon skillName={skill} ></DevIcon>
+                      <DevIcon skillName={skill}></DevIcon>
                       {skill}
                       <div
                         className="cancel-button cursor-pointer"
@@ -307,7 +314,7 @@ function UserSignin() {
                   onChange={handleListInputChange}
                   onKeyDown={handleEnter}
                   placeholder="only up to 15 Skills"
-                  className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
+                  className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
                 />
 
                 <div className="flex flex gap-2 justify-center items-center">
@@ -315,7 +322,7 @@ function UserSignin() {
                     {formData.profile_pic === null ? (
                       <img
                         src={unknown}
-                        className="rounded-full border-grey border-[0.2px] border-solid h-20 w-20 object-contain"
+                        className="rounded-full border-grey border-[0.2px] border-solid h-[3.5rem] w-[3.5rem] object-fill"
                       />
                     ) : (
                       <>
@@ -327,12 +334,12 @@ function UserSignin() {
                         <span
                           onClick={handleRemoveImage}
                           className="  px-1 py-1
-                    text-lg
-                    text-red-500
+                                      text-lg
+                                      text-red-500
 
-                    border-none
-                    rounded
-                    cursor-pointer
+                                      border-none
+                                      rounded
+                                      cursor-pointer
                     "
                         >
                           x
@@ -347,17 +354,19 @@ function UserSignin() {
                     onChange={handleImageChange}
                     style={{ display: "none" }}
                   />
-                  <div className="flex flex-col justify-center items-center" >
-                  <label
-                    htmlFor="imageInput"
-                    className=" h-8 text-xs text-[#22C55E] hover:bg-[#13883e] hover:text-white px-2 py-2 text-xs   border-none rounded cursor-pointer select-none inline-block mt-4"
-                  >
-                    Choose a profile picture
-                  </label>
-                      <div className="optional text-xs text-[#a4a8ae]">Optional</div>
-                      </div>
+                  <div className="flex flex-col justify-center items-center">
+                    <label
+                      htmlFor="imageInput"
+                      className=" h-8 text-[13px] text-[#22C55E] hover:bg-[#13883e] hover:text-white px-2 py-2 text-[13px]   border-none rounded cursor-pointer select-none inline-block mt-4"
+                    >
+                      Choose a profile picture
+                    </label>
+                    <div className="optional text-[13px] text-[#a4a8ae]">
+                      Optional
+                    </div>
+                  </div>
                 </div>
-                
+
                 <div className="flex items-center justify-center flex-col">
                   <input
                     type="file"
@@ -365,16 +374,17 @@ function UserSignin() {
                     onChange={handleFileChange}
                     style={{ display: "none" }}
                   />
-                  <div className="flex flex-col items-center text-xs text-[#22C55E]">
-                  <label
-                    htmlFor="fileInput"
-                    className=" h-8 text-xs text-[#22C55E] hover:bg-[#13883e] hover:text-white px-2 py-2 text-xs   border-none rounded cursor-pointer select-none inline-block mt-4"
-                  >
-                    Upload your resume
+                  <div className="flex flex-col items-center text-[13px] text-[#22C55E]">
+                    <label
+                      htmlFor="fileInput"
+                      className=" h-8 text-[13px] text-[#22C55E] hover:bg-[#13883e] hover:text-white px-2 py-2 text-[13px]   border-none rounded cursor-pointer select-none inline-block mt-4"
+                    >
+                      Upload your resume
                     </label>
 
-                    <div className="optional text-xs text-[#a4a8ae]">Optional</div>
-                      
+                    <div className="optional text-[13px] text-[#a4a8ae]">
+                      Optional
+                    </div>
                   </div>
                   {formData.resume && (
                     <div>Selected file: {formData.resume.name}</div>
@@ -384,14 +394,14 @@ function UserSignin() {
                 <div className="login-btn-wrapper ">
                   <button
                     type="submit"
-                    className="submit-btn text-xs hover:bg-[#13883e]  "
+                    className="submit-btn text-[13px] hover:bg-[#13883e]  "
                   >
                     SignUp
                   </button>
                 </div>
               </form>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
       <BottomBar></BottomBar>

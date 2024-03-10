@@ -6,6 +6,7 @@
   font-family: "Poppins", sans-serif;
   padding: 0px;
   margin: 0px;
+
 }
 
 .primary-border {
@@ -42,7 +43,29 @@
 }
 
 
-@media only screen and (max-width: 871px) {
+
+/* job-list */
+.scrollable-content{
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+ 
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background:#b4b6b8  ;
+  height: 2rem;
+}
+
+@media only screen and (max-width: 1000px) {
   .fav-section{
     display: none;
   }
@@ -76,7 +99,7 @@
   -webkit-box-orient: vertical;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 640px) {
   .fav-section{
     display: none;
   }
@@ -101,3 +124,4 @@
     max-width: 100%;
   }
 }
+

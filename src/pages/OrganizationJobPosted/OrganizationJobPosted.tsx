@@ -27,6 +27,7 @@ function OrganizationJobPosted() {
           <div className="content-wrapper flex flex-col ">
             <div className="nav-section">
               <JobNav jobtype={{type:"Applied",name:"Jobs you have posted "}}></JobNav>
+  
               <div className="section-jobtype w-full h-9 ps-5 pe-5 flex">
                 <div
                   onClick={() => navigate("/")}
@@ -43,10 +44,10 @@ function OrganizationJobPosted() {
               </div>
             </div>
             {loader?
-            <Loader></Loader>:<div className="job-list flex flex-col ">
+            <Loader></Loader>:<div className="job-list scrollable-content flex flex-col ">
               {jobList&&jobList.map((job) => (
                  <>
-                 <div  className="card-container w-full min-h-[6rem] mt-2 flex flex-nowrap pt-2 pb-2 ps-1 pe-1  cursor-pointer border-b-[1px] border-b-solid border-b-[#22C55E]">
+                 <div  className="card-container w-full min-h-[6rem] mt-2 flex flex-nowrap pt-2 pb-2 ps-1 pe-1  cursor-pointer  border-b-[1px] border-b-solid border-b-[lgt-grey] ">
                    <div onClick={()=>navigate(`/job/${job.id}`)}    className="org-logo  h-full flex justify-center mt-2 ms-1 ">
                    <div className="logo-container h-[50px] w-[50px] overflow-hidden ">
                      {(job.organization_profile_pic!=null)?

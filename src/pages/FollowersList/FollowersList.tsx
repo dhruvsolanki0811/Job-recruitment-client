@@ -1,19 +1,33 @@
-import { FavSection, JobNav, Loader, Sidebar } from "../../components/components";
+import {
+  FavSection,
+  JobNav,
+  Loader,
+  Sidebar,
+} from "../../components/components";
 import placeHolder from "../../assets/unknown.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
-import { useFetchUsersConnections, useHandleConnection, useHandleRejection } from "../../hooks/useConnectionsData";
+import {
+  useFetchUsersConnections,
+  useHandleConnection,
+  useHandleRejection,
+} from "../../hooks/useConnectionsData";
 import { useUserAuthStore } from "../../store/AuthStore";
 
 function FollowersList() {
   let { page } = useParams();
-  const {user}=useUserAuthStore()
-  const userName=user.userName?user.userName:""
-  const{mutate:handleConnections,isLoading:handleConnectionLoading}=useHandleConnection(userName)
-  const {mutate:handleReject ,isLoading:handleRejectionLoading}= useHandleRejection(userName)
-  const pageType=page?page:""
-  const {data:connections,isLoading:loader,isFetching}=useFetchUsersConnections(pageType,userName)
-  
+  const { user } = useUserAuthStore();
+  const userName = user.userName ? user.userName : "";
+  const { mutate: handleConnections, isLoading: handleConnectionLoading } =
+    useHandleConnection(userName);
+  const { mutate: handleReject, isLoading: handleRejectionLoading } =
+    useHandleRejection(userName);
+  const pageType = page ? page : "";
+  const {
+    data: connections,
+    isLoading: loader,
+    isFetching,
+  } = useFetchUsersConnections(pageType, userName);
 
   const navigate = useNavigate();
 
@@ -51,36 +65,41 @@ function FollowersList() {
               </div>
             </div>
           </div>
-          {loader || isFetching ||handleConnectionLoading||handleRejectionLoading?
-          <Loader></Loader>
-          :<div className="people-grid flex p-3  w-full ">
-            {connections && connections.map((user:any) => (
-              <>
-                <div className="people-box flex flex-col  ps-3 pe-3">
-                  <div className="follow-container flex justify-between items-center">
-                    <div className="profile-pic  h-8 w-8 mt-2 overflow-hidden border-[1px] rounded-full">
-                      <img
-                        className=" object-cover  h-8 "
-                        src={
-                          user?.profile_pic == null
-                            ? placeHolder
-                            : user?.profile_pic
-                        }
-                      ></img>
-                    </div>
-                    <div className="flex gap-3 items-center">
-                      {page == "connections" && (
-                        <div
-                          onClick={() => {
-                            
-                            handleReject(user.id)
-                          }}
-                          className="follow-btn text-xs ps-2 pe-2 border-[1px] rounded border-solid border-black hover:bg-red-500 hover:text-white cursor-pointer"
-                        >
-                          Connected
+          {loader || handleConnectionLoading || handleRejectionLoading ? (
+            <Loader></Loader>
+          ) : (
+            <div className="people-grid scrollable-content flex p-3  w-full ">
+              {connections &&
+                connections.map((user: any) => (
+                  <>
+                    <div className="people-box flex flex-col  ps-3 pe-3">
+                      <div className="follow-container flex gap-3 items-center">
+                        <div className="profile-pic flex justify-center items-center  h-[2.8rem] w-[3rem] mt-2 overflow-hidden border-[1px] rounded-full">
+                          {user?.profile_pic == null 
+                          ? (
+                            <img
+                              className=" object-  h-[70%] w-[70%]  "
+                              src={placeHolder}
+                            ></img>
+                          ) : (
+                            <img
+                              className=" object-fill  h-full w-full"
+                              src={user?.profile_pic}
+                            ></img>
+                          )}
                         </div>
-                      )}
-                      {/* {page=="pending"&& <>
+                        <div className="flex gap-3 items-center">
+                          {page == "connections" && (
+                            <div
+                              onClick={() => {
+                                handleReject(user.id);
+                              }}
+                              className="follow-btn text-[12px] font-medium ps-2 pe-2 border-[1px] rounded border-solid border-black hover:bg-red-500 hover:text-white cursor-pointer"
+                            >
+                              Connected
+                            </div>
+                          )}
+                          {/* {page=="pending"&& <>
                    <div onClick={()=>{
                       handleReject(user.id)
                       setTrigger(!trigger)
@@ -88,43 +107,44 @@ function FollowersList() {
                     className="follow-btn text-xs ps-2 pe-2 border-[1px] rounded border-solid border-black hover:bg-[#22C55E] hover:text-white  hover:bg-red-500 hover:text-white cursor-pointer" >{
                       ("Cancel")
                     }</div> </>} */}
-                      {page === "received" && (
-                        <>
-                          <div
-                            onClick={async () => {
-                              // await handleConnections("accept", user.id).then(
-                              //   () => {
-                              //     setTrigger(!trigger);
-                              //   }
-                              // );
-                              handleConnections(user.id)
-                            }}
-                            className="follow-btn text-xs ps-2 pe-2 border-[1px] rounded border-solid border-black hover:bg-[#22C55E] hover:text-white cursor-pointer"
-                          >
-                            {"Accept"}
-                          </div>
-                          <div
-                            onClick={ () => {                                
-                                handleReject(user.id)
-                              }}
-                            className="follow-btn text-xs ps-2 pe-2 border-[1px] rounded border-solid border-black hover:bg-red-500 hover:text-white cursor-pointer"
-                          >
-                            {"Reject"}
-                          </div>
-                        </>
-                      )}
+                          {page === "received" && (
+                            <>
+                              <div
+                                onClick={async () => {
+                                  // await handleConnections("accept", user.id).then(
+                                  //   () => {
+                                  //     setTrigger(!trigger);
+                                  //   }
+                                  // );
+                                  handleConnections(user.id);
+                                }}
+                                className="follow-btn text-[12px] font-medium ps-2 pe-2 border-[1px] rounded border-solid border-black hover:bg-[#22C55E] hover:text-white cursor-pointer"
+                              >
+                                {"Accept"}
+                              </div>
+                              <div
+                                onClick={() => {
+                                  handleReject(user.id);
+                                }}
+                                className="follow-btn text-[12px] font-medium ps-2 pe-2 border-[1px] rounded border-solid border-black hover:bg-red-500 hover:text-white cursor-pointer"
+                              >
+                                {"Reject"}
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      <div className="people-username text-[14px] font-medium mt-1 flex gap-2">
+                        {user.firstname}{user.lastname} {" "} @{user.username}
+                      </div>
+                      <div className="text-three-line color-lgt-grey w-full text-[11px] pe-4 mb-1">
+                        {user.description}
+                      </div>
                     </div>
-                  </div>
-                  <div className="people-username text-xs mt-1">
-                    {user.username}
-                  </div>
-                  <div className="people-desc color-lgt-grey w-full text-[10px] pe-4 mb-1">
-                    {user.description}
-                  </div>
-                </div>
-              </>
-            ))}
-          </div>}
+                  </>
+                ))}
+            </div>
+          )}
         </div>
         <FavSection page="Connections"></FavSection>
       </div>

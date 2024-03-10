@@ -13,10 +13,7 @@
   justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
-  overflow-x: hidden;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #333 transparent;
+  
 }
 .company-box {
   box-sizing: border-box;
@@ -27,16 +24,3 @@
   border-radius: 10px;
 }
 
-.company-grid::-webkit-scrollbar {
-  width: 5px; /* Set the width of the vertical scrollbar */
-}
-
-.company-grid::-webkit-scrollbar-thumb {
-  background-color: rgb(
-    225 228 232
-  ); /* Set the color of the vertical scrollbar thumb */
-}
-
-.company-grid::-webkit-scrollbar-track {
-  background-color: transparent; /* Set the color of the vertical scrollbar track */
-}

@@ -55,7 +55,7 @@ function Sidebar() {
               className="nav-item hover:bg-[#22C55E] hover:text-white flex items-center gap-2 text-[16px] font-medium p-2 m-1"
             >
               <PiHandshake className="nav-items-logo text-[22px]"></PiHandshake>
-              Connections
+              Connects
             </div>
           ) : (
             <></>
@@ -77,7 +77,7 @@ function Sidebar() {
                 ? navigate(`/${user.userType}/us`)
                 : navigate("/login");
             }}
-            className="nav-item hover:bg-[#22C55E] hover:text-white flex items-center gap-2 text-[16px] font-medium p-2 m-1"
+            className="nav-item overflow-hidden hover:bg-[#22C55E] hover:text-white flex items-center gap-2 text-[16px] font-medium p-2 m-1"
           >
             {user.userPic?<img
               className="cursor-pointer rounded-full w-[1.5rem] h-[1.4rem]"

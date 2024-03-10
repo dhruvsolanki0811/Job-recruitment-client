@@ -53,13 +53,16 @@ const addOrganization = async (data: OrganizationFormData) => {
   // Display success message
 };
 function OrganizationSignin({}: OrganizationSigninProps) {
-  const queryClient=useQueryClient()
-  const {mutate:createOrganization,isLoading:loader}=useMutation(addOrganization,{
-    onSuccess:async()=>{
-      toast.info('You are an Organization on JobCom');
-      queryClient.invalidateQueries("all-organizations")
+  const queryClient = useQueryClient();
+  const { mutate: createOrganization, isLoading: loader } = useMutation(
+    addOrganization,
+    {
+      onSuccess: async () => {
+        toast.info("You are an Organization on JobCom");
+        queryClient.invalidateQueries("all-organizations");
+      },
     }
-  })
+  );
   const [formState, setFormState] = useState<OrganizationFormData>({
     name: "",
     username: "",
@@ -170,148 +173,148 @@ function OrganizationSignin({}: OrganizationSigninProps) {
         <div className="box-signin content-wrapper flex flex-col ">
           <div className="nav-section">
             <JobNav
-              jobtype={{ type: "User Signin", name: "Fill the below form to create a JobCom Profile" }}
+              jobtype={{
+                type: "User Signin",
+                name: "Fill the below form to create a JobCom Profile",
+              }}
             ></JobNav>
-            <div className="login-container flex flex-col items-center h-full ms-[2.8rem] me-[2rem]">
-              <div className=" flex flex-col items-center w-[25rem] ">
-                <div className="slider-login flex justify-between w-full">
-                  
-                </div>
-                {loader ? (
-                  <Loader></Loader>
-                ) : (
-                  <form
-                    method="POST"
-                    onSubmit={handleSubmit}
-                    className="login-box flex flex-col items-center w-[25rem] "
-                  >
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Name of the Organization"
-                      value={formState.name}
-                      onChange={handleInputChange}
-                      className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
-                    />
-                    <input
-                      type="text"
-                      name="username"
-                      placeholder="Grab a unique username for your Company !"
-                      value={formState.username}
-                      onChange={handleInputChange}
-                      className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
-                    />
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      value={formState.email}
-                      onChange={handleInputChange}
-                      className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
-                    />
-                    <input
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      value={formState.password}
-                      onChange={handleInputChange}
-                      className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
-                    />
-                    <textarea
-                      name="overview"
-                      placeholder="Overview about your Company"
-                      value={formState.overview}
-                      onChange={handleInputChange}
-                      className="w-full text-[12px] h-20 border-[2px] p-2 rounded min-h-10 max-h-[7rem]"
-                    />
-                    <input
-                      type="text"
-                      name="location"
-                      placeholder="Location"
-                      value={formState.location}
-                      onChange={handleInputChange}
-                      className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
-                    />
-                    <input
-                      type="number"
-                      name="founded_at"
-                      placeholder="Enter the year of foundation"
-                      min="1900"
-                      max="2100"
-                      value={formState.founded_at}
-                      onChange={handleInputChange}
-                      className="w-full text-[12px] h-8 border-[2px] p-2 rounded"
-                    />
-                    <input
-                      name="website"
-                      placeholder="Website"
-                      // type="url"
-                      value={formState.website}
-                      onChange={handleInputChange}
-                      className="w-full text-[12px] h-8 border-[2px] p-2 rounded "
-                    />
-                    {/* Image upload section */}
-                    <div className="flex flex gap-2 justify-center items-center">
-                      <div className="flex ">
-                        {selectedImagePreview === null ? (
-                          <img
-                            src={unknown}
-                            className="rounded-full border-grey border-[0.2px] border-solid h-20 w-20 object-contain"
-                          />
-                        ) : (
-                          <>
-                            {" "}
-                            <img
-                              src={selectedImagePreview?.toString()}
-                              className="rounded-full h-20 w-20 object-contain"
-                            />
-                            <span
-                              onClick={handleRemoveImage}
-                              className="  px-1 py-1
+          </div>
+
+          <div className="scrollable-content flex flex-col  items-center w-full    ">
+            <div className="slider-login flex justify-between w-full"></div>
+            {loader ? (
+              <Loader></Loader>
+            ) : (
+              <form
+                method="POST"
+                onSubmit={handleSubmit}
+                className="login-box flex flex-col items-center w-[25rem] mt-3  mb-3"
+              >
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name of the Organization"
+                  value={formState.name}
+                  onChange={handleInputChange}
+                  className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
+                />
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Grab a unique username for your Company !"
+                  value={formState.username}
+                  onChange={handleInputChange}
+                  className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={formState.email}
+                  onChange={handleInputChange}
+                  className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
+                />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={formState.password}
+                  onChange={handleInputChange}
+                  className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
+                />
+                <textarea
+                  name="overview"
+                  placeholder="Overview about your Company"
+                  value={formState.overview}
+                  onChange={handleInputChange}
+                  className="w-full text-[12px] h-20 border-[2px] p-2 rounded min-h-10 max-h-[7rem]"
+                />
+                <input
+                  type="text"
+                  name="location"
+                  placeholder="Location"
+                  value={formState.location}
+                  onChange={handleInputChange}
+                  className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
+                />
+                <input
+                  type="number"
+                  name="founded_at"
+                  placeholder="Enter the year of foundation"
+                  min="1900"
+                  max="2100"
+                  value={formState.founded_at}
+                  onChange={handleInputChange}
+                  className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
+                />
+                <input
+                  name="website"
+                  placeholder="Website"
+                  // type="url"
+                  value={formState.website}
+                  onChange={handleInputChange}
+                  className="w-full text-[13px] h-10 border-[2px] p-2 rounded "
+                />
+                {/* Image upload section */}
+                <div className="flex flex gap-2 justify-center items-center">
+                  <div className="flex ">
+                    {selectedImagePreview === null ? (
+                      <img
+                        src={unknown}
+                        className="rounded-full border-grey border-[0.2px] border-solid h-20 w-20 object-contain"
+                      />
+                    ) : (
+                      <>
+                        {" "}
+                        <img
+                          src={selectedImagePreview?.toString()}
+                          className="rounded-full h-20 w-20 object-contain"
+                        />
+                        <span
+                          onClick={handleRemoveImage}
+                          className="  px-1 py-1
                           text-lg
                           text-red-500
                           border-none
                           rounded
                           cursor-pointer
                           "
-                            >
-                              x
-                            </span>
-                          </>
-                        )}
-                      </div>
-                      <input
-                        type="file"
-                        id="imageInput"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        style={{ display: "none" }}
-                      />
-                      <div className="flex flex-col justify-center items-center">
-                        <label
-                          htmlFor="imageInput"
-                          className=" h-8 text-xs text-[#22C55E] hover:bg-[#13883e] hover:text-white px-2 py-2 text-xs   border-none rounded cursor-pointer select-none inline-block mt-4"
                         >
-                          Choose a profile picture
-                        </label>
-                        <div className="optional text-xs text-[#a4a8ae]">
-                          Optional
-                        </div>
-                      </div>
+                          x
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <input
+                    type="file"
+                    id="imageInput"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    style={{ display: "none" }}
+                  />
+                  <div className="flex flex-col justify-center items-center">
+                    <label
+                      htmlFor="imageInput"
+                      className=" h-8 text-[13px] text-[#22C55E] hover:bg-[#13883e] hover:text-white px-2 py-2 text-[13px]   border-none rounded cursor-pointer select-none inline-block mt-4"
+                    >
+                      Choose a profile picture
+                    </label>
+                    <div className="optional text-[13px] text-[#a4a8ae]">
+                      Optional
                     </div>
-                    {/* Submit button */}
-                    <div className="login-btn-wrapper ">
-                      <button
-                        type="submit"
-                        className="submit-btn text-xs hover:bg-[#13883e]"
-                      >
-                        SignUp
-                      </button>
-                    </div>
-                  </form>
-                )}
-              </div>
-            </div>
+                  </div>
+                </div>
+                {/* Submit button */}
+                <div className="login-btn-wrapper ">
+                  <button
+                    type="submit"
+                    className="submit-btn text-[13px] font-medium   hover:bg-[#13883e]"
+                  >
+                    SignUp
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       </div>

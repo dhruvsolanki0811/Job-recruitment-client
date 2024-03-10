@@ -43,7 +43,7 @@ function AppliedJob() {
               </div>
             </div>
             {loader ?
-          <Loader></Loader> :<div className="job-list flex flex-col ">
+          <Loader></Loader> :<div className="job-list scrollable-content flex flex-col ">
               {jobList && jobList.map((job) => (
                 <Jobcard job={job}></Jobcard>
               ))}

@@ -46,3 +46,24 @@ export interface Filter{
 export interface ConnectionStatus{
   connection_status:string
 }
+
+
+export interface Project  {
+  id: number;
+  name: string;
+  image: string;
+  description: string;
+  deployed_link: string;
+  tech_stack: string[];
+};
+
+export interface Experience {
+  company: string;
+  id: number;
+  role: string;
+  start_month: string;
+  start_year: number;
+  end_month: string | null;
+  end_year: number | null;
+  job_seeker: number;
+};

@@ -18,12 +18,13 @@ function UserList() {
 
   return (
     <>
-      <div className="main-wrapper flex-1">
+      <div className="main-wrapper scrollable-content flex-1">
         <Sidebar></Sidebar>
         <div className="people-content-wrapper flex flex-col ">
-          <div className="nav-section"></div>
+          <div className="nav-section">
+            <JobNav jobtype={{ type: "Users", name: "User" }}></JobNav>
+          </div>
 
-          <JobNav jobtype={{ type: "Users", name: "User" }}></JobNav>
           {jsloader ? (
             <Loader></Loader>
           ) : jobseekers ? (
@@ -44,8 +45,7 @@ function UserList() {
                     >
                       <div className="follow-container flex justify-between items-center">
                         <div className="profile-pic  h-[3rem] w-[3rem]  overflow-hidden border-[1px] rounded-full flex justify-center items-center">
-                          {user.profile_pic == null ? 
-                          (
+                          {user.profile_pic == null ? (
                             <img
                               className=" object-contain  h-[70%] w-[70%]"
                               src={placeHolder}

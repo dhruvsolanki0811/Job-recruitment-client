@@ -112,7 +112,7 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
               {/* Modal */}
               {isModalOpen && (
                 <>
-                  <div className="modal-bg backdrop  hidden fixed top-0 left-0 w-full h-full bg-gray-500 opacity-40 z-0 display-none"></div>
+                  <div className="modal-bg backdrop  hidden fixed top-0 left-0 w-full h-full bg-gray-500 opacity-40 z-10 display-none"></div>
 
                   <div className=" modal-content hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-1 rounded-lg shadow-md z-30">
                     <ModalContent closeModal={closeModal} />

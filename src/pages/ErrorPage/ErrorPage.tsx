@@ -17,9 +17,9 @@ function ErrorPage() {
     <div className="main-wrapper">
         <Sidebar></Sidebar>
         <div className="people-content-wrapper flex flex-col ">
-          <div className="nav-section"></div>
-
+          <div className="nav-section">
           <JobNav jobtype={{type:"Users",name:`Error Page`}}></JobNav>
+          </div>
           <div className="error-section flex flex-col items-center justify-center h-full" >
           <h1 className="error-header text-xl">404  Error</h1>
             <p className="error-desc">
