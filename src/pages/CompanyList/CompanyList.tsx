@@ -23,7 +23,7 @@ function CompanyList() {
           </div>
           {orgLoader ?
           <Loader></Loader>
-          :organizations?(<div className="people-grid scrollable-content mb-[3.9rem]  flex ps-3 pe-3 pt-3 p w-full  ">
+          :organizations?(<div className="people-grid scrollable-content max-sm:mb-[3.9rem]  flex ps-3 pe-3 pt-3 p w-full  ">
             {organizations
               .filter((i) => {
                 return user.userName == null

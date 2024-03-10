@@ -77,7 +77,7 @@ function AuthLogin() {
           {loader ? (
             <Loader></Loader>
           ) : (
-            <div className=" scrollable-content mb-[3.9rem]  flex  justify-center  ">
+            <div className=" scrollable-content max-sm:mb-[3.9rem]  flex  justify-center  ">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();

@@ -44,7 +44,7 @@ function OrganizationJobPosted() {
               </div>
             </div>
             {loader?
-            <Loader></Loader>:<div className="job-list scrollable-content mb-[3.9rem]  flex flex-col ">
+            <Loader></Loader>:<div className="job-list scrollable-content max-sm:mb-[3.9rem]  flex flex-col ">
               {jobList&&jobList.map((job) => (
                  <>
                  <div  className="card-container w-full min-h-[6rem] mt-2 flex flex-nowrap pt-2 pb-2 ps-1 pe-1  cursor-pointer  border-b-[1px] border-b-solid border-b-[lgt-grey] ">

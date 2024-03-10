@@ -51,7 +51,7 @@ function JobDescriptionPage() {
           {jobloader || applyLoading ? (
             <Loader message=""></Loader>
           ) : (
-            <div className="desc-section scrollable-content mb-[3.9rem]  flex flex w-full flex-col">
+            <div className="desc-section scrollable-content max-sm:mb-[3.9rem]  flex flex w-full flex-col">
               <div className="job-desc-section p-7 flex flex-col w-full ">
                 <div className="intro-sec  flex justify-between w-full items-center ">
                   {jobPage?.organization_profile_pic == "" 
