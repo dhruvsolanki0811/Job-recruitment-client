@@ -6,14 +6,12 @@ import {
 } from "../../components/components";
 import { useNavigate } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
-import { APIBASEURL, useUserAuthStore } from "../../store/store";
+import {  useUserAuthStore } from "../../store/store";
 import orgPlaceHolder from "../../assets/placeholder-organization.png";
 import { formatTimestampToDDMonthYYYY } from "../../utils/dateutils";
 import { useFetchOrganizationJobs } from "../../hooks/useJobData";
 import DevIcon from "../../components/Devicon/Devicon";
-import { Job } from "../../types/types";
-import axios from "axios";
-import { useQuery } from "react-query";
+
 
 
 

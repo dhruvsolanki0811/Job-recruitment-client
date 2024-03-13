@@ -18,7 +18,6 @@ function FilterForm() {
     role: globalFilter.role||"",
     required_experience: [0, globalFilter.required_experience__lte||10],
     salary: [0, globalFilter.salary__lte||100],
-    // location: "",
   });
   const { refetch } = useFetchFilteredJobs();
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
