@@ -35,8 +35,9 @@ function UserList() {
                     ? true
                     : i.username != user.userName;
                 })
-                .map((user) => (
-                  <>
+                .map((user,key) => (
+
+                  <div key={key}>
                     <div
                       onClick={() => {
                         navigate(`${user.username}`);
@@ -96,7 +97,7 @@ function UserList() {
                         )}
                       </div>
                     </div>
-                  </>
+                  </div>
                 ))}
             </div>
           ) : (

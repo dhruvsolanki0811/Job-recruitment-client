@@ -69,8 +69,8 @@ function FollowersList() {
           ) : (
             <div className="people-grid scrollable-content max-sm:mb-[3.9rem]  flex p-3  w-full ">
               {connections &&
-                connections.map((user: any) => (
-                  <>
+                connections.map((user: any,key) => (
+                  <div key={key}>
                     <div className="people-box flex flex-col  ps-3 pe-3">
                       <div className="follow-container flex gap-3 items-center">
                         <div className="profile-pic flex justify-center items-center  h-[2.8rem] w-[3rem] mt-2 overflow-hidden border-[1px] rounded-full">
@@ -140,7 +140,7 @@ function FollowersList() {
                         {user.description}
                       </div>
                     </div>
-                  </>
+                  </div>
                 ))}
             </div>
           )}

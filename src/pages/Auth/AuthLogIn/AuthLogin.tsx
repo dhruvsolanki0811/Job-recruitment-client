@@ -63,6 +63,19 @@ function AuthLogin() {
     }
   };
 
+  const handleTestLogin=()=>{
+    if (isUserLogin) {
+      login({ email: "dhruv@gmail.com", password: "123456", type: "jobseeker" });
+      setUserEmail("");
+      setUserPassword("");
+    } else {
+      login({ email: "jobcom@gmail.com", password: "123456", type: "organization" });
+
+      setOrgEmail("");
+      setOrgPassword("");
+    }
+  }
+
   return (
     <>
       {/* <ToastContainer></ToastContainer> */}
@@ -128,6 +141,14 @@ function AuthLogin() {
                     className="submit-btn text-[14px] font-medium hover:bg-[#13883e]  "
                   >
                     Login
+                  </button>
+                </div>
+                <div className="login-btn-wrapper ">
+                  <button
+                    onClick={handleTestLogin}
+                    className="submit-btn text-[14px] font-medium hover:bg-[#13883e]  "
+                  >
+                    Test Login
                   </button>
                 </div>
 

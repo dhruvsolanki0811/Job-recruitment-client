@@ -30,9 +30,10 @@ function ApplicantsList() {
           {applicantLoader&& jobLoader?
         <Loader></Loader>
         :  <div className="people-grid scrollable-content max-sm:mb-[3.9rem]  flex p-3  w-full ">
-            {connections?.map((user:any) => (
+            {connections?.map((user:any,key) => (
               <>
-                <div
+                <div 
+                key={key}
                   onClick={() => {
                     navigate(`/users/${user.username}`);
                   }}

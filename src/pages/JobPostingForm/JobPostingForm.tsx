@@ -72,7 +72,7 @@ function JobPostingForm() {
           <div className="nav-section">
             <JobNav jobtype={{ name: "Post a Job", type: "Login" }}></JobNav>
           </div>
-          <div className="box-signin w-full scrollable-content max-sm:mb-[3.9rem]   flex flex-col mt-5">
+          <div className="box-signin w-full scrollable-content mb-[3.9rem]   flex flex-col mt-5">
             <div className="login-container flex flex-col items-center h-full">
               <div className="login-box flex flex-col items-center w-[25rem]">
                 <div className="slider-login flex justify-between w-full">

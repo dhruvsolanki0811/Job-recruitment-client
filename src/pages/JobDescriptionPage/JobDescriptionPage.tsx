@@ -118,9 +118,9 @@ function JobDescriptionPage() {
                 <div className="intro-sec  flex flex-col justify-between w-full  ">
                   <div className="Skill-list text-[14px]">Skills</div>
                   <div className="job-skills mt-2 flex flex-wrap items-center w-full gap-[9px] text-black">
-                    {jobPage?.skills_required.map((skill) => {
+                    {jobPage?.skills_required.map((skill,key) => {
                       return (
-                        <div className="skills cursor-default flex items-center gap-1 pt-1 pb-1 text-[14px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+                        <div key={key} className="skills cursor-default flex items-center gap-1 pt-1 pb-1 text-[14px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
                           <DevIcon skillName={skill}></DevIcon>
                           {skill}
                         </div>

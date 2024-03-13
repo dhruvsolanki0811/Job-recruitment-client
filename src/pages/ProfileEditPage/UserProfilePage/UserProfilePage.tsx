@@ -113,9 +113,9 @@ function UserProfilePage() {
                     : `of ${jobSeeker?.no_of_years_experience} years`}
                 </div>
                 <div className="job-skills mt-2 flex flex-wrap justify-center items-center w-[70%] mt-5 gap-[9px] text-black">
-                  {jobSeeker?.skills.map((skill) => {
+                  {jobSeeker?.skills.map((skill,key) => {
                     return (
-                      <div className="skills flex items-center gap-1 text-[14px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+                      <div key={key} className="skills flex items-center gap-1 text-[14px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
                         <DevIcon skillName={skill}></DevIcon>
                         {skill}
                       </div>
@@ -157,8 +157,9 @@ function UserProfilePage() {
                       </div>
                     ) : (
                       projects &&
-                      projects.map((project) => (
+                      projects.map((project,key) => (
                         <div
+                        key={key}
                           onClick={() => {
                             setCurrProject(project);
                             setProjectModalOpen(true);
@@ -257,8 +258,8 @@ function UserProfilePage() {
                         <Loader message=""></Loader>
                       </div>
                     </>:experiences &&
-                      experiences.map((experience) => (
-                        <div className="card flex flex-col mt-4 ">
+                      experiences.map((experience,key) => (
+                        <div key={key} className="card flex flex-col mt-4 ">
                           <div className="role font-medium text-[14px] w-full flex justify-between">
                             <span>{experience.role}</span>{" "}
                             <span>

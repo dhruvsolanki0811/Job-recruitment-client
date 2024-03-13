@@ -63,8 +63,8 @@ function AllJobPage() {
           ) : 
           filteredJobs ? (
             <div className="job-list scrollable-content mb-[3.9rem]  flex flex-col ">
-              {filteredJobs ?.map((elem) => (
-                <Jobcard job={elem}></Jobcard>
+              {filteredJobs ?.map((elem,key) => (
+                <Jobcard key={key} job={elem}></Jobcard>
               ))}
             </div>
           ) : (

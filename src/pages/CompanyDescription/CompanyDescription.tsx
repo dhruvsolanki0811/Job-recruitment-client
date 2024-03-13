@@ -90,8 +90,8 @@ function CompanyDescription() {
                         (job) => job.organization_name == organizationPage.name
                       )
                       .slice(0, 3)
-                      .map((job) => (
-                        <>
+                      .map((job,key) => (
+                        <div key={key}>
                           <div
                             onClick={() => {
                               navigate(`/job/${job.id.toString()}`);
@@ -120,7 +120,7 @@ function CompanyDescription() {
                               {formatTimestampToDDMonthYYYY(job.created_at)}
                             </div>
                           </div>
-                        </>
+                        </div>
                       ))}
                 </div>
               </div>

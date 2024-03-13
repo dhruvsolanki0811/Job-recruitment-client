@@ -45,8 +45,8 @@ function OrganizationJobPosted() {
             </div>
             {loader?
             <Loader></Loader>:<div className="job-list scrollable-content max-sm:mb-[3.9rem]  flex flex-col ">
-              {jobList&&jobList.map((job) => (
-                 <>
+              {jobList&&jobList.map((job,key) => (
+                 <div key={key}>
                  <div  className="card-container w-full min-h-[6rem] mt-2 flex flex-nowrap pt-2 pb-2 ps-1 pe-1  cursor-pointer  border-b-[1px] border-b-solid border-b-[lgt-grey] ">
                    <div onClick={()=>navigate(`/job/${job.id}`)}    className="org-logo  h-full flex justify-center mt-2 ms-1 ">
                    <div className="logo-container h-[50px] w-[50px] overflow-hidden ">
@@ -78,9 +78,9 @@ function OrganizationJobPosted() {
                      </div>
 
                      <div className="job-skills mt-2 flex items-center w-full gap-[9px] text-black">
-                       {(job.skills_required.length<3?job.skills_required:job.skills_required.slice(0,3)).map((skill) => {
+                       {(job.skills_required.length<3?job.skills_required:job.skills_required.slice(0,3)).map((skill,key) => {
                          return (
-                           <div className="skills flex gap-1 items-center text-[12px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+                           <div key={key} className="skills flex gap-1 items-center text-[12px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
                              <DevIcon skillName={skill}></DevIcon>
                              {skill}
                            </div>
@@ -93,7 +93,7 @@ function OrganizationJobPosted() {
                      </div>
                    </div>
                  </div>
-               </>
+               </div>
               ))}
             </div>}
           </div>

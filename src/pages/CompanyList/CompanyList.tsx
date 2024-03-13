@@ -30,8 +30,8 @@ function CompanyList() {
                   ? true
                   : i.username != user.userName;
               })
-              .map((organization) => (
-                <>
+              .map((organization,key) => (
+                <div key={key}>
                   <div
                     onClick={() => {
                       navigate(`${organization.username.toString()}`);
@@ -59,7 +59,7 @@ function CompanyList() {
                       {organization.overview}
                     </div>
                   </div>
-                </>
+                </div>
               ))}
           </div>):<></>}
         </div>
