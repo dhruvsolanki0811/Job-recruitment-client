@@ -23,7 +23,7 @@ function JobDescriptionPage() {
   const { user } = useUserAuthStore();
   const jobId = id ? id : "";
   const authUser = user.userName ? user.userName : "";
-  const { mutate: applyJob,isLoading } = useApplyJob(jobId);
+  const { mutate: applyJob, isLoading } = useApplyJob(jobId);
   const { data: applied, isLoading: applyLoading } =
     useFetchStatusOfApplication(jobId, authUser);
   const { data: jobPage, isLoading: jobloader } = useFetchSingleJob(jobId);
@@ -54,8 +54,7 @@ function JobDescriptionPage() {
             <div className="desc-section scrollable-content max-sm:mb-[3.9rem]  flex flex w-full flex-col">
               <div className="job-desc-section p-7 flex flex-col w-full ">
                 <div className="intro-sec  flex justify-between w-full items-center ">
-                  {jobPage?.organization_profile_pic == "" 
-                  ? (
+                  {jobPage?.organization_profile_pic == "" ? (
                     <img
                       src={unknown}
                       className="rounded-full h-16 w-16 object-contain"
@@ -71,7 +70,11 @@ function JobDescriptionPage() {
                       onClick={handleStatus}
                       className="follow-btn text-[14px] cursor-pointer hover:bg-[#22C35E] hover:text-[white] ps-2 pe-2 border-[1px] rounded border-solid border-black"
                     >
-                      {isLoading?"Loading":applied['has_applied'] ? "Applied" : "Apply"}
+                      {isLoading
+                        ? "Loading"
+                        : applied["has_applied"]
+                        ? "Applied"
+                        : "Apply"}
                     </div>
                   )}
                 </div>
@@ -96,14 +99,18 @@ function JobDescriptionPage() {
                   </div>
                   <div className="flex flex-col">
                     <div className="experience-sec">
-                      <div className="primary-text text-[14px] color-lgt-grey">Salary</div>
+                      <div className="primary-text text-[14px] color-lgt-grey">
+                        Salary
+                      </div>
                       <div className="text-[14px]">{jobPage?.salary} lpa</div>
                     </div>
                   </div>
                   <div className="flex flex-col">
                     <div className="experience-sec">
                       <div className="primary-text color-lgt-grey">Type</div>
-                      <div className="text-[14px]">{jobPage?.employee_type}</div>
+                      <div className="text-[14px]">
+                        {jobPage?.employee_type}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -118,9 +125,12 @@ function JobDescriptionPage() {
                 <div className="intro-sec  flex flex-col justify-between w-full  ">
                   <div className="Skill-list text-[14px]">Skills</div>
                   <div className="job-skills mt-2 flex flex-wrap items-center w-full gap-[9px] text-black">
-                    {jobPage?.skills_required.map((skill,key) => {
+                    {jobPage?.skills_required.map((skill, key) => {
                       return (
-                        <div key={key} className="skills cursor-default flex items-center gap-1 pt-1 pb-1 text-[14px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+                        <div
+                          key={key}
+                          className="skills cursor-default flex items-center gap-1 pt-1 pb-1 text-[14px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]"
+                        >
                           <DevIcon skillName={skill}></DevIcon>
                           {skill}
                         </div>
@@ -138,7 +148,6 @@ function JobDescriptionPage() {
                 </div>
               </div>
             </div>
-            
           )}
         </div>
         <FavSection page="Company"></FavSection>

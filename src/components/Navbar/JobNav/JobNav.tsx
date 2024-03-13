@@ -97,7 +97,7 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
       {jobtype.type === "All Jobs" && (
         <>
           <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 p-5 ">
-            <div className="head-filter text-[13px]">{jobtype.name}</div>
+            <div className="head-filter ">{jobtype.name}</div>
             <div className="flex  gap-3">
               {/* Modal Trigger Button */}
               <div
@@ -251,12 +251,6 @@ function ModalContent({ closeModal }: { closeModal: () => void }) {
       </div>
       <h5>Filter</h5>
       <FilterForm></FilterForm>
-      {/* <button
-        onClick={closeModal}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Close Modal
-      </button> */}
     </div>
   );
 }

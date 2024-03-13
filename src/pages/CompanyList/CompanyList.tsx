@@ -19,7 +19,7 @@ function CompanyList() {
     setSearch(e.target.value);
   };
   const filteredCompany = organizations ? organizations.filter((organization) => {
-    return organization.name.includes(search.toLowerCase())||organization.username.includes(search.toLowerCase());
+    return organization.name.toLowerCase().includes(search.toLowerCase())||organization.username.toLowerCase().includes(search.toLowerCase());
   }) : [];
   const navigate = useNavigate();
   return (

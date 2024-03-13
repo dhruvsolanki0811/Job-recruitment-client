@@ -24,7 +24,7 @@ function BottomBar() {
             className="nav-item btn-joblist flex flex-col items-center gap-1 text-[12px]  font-medium	m-3"
             >
               <PiSuitcaseDuotone className="nav-items-logo"></PiSuitcaseDuotone>
-              {user.userType=='organization'?"Job Posted":"JobList"}
+              {user.userType=='organization'?"JobPosted":"JobList"}
             </div>
             <div
               onClick={() => navigate("/users")}
