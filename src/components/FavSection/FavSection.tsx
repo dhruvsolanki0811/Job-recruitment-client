@@ -1,5 +1,4 @@
 import "./FavSection.css";
-import { IoIosNotificationsOutline } from "react-icons/io";
 import logo from "../../assets/unknown.png";
 import placeHolder from "../../assets/placeholder-organization.png";
 
