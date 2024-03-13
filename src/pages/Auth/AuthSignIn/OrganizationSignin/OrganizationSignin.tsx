@@ -6,6 +6,7 @@ import {
   Sidebar,
   BottomBar,
   Loader,
+  FavSection,
 } from "../../../../components/components";
 import unknown from "../../../../assets/placeholder-organization.png";
 import { APIBASEURL, useUserAuthStore } from "../../../../store/store";
@@ -200,7 +201,7 @@ function OrganizationSignin({}: OrganizationSigninProps) {
               <form
                 method="POST"
                 onSubmit={handleSubmit}
-                className="login-box flex flex-col items-center w-[25rem] mt-3  mb-3"
+                className="login-box flex flex-col items-center w-[25rem] mt-2  "
               >
                 <input
                   type="text"
@@ -329,6 +330,8 @@ function OrganizationSignin({}: OrganizationSigninProps) {
             )}
           </div>
         </div>
+        <FavSection page="Company"></FavSection>
+
       </div>
       <BottomBar></BottomBar>
     </>

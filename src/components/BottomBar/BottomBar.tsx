@@ -20,11 +20,11 @@ function BottomBar() {
       <footer className="footer-bar border-t-[1px] border-t-[lgt-grey] border-t-solid fixed h-[3.8rem] bottom-[0] shadow-2xl  w-full bg-white ">
           <div className="flex  justify-center gap-1">
             <div
-              onClick={() => navigate("/")}
-              className="nav-item btn-joblist flex flex-col items-center gap-1 text-[12px]  font-medium	m-3"
+            onClick={() => user.userType=='organization'?navigate("/jobposted"):navigate("/")}
+            className="nav-item btn-joblist flex flex-col items-center gap-1 text-[12px]  font-medium	m-3"
             >
               <PiSuitcaseDuotone className="nav-items-logo"></PiSuitcaseDuotone>
-              JobList
+              {user.userType=='organization'?"Job Posted":"JobList"}
             </div>
             <div
               onClick={() => navigate("/users")}

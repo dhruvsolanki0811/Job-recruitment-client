@@ -12,10 +12,10 @@ import { useFetchAppliedJob } from "../../hooks/useJobData";
 
 function AppliedJob() {
   const { user } = useUserAuthStore();
-  const username=user.userName?user.userName:""
-  const {data:jobList,isLoading:loader}=useFetchAppliedJob(username)
+  const username = user.userName ? user.userName : "";
+  const { data: jobList, isLoading: loader } = useFetchAppliedJob(username);
   const navigate = useNavigate();
-  
+
   return (
     <>
       <>
@@ -42,12 +42,16 @@ function AppliedJob() {
                 </div>
               </div>
             </div>
-            {loader ?
-          <Loader></Loader> :<div className="job-list scrollable-content max-sm:mb-[3.9rem]  flex flex-col ">
-              {jobList && jobList.map((job,key) => (
-                <Jobcard key={key} job={job}></Jobcard>
-              ))}
-            </div>}
+            {loader ? (
+              <Loader></Loader>
+            ) : (
+              <div className="job-list scrollable-content max-sm:mb-[3.9rem]  flex flex-col ">
+                {jobList &&
+                  jobList.map((job, key) => (
+                    <Jobcard key={key} job={job}></Jobcard>
+                  ))}
+              </div>
+            )}
           </div>
           <FavSection page="Company"></FavSection>
         </div>

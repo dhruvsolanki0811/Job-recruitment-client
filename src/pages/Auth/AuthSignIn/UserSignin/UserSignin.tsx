@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import { JobNav, Loader, Sidebar } from "../../../../components/components";
+import { FavSection, JobNav, Loader, Sidebar } from "../../../../components/components";
 import unknown from "../../../../assets/unknown.png";
 import { BottomBar } from "../../../../components/BottomBar/BottomBar";
 import "./UserSignin.css";
@@ -413,6 +413,8 @@ function UserSignin() {
             </div>
           )}
         </div>
+        <FavSection page="Company"></FavSection>
+
       </div>
       <BottomBar></BottomBar>
     </>

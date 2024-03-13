@@ -11,11 +11,22 @@ import { BottomBar } from "../../components/BottomBar/BottomBar";
 import { useUserAuthStore } from "../../store/store";
 import { useFetchAllJobseeker } from "../../hooks/useJobseekerData";
 import DevIcon from "../../components/Devicon/Devicon";
+import { CiSearch } from "react-icons/ci";
+import { useState } from "react";
 function UserList() {
   const navigate = useNavigate();
   const { user } = useUserAuthStore();
   const { data: jobseekers, isLoading: jsloader } = useFetchAllJobseeker();
+  const [search, setSearch] = useState("");
 
+  // Handler for search input change
+  const handleSearchInput = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+  const filteredJobseekers = jobseekers ? jobseekers.filter((user) => {
+    const fullName = `${user.firstname} ${user.lastname}`.toLowerCase();
+    return fullName.includes(search.toLowerCase());
+  }) : [];
   return (
     <>
       <div className="main-wrapper flex-1">
@@ -23,13 +34,27 @@ function UserList() {
         <div className="people-content-wrapper flex flex-col ">
           <div className="nav-section">
             <JobNav jobtype={{ type: "Users", name: "User" }}></JobNav>
+            <div className="search-section w-full h-19 ps-5 pt-3 pb-3 pe-5  ">
+              <div className="input-search-container w-full flex justify-center items-center roundedfull ps-1 pe-1 ">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="search-box"
+                  value={search}
+                  onChange={handleSearchInput}
+                  // onChange={handleSearchInput}
+                  // onKeyDown={handleEnter}
+                />
+                <CiSearch className="cursor-pointer"></CiSearch>
+              </div>
+            </div>
           </div>
 
           {jsloader ? (
             <Loader></Loader>
           ) : jobseekers ? (
             <div className="people-grid scrollable-content max-sm:mb-[3.9rem] flex p-3 w-full ">
-              {jobseekers
+              {filteredJobseekers
                 .filter((i) => {
                   return user.userName == null
                     ? true

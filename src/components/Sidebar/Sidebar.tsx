@@ -25,11 +25,11 @@ function Sidebar() {
         </div>
         <div className="nav-items flex flex-col w-full">
           <div
-            onClick={() => navigate("/")}
+            onClick={() => user.userType=='organization'?navigate("/jobposted"):navigate("/")}
             className="nav-item hover:bg-[#22C55E] hover:text-white flex items-center gap-2 text-[16px]  font-medium	p-2 m-1"
           >
             <PiSuitcaseSimpleDuotone className="nav-items-logo"></PiSuitcaseSimpleDuotone>
-            JobList
+            {user.userType=='organization'?"Job Posted":"JobList"}
           </div>
           <div
             onClick={() => navigate("/users")}

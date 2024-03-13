@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { JobNav, Loader, Sidebar } from "../../../components/components";
+import { FavSection, JobNav, Loader, Sidebar } from "../../../components/components";
 import "./AuthLogin.css";
 import { useNavigate } from "react-router-dom";
 import { BottomBar } from "../../../components/BottomBar/BottomBar";
@@ -170,6 +170,7 @@ function AuthLogin() {
             </div>
           )}
         </div>
+        <FavSection page="Company"></FavSection>
       </div>
       <BottomBar></BottomBar>
     </>

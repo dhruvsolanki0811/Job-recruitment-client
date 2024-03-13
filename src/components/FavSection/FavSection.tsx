@@ -28,22 +28,21 @@ function FavSection({ page }: pageType) {
   return (
     <>
       <div className="fav-section ps-1 pe-1">
-        <div className="top-section h-12 text-xs flex justify-between  items-center ps-4 pe-4 gap-5">
+        <div className="top-section  flex justify-between  items-center p-5 gap-5">
           <div
             onClick={() => {
               user.userType
                 ? navigate(`/${user.userType}/us`)
                 : navigate("/login");
             }}
-            className="username-container cursor-pointer flex gap-1    items-center"
+            className=" cursor-pointer flex gap-1    items-center"
           >
-            {/* <div className=" h-5 w-6">
-            </div> */}
+           
             <div className="text-[14px] ">
-            {user.userName ? user.userName : "Login"}
+            {user.userName ? user.userName.toLocaleUpperCase() : "Login"}
             </div>
           </div>
-          <IoIosNotificationsOutline className="text-[20px] "></IoIosNotificationsOutline>
+          {/* <IoIosNotificationsOutline className="text-[20px] "></IoIosNotificationsOutline> */}
         </div>
         {page === "All Job" && (
           <div className="filter-section w-full flex flex-col  mt-3">

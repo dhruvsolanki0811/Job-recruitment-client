@@ -5,12 +5,22 @@ import { useNavigate } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
 import { useUserAuthStore } from "../../store/store";
 import { useFetchAllOrganizations } from "../../hooks/useOrganizationData";
+import { useState } from "react";
+import { CiSearch } from "react-icons/ci";
 
 function CompanyList() {
   const { user } = useUserAuthStore();
   const{data:organizations,isLoading:orgLoader}=useFetchAllOrganizations()
  
+  const [search, setSearch] = useState("");
 
+  // Handler for search input change
+  const handleSearchInput = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+  const filteredCompany = organizations ? organizations.filter((organization) => {
+    return organization.name.includes(search.toLowerCase())||organization.username.includes(search.toLowerCase());
+  }) : [];
   const navigate = useNavigate();
   return (
     <>
@@ -20,11 +30,25 @@ function CompanyList() {
           <div className="nav-section">
 
           <JobNav jobtype={{ type: "Company", name: "Company" }}></JobNav>
+          <div className="search-section w-full h-19 ps-5 pt-3 pb-3 pe-5  ">
+              <div className="input-search-container w-full flex justify-center items-center roundedfull ps-1 pe-1 ">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="search-box"
+                  value={search}
+                  onChange={handleSearchInput}
+                  // onChange={handleSearchInput}
+                  // onKeyDown={handleEnter}
+                />
+                <CiSearch className="cursor-pointer"></CiSearch>
+              </div>
+            </div>
           </div>
           {orgLoader ?
           <Loader></Loader>
           :organizations?(<div className="people-grid scrollable-content max-sm:mb-[3.9rem]  flex ps-3 pe-3 pt-3 pb-3 w-full  ">
-            {organizations
+            {filteredCompany
               .filter((i) => {
                 return user.userName == null
                   ? true

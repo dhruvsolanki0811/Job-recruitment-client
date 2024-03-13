@@ -89,23 +89,23 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
       )}
       {(jobtype.type === "Login" || jobtype.type === "User Signin") && (
         <>
-          <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 p-4">
-            <div className="head-filter">{jobtype.name}</div>
+          <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 p-5">
+            <div className="head-filter text-[15px]">{jobtype.name}</div>
           </div>
         </>
       )}
       {jobtype.type === "All Jobs" && (
         <>
-          <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 h-[3rem]">
-            <div className="head-filter text-[16px]">{jobtype.name}</div>
+          <div className="filters-tab w-full flex justify-between items-center ps-5 pe-5 p-5 ">
+            <div className="head-filter text-[13px]">{jobtype.name}</div>
             <div className="flex  gap-3">
               {/* Modal Trigger Button */}
               <div
                 onClick={openModal}
                 className="nav-filter hidden gap-1 flex   justify-center items-center"
               >
-                <MdOutlineFilterAlt className="cursor-pointer text-[20px]" />
-                <div className="filter-btn-text text-[20px] text-xs flex-nowrap cursor-pointer">
+                <MdOutlineFilterAlt className="cursor-pointer " />
+                <div className="filter-btn-text  text-[14px]  flex-nowrap cursor-pointer">
                   Filter
                 </div>
               </div>
@@ -120,7 +120,7 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
                 </>
               )}
               <div
-                className="filter-btn flex  gap-1 items-center  p-1 rounded-xl cursor-pointer "
+                className="filter-btn flex  gap-1 items-center   rounded-xl cursor-pointer "
                 onClick={toggleDropdown}
                 ref={dropdownRef}
               >
@@ -128,7 +128,7 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
                   <>
                     <GoSortDesc className="cursor-pointer text-[20px]" />
 
-                    <div className="filter-btn-text text-[20px] text-xs flex-nowrap cursor-pointer">
+                    <div className="filter-btn-text text-[14px]  flex-nowrap cursor-pointer">
                       Sort
                     </div>
                   </>

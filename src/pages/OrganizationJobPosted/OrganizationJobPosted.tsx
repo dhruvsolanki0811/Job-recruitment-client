@@ -34,21 +34,7 @@ function OrganizationJobPosted() {
             <div className="nav-section">
               <JobNav jobtype={{type:"Applied",name:"Jobs you have posted "}}></JobNav>
   
-              <div className="section-jobtype w-full h-9 ps-5 pe-5 flex">
-                <div
-                  onClick={() => navigate("/")}
-                  className="jobtype-container  cursor-pointer primary-text flex justify-center items-center h-full"
-                >
-                  Jobs
-                </div>
-                <div
-                  onClick={() => navigate("/jobposted")}
-                  className="jobtype-container all-section cursor-pointer primary-text flex justify-center items-center h-full"
-                >
-                  {'Job Posted'}
-                </div>
               </div>
-            </div>
             {loader?
             <Loader></Loader>:<div className="job-list scrollable-content max-sm:mb-[3.9rem]  flex flex-col ">
               {jobList&&jobList.map((job,key) => (
