@@ -93,7 +93,7 @@ function CompanyDescription() {
                         <div key={key}>
                           <div
                             onClick={() => {
-                              navigate(`/job/${job.id.toString()}`);
+                              navigate(`/job/${job.organization_name.replace(/\s/g, "").toLowerCase()}-${job.role.replace(/\s/g, "").toLowerCase()}-${job.id.toString()}`);
                             }}
                             className="job-box  w-[17rem] cursor-pointer flex flex-col  ps-3 pe-3  border-[1px]  border-solid border-[#c7c8c9] rounded-[10px]"
                           >

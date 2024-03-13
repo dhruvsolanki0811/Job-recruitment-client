@@ -11,7 +11,7 @@ function Jobcard({ job }: { job: Job }) {
   
   <>
       <div
-        onClick={() => navigate(`/job/${job.id}`)}
+        onClick={() => navigate(`/job/${job.organization_name.replace(/\s/g, "").toLowerCase()}-${job.role.replace(/\s/g, "").toLowerCase()}-${job.id}`)}
         className="card-container w-full min-h-[6rem] mt-2 flex flex-nowrap pt-2 pb-2 ps-1 pe-1  cursor-pointer border-b-[1px] border-b-solid border-b-[lgt-grey]  "
       >
         <div className="org-logo  h-full flex justify-center mt-2 ms-1 ">

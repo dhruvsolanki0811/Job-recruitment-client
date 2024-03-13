@@ -84,6 +84,7 @@ export const useFetchAppliedJob = (username: string) => {
 };
 
 export const useFetchStatusOfApplication = (id: string, userName: string) => {
+  
   const isAuthenticated=userName.length>0;
   const fetchStatusOfApplication = async () => {
     let token = localStorage.getItem("accessToken");
@@ -129,7 +130,7 @@ export const useCreateJob=()=>{
   return useMutation(createJob,{
     onSuccess:async(data)=>{
       queryClient.invalidateQueries(["fetch-filtered", filters])
-      navigate(`/job/${data.id}`)     
+      navigate(`/job/${data.organization_name.replace(/\s/g, "").toLowerCase()}-${data.role.replace(/\s/g, "").toLowerCase()}-${data.id}`)     
     }
   })
 }
@@ -150,9 +151,32 @@ export const useApplyJob=(jobId:string)=>{
   const queryClient= useQueryClient()
   return useMutation(applyJob,{
     onSuccess:async()=>{
+      await queryClient.refetchQueries(["hasApplied", jobId, user.userName])
       await queryClient.invalidateQueries(["hasApplied", jobId, user.userName])
+      await queryClient.invalidateQueries(["hasApplied", jobId, user.userName])
+      await queryClient.refetchQueries(["hasApplied", jobId, user.userName])
       toast.done("SuccessFully Applied")
     }
   })
 }
 
+
+export const useDeleteJob = () => {
+  const { user } = useUserAuthStore();
+  const deleteJob = (id: string) => {
+    return axiosInstance.delete(`${APIBASEURL}/jobs/jobprofile/remove/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+  };
+  const queryClient = useQueryClient();
+
+  return useMutation(deleteJob, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("all-jobs");
+      queryClient.invalidateQueries(["organization-jobs", user.userName]);
+      toast.success("Job Post Deleted!");
+    },
+  });
+};

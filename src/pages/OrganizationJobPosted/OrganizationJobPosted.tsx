@@ -9,17 +9,19 @@ import { BottomBar } from "../../components/BottomBar/BottomBar";
 import { useUserAuthStore } from "../../store/store";
 import orgPlaceHolder from "../../assets/placeholder-organization.png";
 import { formatTimestampToDDMonthYYYY } from "../../utils/dateutils";
-import { useFetchOrganizationJobs } from "../../hooks/useJobData";
+import { useDeleteJob, useFetchOrganizationJobs } from "../../hooks/useJobData";
 import DevIcon from "../../components/Devicon/Devicon";
 import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { MdDelete } from "react-icons/md";
 
 function OrganizationJobPosted() {
   const { user } = useUserAuthStore();
   const orgName = user.userName ? user.userName : "";
   const { data: jobList, isLoading: loader } =
     useFetchOrganizationJobs(orgName);
-
+  const { mutate: deleteJob, isLoading: jobDeleteLoading } = useDeleteJob();
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
@@ -36,6 +38,7 @@ function OrganizationJobPosted() {
         );
       })
     : [];
+
   return (
     <>
       <>
@@ -61,18 +64,26 @@ function OrganizationJobPosted() {
                 </div>
               </div>
             </div>
-            {loader ? (
+            {loader||jobDeleteLoading ? (
               <Loader></Loader>
             ) : (
               <div className="job-list scrollable-content max-sm:mb-[3.9rem]  flex flex-col ">
                 {jobList &&
                   filteredJobs.map((job, key) => (
                     <div key={key}>
-                      <div className="card-container w-full min-h-[6rem] mt-2 flex flex-nowrap pt-2 pb-2 ps-1 pe-1  cursor-pointer  border-b-[1px] border-b-solid border-b-[lgt-grey] ">
-                        <div
-                          onClick={() => navigate(`/job/${job.id}`)}
-                          className="org-logo  h-full flex justify-center mt-2 ms-1 "
-                        >
+                      <div
+                        onClick={() =>
+                          navigate(
+                            `/job/${job.organization_name
+                              .replace(/\s/g, "")
+                              .toLowerCase()}-${job.role
+                              .replace(/\s/g, "")
+                              .toLowerCase()}-${job.id}`
+                          )
+                        }
+                        className="card-container w-full min-h-[6rem] mt-2 flex flex-nowrap pt-2 pb-2 ps-1 pe-1  cursor-pointer  border-b-[1px] border-b-solid border-b-[lgt-grey] "
+                      >
+                        <div className="org-logo  h-full flex justify-center mt-2 ms-1 ">
                           <div className="logo-container h-[50px] w-[50px] overflow-hidden ">
                             {job.organization_profile_pic != null ? (
                               <img
@@ -97,14 +108,6 @@ function OrganizationJobPosted() {
                             <div className="title ">{job.role}</div>
                             <div className="org-name w- text-[14px] color-lgt-grey word-wrap-overflow w-24">
                               at {job.organization_name}
-                            </div>
-                            <div
-                              onClick={() => {
-                                navigate(`/applicantslist/${job.id}`);
-                              }}
-                              className="follow-btn text-xs ps-2 pe-2 border-[1px] rounded border-solid hover:border-black  cursor-pointer"
-                            >
-                              Applicants
                             </div>
                           </div>
                           <div className="about-job flex wrap text-[13px] font-thin  gap-2 color-lgt-grey  ">
@@ -134,6 +137,25 @@ function OrganizationJobPosted() {
                                 +{job.skills_required.length - 3}
                               </div>
                             )}
+                          </div>
+                          <div className="flex w-full mt-3 gap-3 ">
+                            <div
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                navigate(`/applicantslist/${job.id}`);
+                              }}
+                              className="flex gap-2  items-center follow-btn text-[14px] ps-2 pe-2 border-[1px] rounded border-solid hover:border-black  cursor-pointer"
+                            >
+                              View Applicants <FaArrowRightLong />
+                            </div>
+                            <div 
+                            onClick={(e)=>{
+                              e.stopPropagation()
+                              deleteJob(String(job.id))
+                            }}
+                            className="flex gap-2 items-center  follow-btn text-[14px] ps-2 pe-2 border-[1px] rounded border-solid hover:border-black hover:bg-[red] hover:text-white  cursor-pointer">
+                              Delete <MdDelete />
+                            </div>
                           </div>
                         </div>
                       </div>

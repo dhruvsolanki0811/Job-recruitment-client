@@ -17,12 +17,18 @@ import {
   useFetchStatusOfApplication,
 } from "../../hooks/useJobData";
 import DevIcon from "../../components/Devicon/Devicon";
+import { MdDone, MdOutlineTransitEnterexit } from "react-icons/md";
 
 function JobDescriptionPage() {
   const { id } = useParams();
   const { user } = useUserAuthStore();
-  const jobId = id ? id : "";
-  const authUser = user.userName ? user.userName : "";
+
+  const newId = id ? id : "";
+  const parts = newId.split("-");
+  const jobId = parts[parts.length - 1];
+
+  const authUser =
+    user.userType == "jobseeker" && user.userName ? user.userName : "";
   const { mutate: applyJob, isLoading } = useApplyJob(jobId);
   const { data: applied, isLoading: applyLoading } =
     useFetchStatusOfApplication(jobId, authUser);
@@ -68,13 +74,20 @@ function JobDescriptionPage() {
                   {user.userType === "jobseeker" && (
                     <div
                       onClick={handleStatus}
-                      className="follow-btn text-[14px] cursor-pointer hover:bg-[#22C35E] hover:text-[white] ps-2 pe-2 border-[1px] rounded border-solid border-black"
+                      className="follow-btn flex gap-2 items-center  bg-white text-[15px] cursor-pointer hover:bg-[#22C35E] hover:text-[white] ps-2 pe-2 border-[1px] rounded border-solid border-black"
                     >
-                      {isLoading
-                        ? "Loading"
-                        : applied["has_applied"]
-                        ? "Applied"
-                        : "Apply"}
+                      {isLoading ||applyLoading? (
+                        "Loading"
+                      ) : applied["has_applied"] ? (
+                        <>
+                          Applied <MdDone className="text-[18px]" />
+                        </>
+                      ) : (
+                        <>
+                          Apply{" "}
+                          <MdOutlineTransitEnterexit className="text-[18px]" />
+                        </>
+                      )}
                     </div>
                   )}
                 </div>

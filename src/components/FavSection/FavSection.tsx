@@ -20,7 +20,7 @@ function FavSection({ page }: pageType) {
   const navigate = useNavigate();
 
   const { user } = useUserAuthStore();
-  
+
   const { data: jobseekers } =useFetchAllJobseeker();
   const {data:organizations}=useFetchAllOrganizations()
   
