@@ -14,8 +14,9 @@ const fetchAllJobseeker = async ():Promise<JobSeeker[]>  => {
     return useQuery('all-jobseeker', fetchAllJobseeker)
   }
 
-  export const useFetchSingleJobSeeker=(JobSeeker:string)=>{
+  export const useFetchSingleJobSeeker=(JobSeeker:string,type?:string)=>{
     const isAuthenticated =JobSeeker.length>0;
+    const isType=type=='Company Description'
     const fetchSingleJobSeeker = async (): Promise<JobSeeker> => {
   
       const response = await axios.get(
@@ -24,7 +25,7 @@ const fetchAllJobseeker = async ():Promise<JobSeeker[]>  => {
       return response.data
       
     };
-    return useQuery(['Single-jobseeker',JobSeeker],fetchSingleJobSeeker,{enabled:isAuthenticated})
+    return useQuery(['Single-jobseeker',JobSeeker],fetchSingleJobSeeker,{enabled:(isType?false:isAuthenticated)})
   }
 
 

@@ -18,9 +18,9 @@ function CompanyDescription() {
   const organizationName = username ? username : "";
   const { data: organizationPage, isLoading: organizationLoading } =
     useFetchSingleOrganization(organizationName);
-
+    const OrgName=organizationPage?.name?organizationPage?.name:""
   const { data: jobList, isLoading: jobsLoading } =
-    useFetchOrganizationJobs(organizationName);
+    useFetchOrganizationJobs(OrgName);
 
   return (
     <>

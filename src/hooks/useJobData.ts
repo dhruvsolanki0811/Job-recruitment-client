@@ -20,7 +20,7 @@ export const useFetchAllJobs = () => {
 
 export const useFetchOrganizationJobs = (organization_name: string) => {
   const fetchOrganizationJobs = async (): Promise<Job[]> => {
-    let apiUrl = `${APIBASEURL}/jobs/jobprofile?organization__username=${organization_name}`;
+    let apiUrl = `${APIBASEURL}/jobs/jobprofile?organization__user__username=${organization_name}`;
 
     const response = await axios.get(`${apiUrl}`);
     return response.data;

@@ -22,7 +22,7 @@ function JobNav({ jobtype }: { jobtype: PropType }) {
   const { filters, setFilter, setfilteredJobs, sortJob } = useFilterStore();
   const { refetch } = useFetchFilteredJobs();
   const userName = username ? username : "";
-  const { data: jobSeeker } = useFetchSingleJobSeeker(userName);
+  const { data: jobSeeker } = useFetchSingleJobSeeker(userName,jobtype.type);
 
   const handleSearchInput = (e: any) => {
     const { value } = e.target;
