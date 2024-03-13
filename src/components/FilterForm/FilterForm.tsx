@@ -13,13 +13,13 @@ interface JobFiltersState {
 
 function FilterForm() {
   const [loading, setLoading] = useState(false);
+  const { setFilter, filters: globalFilter } = useFilterStore();
   const [filters, setFilters] = useState<JobFiltersState>({
-    role: "",
-    required_experience: [0, 10],
-    salary: [0, 100],
+    role: globalFilter.role||"",
+    required_experience: [0, globalFilter.required_experience__lte||10],
+    salary: [0, globalFilter.salary__lte||100],
     // location: "",
   });
-  const { setFilter, filters: gloabalFilter } = useFilterStore();
   const { refetch } = useFetchFilteredJobs();
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -60,7 +60,7 @@ function FilterForm() {
     if (filters.role.length > 0) {
       filterSent["role"] = filters.role;
     }
-    setFilter({ ...gloabalFilter, ...filterSent });
+    setFilter({ ...globalFilter, ...filterSent });
     await refetch();
     setLoading(false);
     // fetchJobs(filterSent);
@@ -68,7 +68,7 @@ function FilterForm() {
   };
   const clearFilters = (e: FormEvent) => {
     e.preventDefault();
-    const newFilters = { ...gloabalFilter };
+    const newFilters = { ...globalFilter };
     if (newFilters.required_experience__lte) {
       delete newFilters.required_experience__lte;
     }
