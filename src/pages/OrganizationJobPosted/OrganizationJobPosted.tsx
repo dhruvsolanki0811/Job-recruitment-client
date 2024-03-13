@@ -6,18 +6,26 @@ import {
 } from "../../components/components";
 import { useNavigate } from "react-router-dom";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
-import { useUserAuthStore } from "../../store/store";
+import { APIBASEURL, useUserAuthStore } from "../../store/store";
 import orgPlaceHolder from "../../assets/placeholder-organization.png";
 import { formatTimestampToDDMonthYYYY } from "../../utils/dateutils";
 import { useFetchOrganizationJobs } from "../../hooks/useJobData";
 import DevIcon from "../../components/Devicon/Devicon";
+import { Job } from "../../types/types";
+import axios from "axios";
+import { useQuery } from "react-query";
+
+
+
+
 
 function OrganizationJobPosted() {
 
     const {user}=useUserAuthStore()
     const orgName=user.userName?user.userName:""
     const{data:jobList,isLoading:loader}=useFetchOrganizationJobs(orgName)
-  const navigate = useNavigate();
+
+    const navigate = useNavigate();
   
   return (
     <>
