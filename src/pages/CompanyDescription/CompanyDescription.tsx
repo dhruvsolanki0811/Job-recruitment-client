@@ -37,7 +37,7 @@ function CompanyDescription() {
           {organizationLoading || jobsLoading ? (
             <Loader message=""></Loader>
           ) : (
-            <div className="people-grid flex  p-3  w-full ">
+            <div className="people-grid flex  p-3  w-full mb-[3.9rem]">
               <div className="intro-sec flex flex-col  w-full  mt-5 items-center border-b-[1px] border-b-solid border-b-[#e1e4e8] ">
                 <img
                   src={
