@@ -3,7 +3,7 @@ import { JobNav, Loader, Sidebar } from "../../../../components/components";
 import unknown from "../../../../assets/unknown.png";
 import { BottomBar } from "../../../../components/BottomBar/BottomBar";
 import "./UserSignin.css";
-import { APIBASEURL } from "../../../../store/store";
+import { APIBASEURL, useUserAuthStore } from "../../../../store/store";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -38,7 +38,7 @@ const createJobseeker = async (data: SeekerFormData) => {
       }
     }
   });
-  await axios({
+  const response = await axios({
     method: "post",
     url: `${APIBASEURL}/account/create/jobseeker`,
     data: formData,
@@ -46,6 +46,16 @@ const createJobseeker = async (data: SeekerFormData) => {
       "Content-Type": `multipart/form-data`,
     },
   });
+  const { access, refresh } = await response.data;
+  const currUser = {
+    userName: response.data.user.username,
+    userId: response.data.user.id,
+    userType: "jobseeker",
+  };
+  console.log(currUser);
+  useUserAuthStore.setState({ user: currUser });
+  localStorage.setItem("accessToken", access);
+  localStorage.setItem("refreshToken", refresh);
 };
 
 function UserSignin() {

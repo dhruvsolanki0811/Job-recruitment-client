@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import {  useState } from "react";
 import { useFetchAllJobseeker } from "../../hooks/useJobseekerData";
 import { useFetchAllOrganizations } from "../../hooks/useOrganizationData";
-import { TbUserQuestion } from "react-icons/tb";
 import { JobSeeker } from "../../types/types";
 type pageType = {
   page: "Users" | "All Job" | "Company" | "Connections";
@@ -22,7 +21,7 @@ function FavSection({ page }: pageType) {
   const navigate = useNavigate();
 
   const { user } = useUserAuthStore();
-
+  
   const { data: jobseekers } =useFetchAllJobseeker();
   const {data:organizations}=useFetchAllOrganizations()
   
@@ -38,13 +37,8 @@ function FavSection({ page }: pageType) {
             }}
             className="username-container cursor-pointer flex gap-1    items-center"
           >
-            <div className=" h-5 w-6">
-              {user.userPic?<img
-                className=" object-cover overflow-hidden h-full"
-                src={`${user.userPic}`}
-              ></img>:<TbUserQuestion className="nav-items-logo"/>
-            }
-            </div>
+            {/* <div className=" h-5 w-6">
+            </div> */}
             <div className="text-[14px] ">
             {user.userName ? user.userName : "Login"}
             </div>

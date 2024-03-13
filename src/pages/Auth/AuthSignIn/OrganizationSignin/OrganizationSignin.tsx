@@ -8,7 +8,7 @@ import {
   Loader,
 } from "../../../../components/components";
 import unknown from "../../../../assets/placeholder-organization.png";
-import { APIBASEURL } from "../../../../store/store";
+import { APIBASEURL, useUserAuthStore } from "../../../../store/store";
 import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
 
@@ -44,12 +44,24 @@ const addOrganization = async (data: OrganizationFormData) => {
   }
 
   // Send the request
-  await axios.post(`${APIBASEURL}/account/create/organization`, formData, {
-    headers: {
-      "Content-Type": `multipart/form-data`,
-    },
-  });
-
+  const response = await axios.post(
+    `${APIBASEURL}/account/create/organization`,
+    formData,
+    {
+      headers: {
+        "Content-Type": `multipart/form-data`,
+      },
+    }
+  );
+  const { access, refresh } = response.data;
+  const currUser = {
+    userName: response.data.user.username,
+    userId: response.data.user.id,
+    userType: "organization",
+  };
+  useUserAuthStore.setState({ user: currUser });
+  localStorage.setItem("accessToken", access);
+  localStorage.setItem("refreshToken", refresh);
   // Display success message
 };
 function OrganizationSignin({}: OrganizationSigninProps) {

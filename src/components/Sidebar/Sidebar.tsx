@@ -3,15 +3,13 @@ import logo from "../../assets/logo.png";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import { TbUserQuestion } from "react-icons/tb";
 
-import {
-  PiSuitcaseSimpleDuotone,
-  PiHandshake,
-} from "react-icons/pi";
+import { PiSuitcaseSimpleDuotone, PiHandshake } from "react-icons/pi";
 import { IoPeopleOutline } from "react-icons/io5";
 import { HiOutlineBuildingOffice } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import { useUserAuthStore } from "../../store/AuthStore";
 import { IoIosLogOut } from "react-icons/io";
+import { FaUserCheck } from "react-icons/fa6";
 
 function Sidebar() {
   const navigate = useNavigate();
@@ -19,13 +17,11 @@ function Sidebar() {
   return (
     <>
       <div className="side-section ">
-        
-          <div className="logo-container flex  h-[7rem] ob">
-            <img
-              className="logo object-cover overflow-hidden h-full"
-              src={logo}
-            ></img>
-          
+        <div className="logo-container flex  h-[7rem] ob">
+          <img
+            className="logo object-cover overflow-hidden h-full"
+            src={logo}
+          ></img>
         </div>
         <div className="nav-items flex flex-col w-full">
           <div
@@ -79,13 +75,15 @@ function Sidebar() {
             }}
             className="nav-item overflow-hidden hover:bg-[#22C55E] hover:text-white flex items-center gap-2 text-[16px] font-medium p-2 m-1"
           >
-            {user.userPic?<img
-              className="cursor-pointer rounded-full w-[1.5rem] h-[1.4rem]"
-              src={`${user.userPic}` }
-            ></img>:
-        <TbUserQuestion className="nav-items-logo"/>
-
-            }
+            {user.userId ? (
+              // <img
+              //   className="cursor-pointer rounded-full w-[1.5rem] h-[1.4rem]"
+              //   src={`${user.userPic}` }
+              // ></img>
+              <FaUserCheck className="nav-items-logo" />
+            ) : (
+              <TbUserQuestion className="nav-items-logo" />
+            )}
             <div className="username-sec text-[16px] cursor-pointer font-medium">
               {user.userName ? user.userName : "Login"}
             </div>

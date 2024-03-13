@@ -2,6 +2,7 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import "./FilterForm.css";
 import { useFilterStore } from "../../store/FilterStore";
 import { useFetchFilteredJobs } from "../../hooks/useJobData";
+import ReactLoading from "react-loading";
 
 interface JobFiltersState {
   role: string;
@@ -11,6 +12,7 @@ interface JobFiltersState {
 }
 
 function FilterForm() {
+  const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState<JobFiltersState>({
     role: "",
     required_experience: [0, 10],
@@ -18,7 +20,7 @@ function FilterForm() {
     // location: "",
   });
   const { setFilter, filters: gloabalFilter } = useFilterStore();
-  const {refetch}=useFetchFilteredJobs()
+  const { refetch } = useFetchFilteredJobs();
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -38,8 +40,9 @@ function FilterForm() {
     setFilters((prevFilters) => ({ ...prevFilters, salary: [0, value] }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     const filterSent: {
       required_experience__lte?: number;
       salary__lte?: number;
@@ -58,31 +61,33 @@ function FilterForm() {
       filterSent["role"] = filters.role;
     }
     setFilter({ ...gloabalFilter, ...filterSent });
-    refetch()
+    await refetch();
+    setLoading(false);
     // fetchJobs(filterSent);
     // Handle the submission of filters (e.g., send a request to the server with the filters)
   };
-  const clearFilters=(e:FormEvent)=>{
-    e.preventDefault()
-    const newFilters={...gloabalFilter}
-    if(newFilters.required_experience__lte){
-    delete newFilters.required_experience__lte}
+  const clearFilters = (e: FormEvent) => {
+    e.preventDefault();
+    const newFilters = { ...gloabalFilter };
+    if (newFilters.required_experience__lte) {
+      delete newFilters.required_experience__lte;
+    }
 
-    if(newFilters.role){
-      delete newFilters.role
+    if (newFilters.role) {
+      delete newFilters.role;
     }
-    if(newFilters.salary__lte){
-      delete newFilters.salary__lte
+    if (newFilters.salary__lte) {
+      delete newFilters.salary__lte;
     }
-    setFilter({...newFilters})
+    setFilter({ ...newFilters });
     setFilters({
       role: "",
       required_experience: [0, 10],
       salary: [0, 100],
       // location: "",
-    })
-    refetch()
-  }
+    });
+    refetch();
+  };
   return (
     <>
       <form className="flex ps-2 pe-2 pt-3 pb-3 flex-col gap-1">
@@ -129,14 +134,29 @@ function FilterForm() {
           <div className="text-[13px] mt-2">${filters.salary[1]}Lpa</div>
         </label>
 
-        <div className="btn-wrapper flex gap-2 mt-2">
-          <button className="submit-btn text-[13px] font-medium	" onClick={handleSubmit}>
-            Apply
-          </button>
-          <button className="submit-btn text-[13px]  font-medium	" onClick={clearFilters}>
-            Clear
-          </button>
-        </div>
+        {loading? (
+          <ReactLoading
+            type="bubbles"
+            color="green"
+            height={10}
+            className="flex items-center  overflow-hidden mt-2"
+          />
+        ) : (
+          <div className="btn-wrapper flex items-center gap-2 mt-2">
+            <button
+              className="submit-btn text-[13px] font-medium	flex items-center"
+              onClick={handleSubmit}
+            >
+              Apply
+            </button>
+            <button
+              className="submit-btn text-[13px]  font-medium	"
+              onClick={clearFilters}
+            >
+              Clear
+            </button>
+          </div>
+        )}
       </form>
     </>
   );

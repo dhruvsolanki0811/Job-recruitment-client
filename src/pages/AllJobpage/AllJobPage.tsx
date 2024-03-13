@@ -16,8 +16,11 @@ import { useEffect } from "react";
 
 function AllJobPage() {
   const navigate = useNavigate();
-  const {filters,setfilteredJobs,filteredJobs}=useFilterStore()
+  const {filters,setfilteredJobs,filteredJobs,setFilter}=useFilterStore()
   const { data: jobLists, isLoading: jobloader } = useFetchAllJobs();
+  useEffect(()=>{
+    setFilter({})
+  },[])
   useEffect(()=>{
     if(jobLists){
       setfilteredJobs(jobLists)
@@ -59,7 +62,7 @@ function AllJobPage() {
             <Loader></Loader>
           ) : 
           filteredJobs ? (
-            <div className="job-list scrollable-content max-sm:mb-[3.9rem]  flex flex-col ">
+            <div className="job-list scrollable-content mb-[3.9rem]  flex flex-col ">
               {filteredJobs ?.map((elem) => (
                 <Jobcard job={elem}></Jobcard>
               ))}

@@ -4,8 +4,9 @@ import {
   Loader,
   Sidebar,
 } from "../../components/components";
-import unknown from "../../assets/unknown.png";
 
+import unknown from "../../assets/unknown.png";
+import unknownProject from "../../assets/placeholder-organization.png";
 import "./UserDescriptionPage.css";
 
 import { BottomBar } from "../../components/BottomBar/BottomBar";
@@ -166,11 +167,15 @@ function UserDescriptionPage() {
                           className="project-card cursor-pointer border-[1px] overflow-hidden rounded-[10px] border-solid border-[#e1e4e8] w-[13.4rem] max-sm:w-full max-lg:w-full max-md:w-[13.4rem] h-[14rem] "
                         >
                           <div className="project-img h-[74%] border-b-[lgt-grey] border-b-solid border-b-[2px]">
-                            <img
+                          {project.image?<img
                               className="object-cover h-full w-full  "
                               src={project.image}
                               alt=""
-                            />
+                            />:<img
+                            className="object-fill h-full w-full  "
+                            src={unknownProject}
+                            alt=""
+                          />}
                           </div>
 
                           <div className="project-overview px-3 py-1 flex flex-col h-[26%]">

@@ -63,7 +63,7 @@ export interface Experience {
   role: string;
   start_month: string;
   start_year: number;
-  end_month: string | null;
+  end_month?: string | null;
   end_year: number | null;
   job_seeker: number;
 };

@@ -10,13 +10,12 @@ export const useLoginHook=()=>{
         const currUser={
             userName:response.data.user.username,
             userId:response.data.user.id,
-            userPic:response.data.user.profile_pic,
             userType:data.type
         }
         useUserAuthStore.setState({user:currUser})
         localStorage.setItem("accessToken", access);
         localStorage.setItem("refreshToken", refresh);
-
+        return response.data
     }   
     return useMutation(signin,{
         onSuccess:()=>{

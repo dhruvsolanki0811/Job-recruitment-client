@@ -23,13 +23,13 @@ function JobDescriptionPage() {
   const { user } = useUserAuthStore();
   const jobId = id ? id : "";
   const authUser = user.userName ? user.userName : "";
-  const { mutate: applyJob } = useApplyJob(jobId);
+  const { mutate: applyJob,isLoading } = useApplyJob(jobId);
   const { data: applied, isLoading: applyLoading } =
     useFetchStatusOfApplication(jobId, authUser);
   const { data: jobPage, isLoading: jobloader } = useFetchSingleJob(jobId);
 
   const handleStatus = () => {
-    if (!applied && jobPage?.id) {
+    if (!applied["has_applied"] && jobPage?.id) {
       applyJob(String(jobPage?.id));
     }
   };
@@ -71,7 +71,7 @@ function JobDescriptionPage() {
                       onClick={handleStatus}
                       className="follow-btn text-[14px] cursor-pointer hover:bg-[#22C35E] hover:text-[white] ps-2 pe-2 border-[1px] rounded border-solid border-black"
                     >
-                      {applied ? "Applied" : "Apply"}
+                      {isLoading?"Loading":applied['has_applied'] ? "Applied" : "Apply"}
                     </div>
                   )}
                 </div>

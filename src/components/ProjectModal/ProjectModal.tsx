@@ -2,6 +2,7 @@ import { IoArrowUpOutline, IoCloseCircle } from "react-icons/io5";
 import DevIcon from "../Devicon/Devicon";
 import { useEffect, useRef } from "react";
 import { Project } from "../../types/types";
+import unknownProject from "../../assets/project-placeholder.png";
 
 function ProjectModal({project,close}: {project:Project ,close: () => void}) 
 {
@@ -12,6 +13,7 @@ function ProjectModal({project,close}: {project:Project ,close: () => void})
     }
   };
   useEffect(() => {
+    console.log(project)
     document.addEventListener("mousedown", handleOutsideClick);
   }, []);
   return (
@@ -19,14 +21,20 @@ function ProjectModal({project,close}: {project:Project ,close: () => void})
       <div className="overlay absolute top-0 left-0 z-50 w-[100vw] h-[100vh] bg-gray-400 opacity-30  flex items-center justify-center  "></div>
       <div className="overlay  absolute top-0 left-0 z-50 w-[100vw] h-[100vh]   flex items-center  justify-center  ">
         <div ref={modalContainer} className="project-container rounded-[10px] overflow-hidden relative opactiy-100  top-0 bg-white w-[45rem] max-md:w-full h-[35rem] mx-[1rem]">
-          <div className="project-image-container h-[70%] border-b-[1px] border-b-solid border-b-[lgt-grey]">
-            <img
-              src={`${project.image}`}
+          <div className="project-image-container h-[60%] border-b-[1px] border-b-solid border-b-[lgt-grey]">
+           { !project.image?
+           <img
+           src={`${unknownProject}`}
+           className="h-full w-full object-cover"
+           alt=""
+         />
+           :<img
+              src={project.image}
               className="h-full w-full object-cover"
               alt=""
-            />
+            />}
           </div>
-          <div className="project-image-overlay absolute bg-[#00000033]  opactiy-0  top-0  w-full h-[70%]   ">
+          <div className="project-image-overlay absolute bg-[#00000033]  opactiy-0  top-0  w-full h-[60%]   ">
             <div className="close-btn w-full flex justify-end pt-4 pe-4">
               <IoCloseCircle
                 onClick={() => close()}
@@ -34,8 +42,8 @@ function ProjectModal({project,close}: {project:Project ,close: () => void})
               />
             </div>
           </div>
-          <div className="project-desc   h-[30%] overflow-y-auto w-full py-3 flex-col px-5 ">
-            <div className="project-name font-semibold text-[17px] flex items-center gap-2">
+          <div className="project-desc   h-[40%] overflow-y-auto w-full py-3 flex-col px-5 ">
+            <div className="project-name mt-3 font-semibold text-[17px] flex items-center gap-2">
               {project.name}{" "}
               <a
                 href={`${project.deployed_link}`}

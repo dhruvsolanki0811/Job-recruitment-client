@@ -28,7 +28,7 @@ axiosInstance.interceptors.response.use(
           if (response.status == 401) {
             localStorage.removeItem("refreshToken");
             localStorage.removeItem("accessToken");
-            useUserAuthStore.setState({ user:{userId:null,userName:null,userType:null,userPic:null} })
+            useUserAuthStore.setState({ user:{userId:null,userName:null,userType:null} })
             toast.done("Successfully logged out");
   
         }
@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
         .catch(() => {
           localStorage.removeItem("refreshToken");
           localStorage.removeItem("accessToken");
-          useUserAuthStore.setState({ user:{userId:null,userName:null,userType:null,userPic:null} })
+          useUserAuthStore.setState({ user:{userId:null,userName:null,userType:null} })
           toast.done("Successfully logged out");
 
         });

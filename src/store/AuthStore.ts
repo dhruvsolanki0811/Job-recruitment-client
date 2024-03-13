@@ -11,7 +11,6 @@ interface userAuth extends DevtoolsStore {
   user:{
     userId:number|null,
     userName:string|null,
-    userPic:string|null,
     userType:string|null
   }
   logout: () => void;
@@ -28,7 +27,7 @@ export const useUserAuthStore = create<userAuth>()(
         //clearTimeout(refreshTimeout); // Clear the refresh timeout on logout
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
-        set({ user:{userId:null,userName:null,userPic:null,userType:null} });
+        set({ user:{userId:null,userName:null,userType:null} });
         toast.done("Successfully logged out");
       },
     };
