@@ -19,8 +19,9 @@ import {
 } from "./pages/pages";
 import { RestrictAuth } from "./pages/Auth/AuthRoutes/restrict-auth";
 import { RequireAuth } from "./pages/Auth/AuthRoutes/require-auth";
-import { UserProfilePage } from "./pages/ProfileEditPage/UserProfilePage/UserProfilePage";
+import { UserProfilePage } from "./pages/ProfilePage/UserProfilePage/UserProfilePage";
 import { useUserAuthStore } from "./store/AuthStore";
+import UserProfileUpdateForm from "./pages/ProfileUpdateForm/UserProfileUpdateForm";
 
 function RoutesPath() {
   const { user } = useUserAuthStore();
@@ -68,6 +69,8 @@ function RoutesPath() {
         />
         <Route path="/organization/us" element={<OrganizationProfilePage />} />
         <Route path="/jobseeker/us" element={<UserProfilePage />} />
+        <Route path="/jobseeker/edit" element={<UserProfileUpdateForm />} />
+
         <Route
           path="/applicantslist/:jobId"
           element={<ApplicantsList></ApplicantsList>}

@@ -103,7 +103,7 @@ function UserSignin() {
       e.preventDefault(); // Prevent the default form submission behavior
 
       setFormData((prev) => {
-        const updatedList = [inputListValue, ...prev.skills.slice(0, 14)];
+        const updatedList = [inputListValue, ...prev.skills];
         setListValue(""); // Clear the input field after adding the item
         return { ...prev, skills: updatedList };
       });
@@ -142,19 +142,19 @@ function UserSignin() {
     }
   };
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
 
-    if (file && file.type === "application/pdf") {
-      setFormData((prevData) => ({
-        ...prevData,
-        resume: file,
-      }));
-    } else {
-      toast.error("Please select a PDF file.");
-      event.target.value = ""; // Clear the input field
-    }
-  };
+      if (file && file.type === "application/pdf") {
+        setFormData((prevData) => ({
+          ...prevData,
+          resume: file,
+        }));
+      } else {
+        toast.error("Please select a PDF file.");
+        event.target.value = ""; // Clear the input field
+      }
+    };
 
   const handleSubmit = (
     e: React.FormEvent<HTMLFormElement | HTMLButtonElement>
@@ -284,7 +284,7 @@ function UserSignin() {
                   placeholder="No of year of Experience"
                   value={formData.no_of_years_experience}
                   min={0}
-                  max={20}
+                  max={50}
                   onChange={handleInputChange}
                   className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
                 />
@@ -323,7 +323,7 @@ function UserSignin() {
                   value={inputListValue}
                   onChange={handleListInputChange}
                   onKeyDown={handleEnter}
-                  placeholder="only up to 15 Skills"
+                  placeholder="Add Skills"
                   className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
                 />
 

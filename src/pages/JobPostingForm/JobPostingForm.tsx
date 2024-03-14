@@ -37,7 +37,7 @@ function JobPostingForm() {
     if (e.key === "Enter" && inputListValue.trim() !== "") {
       setJobDetails((prevDetails: any) => ({
         ...prevDetails,
-        skills: [inputListValue, ...prevDetails.skills.slice(0, 14)],
+        skills: [inputListValue, ...prevDetails.skills],
       }));
       setListValue("");
     }
@@ -140,7 +140,7 @@ function JobPostingForm() {
                     value={inputListValue}
                     onChange={handleListInputChange}
                     onKeyDown={handleEnter}
-                    placeholder="only up to 15 Skills"
+                    placeholder="Add Skills"
                     className="w-full text-[14px] h-8 border-[2px] p-2 rounded"
                   />
                 </div>

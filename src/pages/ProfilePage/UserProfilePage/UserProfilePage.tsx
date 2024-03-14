@@ -23,8 +23,12 @@ import { useDeleteExperience, useFetchExperienceByUser } from "../../../hooks/us
 import { IoAddCircleSharp } from "react-icons/io5";
 import ProjectFormModal from "../../../components/ProjectFormModal/ProjectFormModal";
 import ExperienceFormData from "../../../components/ExperienceFormData/ExperienceFormData";
+import { TbEdit } from "react-icons/tb";
+import { FaRegFilePdf } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 function UserProfilePage() {
+  const navigate=useNavigate()
   const { user } = useUserAuthStore();
   const { mutate: deleteProject, isLoading } = useDeleteProject();
   const {mutate:deleteExperience,isLoading:isExperienceDeleteLoading}=useDeleteExperience()
@@ -83,7 +87,7 @@ function UserProfilePage() {
           ) : (
             <div className="people-grid scrollable-content max-sm:mb-[3.9rem]  flex p-3  w-full   ">
               <div className="intro-sec flex flex-col  w-full justify-center mt-5 items-center border-b-[1px] border-b-solid border-b-[#e1e4e8]">
-                <div className="image-container flex justify-center items-center h-[5rem] w-[5rem] border-[2px] border-solid border-[#22C55E] p-[1px]">
+                <div  className="image-container cursor-pointer relative flex justify-center items-center h-[5rem] w-[5rem] border-[2px] border-solid border-[#22C55E] p-[1px]">
                   <img
                     src={
                       jobSeeker?.profile_pic == null
@@ -92,6 +96,10 @@ function UserProfilePage() {
                     }
                     className="h-full w-full object-cover"
                   />
+                  <div className="icon-container absolute z-[100] w-full h-full">
+                  <TbEdit className="text-[25px] text-[black] border-[1px] border-solid border-[#22C55E] rounded-full p-1 bg-white bottom-0 right-[-11px] absolute"/>
+
+                  </div>
                 </div>
                 <div className="follow-username-sec flex items-center mt-2 ">
                   <div className="header-username  ">
@@ -106,6 +114,7 @@ function UserProfilePage() {
                   <CiMail />
                   {jobSeeker?.email}
                 </div>
+                
                 <div className="header-email text-[13px] color-lgt-grey mt-3 flex items-center gap-1 justify-center">
                   Professional Experience{" "}
                   {jobSeeker?.no_of_years_experience === 0
@@ -122,7 +131,19 @@ function UserProfilePage() {
                     );
                   })}
                 </div>
+                <div className="header-email text-[13px] color-lgt-grey mt-3 flex items-center gap-2 justify-center">
+                  Resume : {jobSeeker?.resume?
+                  <a  href={jobSeeker.resume} download={jobSeeker.resume.replace('https://res.cloudinary.com/dlkqz4nqp/image/upload/v1/media/resumes',"")+".pdf"} className="flex cursor-pointer items-center border-[1px] px-2 py-1 rounded-full border-solid border-[lgt-grey]">
+                  <FaRegFilePdf className=" text-[red] text-[20px]"/>
+                  </a>:<div className="cursor-default">Not uploaded yet</div>}
               </div>
+              <div className="header-download text-[15px] mt-3 flex items-center gap-1 justify-center">
+                    <div onClick={()=>{navigate("/jobSeeker/edit")}} className="btn-container gap-2 rounded-full border-[1px] border-solid border-[lgt-grey] px-2 py-1 hover:bg-[green] cursor-pointer hover:text-white flex items-center ">
+                      Edit Profile <TbEdit></TbEdit>
+                    </div>
+                </div>
+              </div>
+              
               <div className="about-sec flex flex-col justify-center  w-full  items-center border-b-[1px] pb-3">
                 <div className="header-about text-[14px]">
                   About {jobSeeker?.firstname} {jobSeeker?.lastname}
@@ -150,7 +171,7 @@ function UserProfilePage() {
                       close={projectFormModalClose}
                     ></ProjectFormModal>
                   )}
-                  <div className="projetctcards-grid flex mt-4 mb-4 justify-center  flex-wrap w-full px-7 gap-4">
+                  <div className="projetctcards-grid flex mt-4 mb-4 justify-center  flex-wrap w-full px-6 gap-4">
                     {isLoading ? (
                       <div className="loader-container h-[13rem]">
                         <Loader message=""></Loader>
@@ -164,7 +185,7 @@ function UserProfilePage() {
                             setCurrProject(project);
                             setProjectModalOpen(true);
                           }}
-                          className="project-card cursor-pointer border-[1px] overflow-hidden rounded-[10px] border-solid border-[#e1e4e8] w-[13.4rem] max-sm:w-full max-lg:w-full max-md:w-[13.4rem] h-[13rem] "
+                          className="project-card cursor-pointer border-[1px] overflow-hidden rounded-[10px] border-solid border-[#e1e4e8] w-[13.4rem] max-sm:w-full  max-md:w-[13.4rem] h-[13rem] "
                         >
                           <div className="project-img h-[74%] border-b-[1px] border-b-solid border-b-[lgt-grey]">
                             {project.image ? (

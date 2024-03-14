@@ -72,7 +72,7 @@ function ProjectFormModal({
       e.preventDefault(); // Prevent the default form submission behavior
 
       setFormData((prev) => {
-        const updatedList = [inputListValue, ...prev.skills.slice(0, 14)];
+        const updatedList = [inputListValue, ...prev.skills];
         setListValue(""); // Clear the input field after adding the item
         return { ...prev, skills: updatedList };
       });
@@ -216,7 +216,7 @@ function ProjectFormModal({
               value={inputListValue}
               onChange={handleListInputChange}
               onKeyDown={handleEnter}
-              placeholder="only up to 15 Skills"
+              placeholder="Add skills"
               className="w-full text-[13px] h-10 border-[2px] p-2 rounded"
             />
           </label>

@@ -22,6 +22,8 @@ export interface Job {
     phone_number: number;
     skills: string[];
     profile_pic: string;
+    resume:string|null
+
   }
 
   

@@ -10,7 +10,7 @@ export {JobPostingForm} from "./JobPostingForm/JobPostingForm"
 export {JobDescriptionPage} from "./JobDescriptionPage/JobDescriptionPage"
 export {UserDescriptionPage} from "./UserDescriptionPage/UserDescriptionPage"
 export {CompanyDescription} from "./CompanyDescription/CompanyDescription"
-export {OrganizationProfilePage} from "./ProfileEditPage/OrganizationProfilePage/OrganizationProfilePage"
+export {OrganizationProfilePage} from "./ProfilePage/OrganizationProfilePage/OrganizationProfilePage"
 export {OrganizationJobPosted} from './OrganizationJobPosted/OrganizationJobPosted'
 export {ApplicantsList} from './ApplicantsList/ApplicantsList'
 export {ErrorPage} from './ErrorPage/ErrorPage'
