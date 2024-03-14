@@ -1,4 +1,3 @@
-import axios from "axios";
 import DevIcon from "../../components/Devicon/Devicon";
 import {
   BottomBar,
@@ -15,8 +14,6 @@ import { toast } from "react-toastify";
 import { APIBASEURL } from "../../store/store";
 import { useMutation, useQueryClient } from "react-query";
 import { axiosInstance } from "../../axios/axios";
-import Loading from "react-loading";
-import { TbEdit } from "react-icons/tb";
 import { FaRegFilePdf } from "react-icons/fa6";
 
 interface SeekerFormData {
