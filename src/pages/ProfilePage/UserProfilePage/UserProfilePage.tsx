@@ -87,7 +87,7 @@ function UserProfilePage() {
           ) : (
             <div className="people-grid scrollable-content max-sm:mb-[3.9rem]  flex p-3  w-full   ">
               <div className="intro-sec flex flex-col  w-full justify-center mt-5 items-center border-b-[1px] border-b-solid border-b-[#e1e4e8]">
-                <div  className="image-container cursor-pointer relative flex justify-center items-center h-[5rem] w-[5rem] border-[2px] border-solid border-[#22C55E] p-[1px]">
+                <div onClick={()=>{navigate("/jobSeeker/edit")}} className="image-container cursor-pointer relative flex justify-center items-center h-[5rem] w-[5rem] border-[2px] border-solid border-[#22C55E] p-[1px]">
                   <img
                     src={
                       jobSeeker?.profile_pic == null
