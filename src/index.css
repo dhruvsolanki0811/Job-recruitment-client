@@ -121,6 +121,7 @@
     border: none;
   }
   .people-box{
+    width: 90vw;
     max-width: 100%;
   }
 }

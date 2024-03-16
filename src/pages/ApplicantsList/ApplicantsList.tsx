@@ -44,7 +44,7 @@ function ApplicantsList() {
                 <div key={key}>
                   <div
                     onClick={() => {
-                      navigate(`${user.username}`);
+                      navigate(`/users/${user.username}`);
                     }}
                     className="people-box cursor-pointer flex flex-col  ps-3 pe-3"
                   >
