@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import { FavSection, Sidebar, JobNav } from "../../components/components";
+import { FavSection, Sidebar, JobNav, Loader } from "../../components/components";
 import { BottomBar } from "../../components/BottomBar/BottomBar";
 import { useUserAuthStore } from "../../store/store";
 import { useCreateJob } from "../../hooks/useJobData";
@@ -7,7 +7,7 @@ import DevIcon from "../../components/Devicon/Devicon";
 
 function JobPostingForm() {
   const { user } = useUserAuthStore();
-  const { mutate: create } = useCreateJob();
+  const { mutate: create,isLoading:PostLoading } = useCreateJob();
   const [jobDetails, setJobDetails] = useState({
     role: "",
     description: "",
@@ -145,12 +145,14 @@ function JobPostingForm() {
                   />
                 </div>
                 <div className="login-btn-wrapper">
-                  <button
+                  {PostLoading?
+                  <Loader message=""/>
+                  :<button
                     className="submit-btn text-[15px] hover:bg-[#13883e]"
                     onClick={handleSubmit}
                   >
                     Post the Job
-                  </button>
+                  </button>}
                 </div>
               </div>
             </div>
