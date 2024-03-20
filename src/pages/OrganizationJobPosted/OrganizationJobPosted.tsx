@@ -124,7 +124,7 @@ function OrganizationJobPosted() {
                               return (
                                 <div
                                   key={key}
-                                  className="skills flex gap-1 items-center text-[12px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]"
+                                  className="skills truncate flex gap-1 items-center text-[12px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]"
                                 >
                                   <DevIcon skillName={skill}></DevIcon>
                                   {skill}

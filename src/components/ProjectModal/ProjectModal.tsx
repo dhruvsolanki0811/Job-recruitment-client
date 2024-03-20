@@ -55,7 +55,7 @@ function ProjectModal({project,close}: {project:Project ,close: () => void})
             <div className="tech-skills w-full flex flex-wrap  mt-4 gap-1">
               {project.tech_stack.map((skill,index) => {
                 return (
-                  <div key={index} className="skills flex min-w-[max-content] items-center gap-1 text-[14px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+                  <div key={index} className="skills truncate flex min-w-[max-content] items-center gap-1 text-[14px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
                     <DevIcon skillName={skill}></DevIcon>
                     {skill}
                   </div>

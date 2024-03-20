@@ -51,7 +51,7 @@ function Jobcard({ job }: { job: Job }) {
               : job.skills_required.slice(0, 3)
             ).map((skill,i) => {
               return (
-                <div key={i } className="skills flex gap-1 items-center text-[12px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
+                <div key={i } className="skills truncate flex gap-1 items-center text-[12px] font-light pe-2 ps-2  border-[0.1px]  border-solid rounded-[10px]">
                   <DevIcon skillName={skill}></DevIcon>
                   {skill}
                 </div>
