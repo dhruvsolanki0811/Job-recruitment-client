@@ -19,22 +19,18 @@ import {
 } from "./pages/pages";
 import { RestrictAuth } from "./pages/Auth/AuthRoutes/restrict-auth";
 import { RequireAuth } from "./pages/Auth/AuthRoutes/require-auth";
+
 import { UserProfilePage } from "./pages/ProfilePage/UserProfilePage/UserProfilePage";
-import { useUserAuthStore } from "./store/AuthStore";
 import UserProfileUpdateForm from "./pages/ProfileUpdateForm/UserProfileUpdateForm";
+import { HomePageAuth } from "./pages/Auth/AuthRoutes/homepage-auth";
 
 function RoutesPath() {
-  const { user } = useUserAuthStore();
   return (
     <Routes>
       <Route
         path="/"
         element={
-          user.userType == "organization" ? (
-            <Navigate to={`/jobposted`} />
-          ) : (
-            <AllJobPage></AllJobPage>
-          )
+          <HomePageAuth></HomePageAuth>
         }
       />
       <Route path="/users" element={<UserList></UserList>} />
