@@ -1,6 +1,5 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import {  Route, Routes } from "react-router-dom";
 import {
-  AllJobPage,
   AppliedJob,
   AuthLogin,
   CompanyDescription,
